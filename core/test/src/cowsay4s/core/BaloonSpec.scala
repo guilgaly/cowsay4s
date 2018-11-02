@@ -3,7 +3,7 @@ package cowsay4s.core
 import cowsay.tests.UnitSpec
 import cowsay4s.core.Baloon.{DelimiterCouple, Delimiters}
 
-class BaloonTest extends UnitSpec {
+class BaloonSpec extends UnitSpec {
 
   private val delimiters = new Delimiters {
     override def first: DelimiterCouple = DelimiterCouple('1', '2')

@@ -2,7 +2,7 @@ package cowsay4s.core.utils
 
 import cowsay.tests.UnitSpec
 
-class TextUtilTest extends UnitSpec {
+class TextUtilSpec extends UnitSpec {
 
   "wrap" when {
     "given an empty string" should {
