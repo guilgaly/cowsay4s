@@ -1,0 +1,16 @@
+sudo: required
+language: scala
+jdk:
+- openjdk8
+
+cache:
+  directories:
+  - $HOME/.coursier
+
+script:
+- curl -L -o ~/bin/mill "https://github.com/lihaoyi/mill/releases/download/0.3.3/0.3.3" && chmod +x ~/bin/mill
+- export PATH=~/bin/mill:$PATH
+- git clean -xdf
+- mill __.reformat
+- git diff-index --quiet HEAD
+- mill _.test
