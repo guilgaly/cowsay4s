@@ -25,7 +25,6 @@ private[core] object Cow {
     for {
       url <- Option {
         val resourceName = s"/cowsay4s/core/${cowName.name}.cow"
-        println(resourceName)
         getClass.getResource(resourceName)
       }.toRight(CowNotFound)
 

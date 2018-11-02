@@ -1,5 +1,5 @@
 package cowsay4s.core.impl
-import cowsay4s.core.StrictPositiveInt
+import cowsay4s.core.{CowAction, StrictPositiveInt}
 
 private[core] object Baloon {
 
@@ -10,6 +10,13 @@ private[core] object Baloon {
     def middle: DelimiterCouple
     def last: DelimiterCouple
     def only: DelimiterCouple
+  }
+
+  object Delimiters {
+    def fromAction(action: CowAction): Delimiters = action match {
+      case CowAction.CowSay   => Baloon.SayDelimiters
+      case CowAction.CowThink => Baloon.ThinkDelimiters
+    }
   }
 
   case object SayDelimiters extends Delimiters {
