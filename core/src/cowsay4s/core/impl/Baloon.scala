@@ -1,5 +1,5 @@
 package cowsay4s.core.impl
-import cowsay4s.core.utils.TextUtil
+import cowsay4s.core.StrictPositiveInt
 
 private[core] object Baloon {
 
@@ -27,7 +27,9 @@ private[core] object Baloon {
     override val only: DelimiterCouple = parensDelims
   }
 
-  def format(text: String, lineWidth: Int, delimiters: Delimiters): String = {
+  def format(text: String,
+             lineWidth: StrictPositiveInt,
+             delimiters: Delimiters): String = {
     val lines = TextUtil.wrap(text, lineWidth)
     val maxLength = lines.map(_.length).max
 

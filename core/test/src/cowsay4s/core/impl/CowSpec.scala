@@ -2,10 +2,11 @@ package cowsay4s.core.impl
 
 import cowsay.tests.UnitSpec
 import cowsay4s.core.CowError.CowNotFound
+import cowsay4s.core.CowName
 
 class CowSpec extends UnitSpec {
 
-  "loadFromClasspath" when {
+  "load" when {
     "given a valid cow name" should {
       "load the 'default' cow" in {
         val expected =
@@ -16,7 +17,7 @@ class CowSpec extends UnitSpec {
             |             $tongue ||----w |
             |                ||     ||
             |""".stripMargin
-        Cow.loadFromClasspath("default") shouldBe Right(Cow(expected))
+        Cow.load(CowName("default")) shouldBe Right(Cow(expected))
       }
       "load the 'satanic' cow" in {
         val expected =
@@ -29,12 +30,12 @@ class CowSpec extends UnitSpec {
             |*  ||----||      
             |   ~~    ~~      
             |""".stripMargin
-        Cow.loadFromClasspath("satanic") shouldBe Right(Cow(expected))
+        Cow.load(CowName("satanic")) shouldBe Right(Cow(expected))
       }
     }
     "given an invalid cow name" should {
       "return a 'CowNotFound' error" in {
-        Cow.loadFromClasspath("toto") shouldBe Left(CowNotFound)
+        Cow.load(CowName("toto")) shouldBe Left(CowNotFound)
       }
     }
   }

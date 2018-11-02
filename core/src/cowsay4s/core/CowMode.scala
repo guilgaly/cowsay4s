@@ -4,7 +4,8 @@ import scala.collection.immutable
 
 import enumeratum.{Enum, EnumEntry}
 
-sealed abstract class CowMode(code: String, face: CowFace) extends EnumEntry
+sealed abstract class CowMode(val code: String, val face: CowFace)
+    extends EnumEntry
 
 object CowMode extends Enum[CowMode] {
 

@@ -1,20 +1,21 @@
-package cowsay4s.core.utils
+package cowsay4s.core.impl
 
 import cowsay.tests.UnitSpec
+import cowsay4s.core.StrictPositiveInt
 
 class TextUtilSpec extends UnitSpec {
 
   "wrap" when {
     "given an empty string" should {
       "return a single empty string" in {
-        TextUtil.wrap("", 0) shouldBe Seq("")
+        TextUtil.wrap("", StrictPositiveInt(1)) shouldBe Seq("")
       }
     }
     "given a short string" should {
       "return a single string" in {
         val str = "The cow says hello!"
         val expected = Seq(str)
-        TextUtil.wrap(str, 20) shouldBe expected
+        TextUtil.wrap(str, StrictPositiveInt(20)) shouldBe expected
       }
     }
     "given a long string" should {
@@ -36,7 +37,7 @@ class TextUtilSpec extends UnitSpec {
           "urna. Ut ullamcorper est eu risus",
           "luctus, et accumsan enim pellentesque.",
         )
-        TextUtil.wrap(str, 40) shouldBe expected
+        TextUtil.wrap(str, StrictPositiveInt(40)) shouldBe expected
       }
     }
   }

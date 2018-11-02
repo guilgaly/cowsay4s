@@ -4,45 +4,51 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Paths}
 import scala.util.Try
 
-import cowsay4s.core.CowError
 import cowsay4s.core.CowError.{
   CowNotFound,
   CowParsingError,
   CowReadingException
 }
+import cowsay4s.core.{CowError, CowName, CowProvider, CowString}
 
 private[core] case class Cow(value: String) extends AnyVal
 
 private[core] object Cow {
 
-  def loadFromClasspath(cowName: String): Either[CowError, Cow] =
+  def load(cowProvider: CowProvider): Either[CowError, Cow] =
+    cowProvider match {
+      case cowName: CowName     => loadFromClasspath(cowName)
+      case cowString: CowString => loadFromString(cowString)
+    }
+
+  private def loadFromClasspath(cowName: CowName) =
     for {
       url <- Option {
-        val resourceName = s"/cowsay4s/core/$cowName.cow"
+        val resourceName = s"/cowsay4s/core/${cowName.name}.cow"
         println(resourceName)
         getClass.getResource(resourceName)
       }.toRight(CowNotFound)
 
       path <- tryCowReading(Paths.get(url.toURI))
 
-      cowFileContent <- tryCowReading {
+      cowString <- tryCowReading {
         new String(Files.readAllBytes(path), StandardCharsets.UTF_8)
       }
 
-      cow <- loadFromString(cowFileContent)
+      cow <- loadFromString(CowString(cowString))
 
     } yield cow
 
-  def loadFromString(str: String): Either[CowError, Cow] = {
+  private def loadFromString(cowString: CowString) = {
     val pattern = """(?s).*\$the_cow\s*=\s*<<"?EOC"?;(.*)EOC.*""".r
-    val normalizedString = str.replace("\r\n", "\n").replace('\r', '\n')
+    val str = cowString.value.replace("\r\n", "\n").replace('\r', '\n')
 
-    normalizedString match {
+    str match {
       case pattern(cowValue) => Right(Cow(cowValue))
       case _                 => Left(CowParsingError("Unable to parse cow"))
     }
   }
 
-  private def tryCowReading[T](f: => T): Either[CowError, T] =
+  private def tryCowReading[T](f: => T) =
     Try(f).toEither.left.map(CowReadingException)
 }

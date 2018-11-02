@@ -1,22 +1,22 @@
-package cowsay4s.core.utils
-
+package cowsay4s.core.impl
 import java.util.StringTokenizer
+
+import cowsay4s.core.StrictPositiveInt
 
 private[core] object TextUtil {
 
-  def wrap(text: String, lineWidth: Int): List[String] = {
-    val targetLineWidth = if (lineWidth > 0) lineWidth else 1
+  def wrap(text: String, lineWidth: StrictPositiveInt): List[String] = {
     val tokenizer = new StringTokenizer(text)
 
     var lines = List.empty[String]
     var currentLine = ""
-    var spaceLeft = lineWidth
+    var spaceLeft = lineWidth.value
     while (tokenizer.hasMoreTokens) {
       val word = tokenizer.nextToken
       if ((word.length + 1) > spaceLeft) {
         lines = currentLine :: lines
         currentLine = word
-        spaceLeft = targetLineWidth - word.length
+        spaceLeft = lineWidth.value - word.length
       } else {
         currentLine = if (currentLine.isEmpty) word else s"$currentLine $word"
         spaceLeft = spaceLeft - (word.length + 1)
