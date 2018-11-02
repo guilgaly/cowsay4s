@@ -1,4 +1,4 @@
-package cowsay4s.core
+package cowsay4s.core.impl
 
 import cowsay.tests.UnitSpec
 import cowsay4s.core.CowError.CowNotFound

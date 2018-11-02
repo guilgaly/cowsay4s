@@ -1,7 +1,7 @@
-package cowsay4s.core
+package cowsay4s.core.impl
 import cowsay4s.core.utils.TextUtil
 
-object Baloon {
+private[core] object Baloon {
 
   final case class DelimiterCouple(start: Char, end: Char)
 

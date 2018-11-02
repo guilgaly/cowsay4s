@@ -1,14 +1,15 @@
-package cowsay4s.core
+package cowsay4s.core.impl
 
 import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Paths}
 import scala.util.Try
 
+import cowsay4s.core.CowError
 import cowsay4s.core.CowError.{CowNotFound, CowParsingError, CowReadingException}
 
-case class Cow(value: String) extends AnyVal
+private[core] case class Cow(value: String) extends AnyVal
 
-object Cow {
+private[core] object Cow {
 
   def loadFromClasspath(cowName: String): Either[CowError, Cow] =
     for {
@@ -34,7 +35,7 @@ object Cow {
 
     normalizedString match {
       case pattern(cowValue) => Right(Cow(cowValue))
-      case _ => Left(CowParsingError("Unable to parse cow"))
+      case _                 => Left(CowParsingError("Unable to parse cow"))
     }
   }
 

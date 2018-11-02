@@ -1,7 +1,7 @@
-package cowsay4s.core
+package cowsay4s.core.impl
 
 import cowsay.tests.UnitSpec
-import cowsay4s.core.Baloon.{DelimiterCouple, Delimiters}
+import cowsay4s.core.impl.Baloon.{DelimiterCouple, Delimiters}
 
 class BaloonSpec extends UnitSpec {
 

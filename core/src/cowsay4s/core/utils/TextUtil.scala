@@ -2,7 +2,7 @@ package cowsay4s.core.utils
 
 import java.util.StringTokenizer
 
-object TextUtil {
+private[core] object TextUtil {
 
   def wrap(text: String, lineWidth: Int): List[String] = {
     val targetLineWidth = if (lineWidth > 0) lineWidth else 1
