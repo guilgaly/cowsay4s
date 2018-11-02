@@ -5,7 +5,11 @@ import java.nio.file.{Files, Paths}
 import scala.util.Try
 
 import cowsay4s.core.CowError
-import cowsay4s.core.CowError.{CowNotFound, CowParsingError, CowReadingException}
+import cowsay4s.core.CowError.{
+  CowNotFound,
+  CowParsingError,
+  CowReadingException
+}
 
 private[core] case class Cow(value: String) extends AnyVal
 

@@ -27,4 +27,10 @@ private[core] object TextUtil {
     }
     lines.reverse
   }
+
+  def normalizeLength(text: String, length: Int): String = {
+    assert(length > 0)
+    if (text.length >= length) text.take(length)
+    else text.padTo(length, ' ')
+  }
 }

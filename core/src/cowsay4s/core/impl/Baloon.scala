@@ -39,8 +39,8 @@ private[core] object Baloon {
         List(line(one, maxLength, delimiters.only))
       case head +: mid :+ last =>
         line(head, maxLength, delimiters.first) +:
-        mid.map(s => line(s, maxLength, delimiters.middle)) :+
-        line(last, maxLength, delimiters.last)
+          mid.map(s => line(s, maxLength, delimiters.middle)) :+
+          line(last, maxLength, delimiters.last)
     }
     val bottom = bottomLine(maxLength)
 
