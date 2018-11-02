@@ -12,10 +12,10 @@ See also:
 - [tnalpgge/rank-amateur-cowsay](https://github.com/tnalpgge/rank-amateur-cowsay)
 for the original program
 
-```
- _________________
+```text
+ _______________
 < Cows ♥ Scala! >
- -----------------
+ ---------------
         \   ^__^
          \  (oo)\_______
             (__)\       )\/\
