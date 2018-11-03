@@ -3,7 +3,7 @@ import cowsay4s.core.{CowAction, CowMode}
 import scopt.OptionParser
 
 case class CliArgs(
-    mode: Option[CowMode],
+    mode: CowMode,
     eyes: Option[String],
     tongue: Option[String],
     cowfile: String,
@@ -16,7 +16,7 @@ case class CliArgs(
 
   /** No-args constructor used only for the scopt parser. */
   private def this() = this(
-    mode = None,
+    mode = CowMode.Default,
     eyes = None,
     tongue = None,
     cowfile = "default",
@@ -39,29 +39,76 @@ object CliArgs {
   def parse(args: Seq[String]): Option[CliArgs] =
     parser.parse(args, new CliArgs())
 
-//  Usage: cowsay [-bdgpstwy] [-h] [-e eyes] [-f cowfile]
-//    [-l] [-n] [-T tongue] [-W wrapcolumn] [message]
+  private def parser: OptionParser[CliArgs] =
+    new OptionParser[CliArgs]("cowsay4s-cli") {
+      head("cowsay4s-cli")
 
-  private def parser = new OptionParser[CliArgs]("cowsay4s-cli") {
-    head("cowsay4s-cli")
+      help("help").text("prints this usage text")
 
-    help("help").text("prints this usage text")
+      modeSwitch('b', "borg", CowMode.Borg)
+      modeSwitch('d', "dead", CowMode.Dead)
+      modeSwitch('g', "greedy", CowMode.Greedy)
+      modeSwitch('p', "paranoia", CowMode.Paranoia)
+      modeSwitch('s', "stoned", CowMode.Stoned)
+      modeSwitch('t', "tired", CowMode.Tired)
+      modeSwitch('w', "wired", CowMode.Wired)
+      modeSwitch('y', "youthful", CowMode.Youthful)
 
-    arg[String]("<say | think>")
-      .text("wether the cow should say or think")
-      .validate {
-        case "say" | "think" => success
-        case _               => failure("action must be 'say' or 'think'")
-      }
-      .action {
-        case ("say", config)   => config.copy(action = CowAction.CowSay)
-        case ("think", config) => config.copy(action = CowAction.CowThink)
-        case (_, config)       => config
-      }
+      opt[String]('e', "eyes")
+        .text(
+          "appearance of the cow's eyes (only the first two characters are used)")
+        .action((eyes, config) => config.copy(eyes = Some(eyes)))
 
-    arg[String]("<message>")
-      .text("the message the cow will say or think")
-      .action((string: String, config: CliArgs) =>
-        config.copy(message = Some(string)))
-  }
+      opt[String]('T', "tongue")
+        .text(
+          "appearance of the cow's tongue (only the first two characters are used)")
+        .action((tongue, config) => config.copy(tongue = Some(tongue)))
+
+      opt[String]('f', "cowfile")
+        .text("name of the cowfile to use")
+        .action((cowfile, config) => config.copy(cowfile = cowfile))
+
+      opt[Unit]('l', "list")
+        .text("list all cowfiles [NOT IMPLEMENTED YET]")
+        .action((_, config) => config.copy(list = true))
+
+      opt[Unit]('n', "nowrap")
+        .text("do not automatically wrap the message [NOT IMPLEMENTED YET]")
+        .action((_, config) => config.copy(nowrap = true))
+
+      opt[Int]('W', "wrapcolumn")
+        .text("max line length to wrap the message (40 by default)")
+        .validate { w =>
+          if (w > 0)
+            success
+          else
+            failure(
+              s"$w is not a valid argument for --wrapcolumn; should be strictly positive")
+        }
+        .action((wrapcolumn, config) => config.copy(wrapcolumn = wrapcolumn))
+
+      arg[String]("<say|think>")
+        .text("whether the cow should say or think the message")
+        .validate {
+          case "say" | "think" =>
+            success
+          case invalid =>
+            failure(
+              s"$invalid is not a valid action; should be 'say' or 'think'; ")
+        }
+        .action {
+          case ("say", config)   => config.copy(action = CowAction.CowSay)
+          case ("think", config) => config.copy(action = CowAction.CowThink)
+          case (_, config)       => config
+        }
+
+      arg[String]("<message>")
+        .text("the message the cow will say or think")
+        .action((message, config) => config.copy(message = Some(message)))
+
+      private def modeSwitch(x: Char, name: String, mode: CowMode) =
+        opt[Unit](x, name)
+          .text(s"$name mode")
+          .action((_, config: CliArgs) => config.copy(mode = mode))
+    }
 }
