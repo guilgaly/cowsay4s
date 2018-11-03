@@ -22,13 +22,17 @@ trait Cowsay4sModule extends ScalaModule with ScalafmtModule {
 }
 
 object core extends Cowsay4sModule {
-  override def scalaVersion = settings.scalaVersion
-  override def scalacOptions = settings.defaultScalacOptions
-
   override def ivyDeps = Agg(
     dependencies.logging.log4s,
     dependencies.logging.slf4jApi,
     dependencies.enumeratum,
+  )
+}
+
+object cli extends Cowsay4sModule {
+  override def moduleDeps = Seq(core)
+  override def ivyDeps = Agg(
+    dependencies.scopt,
   )
 }
 
