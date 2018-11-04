@@ -1,14 +1,18 @@
 sudo: required
+before_install:
+- openssl aes-256-cbc -K $encrypted_a619f2099269_key -iv $encrypted_a619f2099269_iv
+  -in key.asc.enc -out key.asc -d
 language: scala
 jdk:
 - openjdk8
-
 cache:
   directories:
-  - $HOME/.coursier
-
+  - "$HOME/.coursier"
+before_script:
+- gpg --import key.asc
 script:
-- curl -L -o ~/bin/mill "https://github.com/lihaoyi/mill/releases/download/0.3.3/0.3.3" && chmod +x ~/bin/mill
+- curl -L -o ~/bin/mill "https://github.com/lihaoyi/mill/releases/download/0.3.3/0.3.3"
+  && chmod +x ~/bin/mill
 - export PATH=~/bin/mill:$PATH
 - git clean -xdf
 - mill __.reformat
