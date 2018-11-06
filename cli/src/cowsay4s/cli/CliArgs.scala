@@ -43,7 +43,7 @@ object CliArgs {
     new OptionParser[CliArgs]("cowsay4s-cli") {
       head("cowsay4s-cli")
 
-      help("help").text("prints this usage text")
+      help("help").abbr("h").text("prints this usage text")
 
       modeSwitch('b', "borg", CowMode.Borg)
       modeSwitch('d', "dead", CowMode.Dead)
@@ -87,7 +87,8 @@ object CliArgs {
         }
         .action((wrapcolumn, config) => config.copy(wrapcolumn = wrapcolumn))
 
-      arg[String]("<say|think>")
+      opt[String]('a', "action")
+        .valueName("<say|think>")
         .text("whether the cow should say or think the message")
         .validate {
           case "say" | "think" =>
@@ -103,6 +104,7 @@ object CliArgs {
         }
 
       arg[String]("<message>")
+        .optional()
         .text("the message the cow will say or think")
         .action((message, config) => config.copy(message = Some(message)))
 
