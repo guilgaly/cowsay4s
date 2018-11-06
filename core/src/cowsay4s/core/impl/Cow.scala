@@ -26,7 +26,7 @@ private[core] object Cow {
       url <- Option {
         val resourceName = s"/cowsay4s/core/${cowName.name}.cow"
         getClass.getResource(resourceName)
-      }.toRight(CowNotFound)
+      }.toRight(CowNotFound(cowName.name))
 
       path <- tryCowReading(Paths.get(url.toURI))
 

@@ -35,7 +35,7 @@ class CowSpec extends UnitSpec {
     }
     "given an invalid cow name" should {
       "return a 'CowNotFound' error" in {
-        Cow.load(CowName("toto")) shouldBe Left(CowNotFound)
+        Cow.load(CowName("toto")) shouldBe Left(CowNotFound("toto"))
       }
     }
   }
