@@ -5,5 +5,5 @@ case class CowCommand(
     provider: CowProvider,
     face: CowFace,
     wrap: StrictPositiveInt,
-    message: String,
+    message: String
 )

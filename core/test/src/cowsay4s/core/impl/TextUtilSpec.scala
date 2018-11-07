@@ -34,7 +34,7 @@ class TextUtilSpec extends UnitSpec {
           "mollis luctus nibh euismod molestie.",
           "Fusce non consectetur dui, at suscipit",
           "urna. Ut ullamcorper est eu risus",
-          "luctus, et accumsan enim pellentesque.",
+          "luctus, et accumsan enim pellentesque."
         )
         TextUtil.softWrap(str, 40) shouldBe expected
       }

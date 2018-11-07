@@ -5,12 +5,11 @@ import cowsay4s.core.{CowAction, CowCommand, CowError, CowFace}
 private[core] object TalkingCow {
 
   def printToString(command: CowCommand): Either[CowError, String] =
-    for {
-      cow <- Cow.load(command.provider)
-      pimpedCow = pimpCow(cow, command.face, command.action)
-      baloon = printBaloon(command: CowCommand)
-      talkingCow = assembleTalkingCow(pimpedCow, baloon)
-    } yield talkingCow
+    Cow.load(command.provider).right.map { cow =>
+      val pimpedCow = pimpCow(cow, command.face, command.action)
+      val baloon = printBaloon(command: CowCommand)
+      assembleTalkingCow(pimpedCow, baloon)
+    }
 
   private def pimpCow(cow: Cow, face: CowFace, action: CowAction): String = {
     val eyes = face.eyes.value

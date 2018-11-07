@@ -17,4 +17,4 @@ script:
 - git clean -xdf
 - mill __.reformat
 - git diff-index --quiet HEAD
-- mill _.test
+- mill  all '_[2.12.7].test' '_[2.11.12].test' 'cli.test'

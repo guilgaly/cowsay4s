@@ -2,7 +2,6 @@ package cowsay4s.core.impl
 
 import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Paths}
-import scala.util.Try
 
 import cowsay4s.core.CowError.{
   CowNotFound,
@@ -10,6 +9,8 @@ import cowsay4s.core.CowError.{
   CowReadingException
 }
 import cowsay4s.core.{CowError, CowName, CowProvider, CowString}
+
+import scala.util.{Failure, Success, Try}
 
 private[core] case class Cow(value: String) extends AnyVal
 
@@ -26,15 +27,15 @@ private[core] object Cow {
       url <- Option {
         val resourceName = s"/cowsay4s/core/${cowName.name}.cow"
         getClass.getResource(resourceName)
-      }.toRight(CowNotFound(cowName.name))
+      }.toRight(CowNotFound(cowName.name)).right
 
-      path <- tryCowReading(Paths.get(url.toURI))
+      path <- tryCowReading(Paths.get(url.toURI)).right
 
       cowString <- tryCowReading {
         new String(Files.readAllBytes(path), StandardCharsets.UTF_8)
-      }
+      }.right
 
-      cow <- loadFromString(CowString(cowString))
+      cow <- loadFromString(CowString(cowString)).right
 
     } yield cow
 
@@ -49,5 +50,8 @@ private[core] object Cow {
   }
 
   private def tryCowReading[T](f: => T) =
-    Try(f).toEither.left.map(CowReadingException)
+    Try(f) match {
+      case Failure(t)     => Left(CowReadingException(t))
+      case Success(value) => Right(value)
+    }
 }
