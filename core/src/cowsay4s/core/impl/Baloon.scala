@@ -37,8 +37,8 @@ private[core] object Baloon {
   def format(text: String,
              lineWidth: StrictPositiveInt,
              delimiters: Delimiters): String = {
-    val lines = TextUtil.wrap(text, lineWidth)
-    val maxLength = lines.map(_.length).max
+    val lines = TextUtil.softWrap(text, lineWidth.value)
+    val maxLength = lines.map(TextUtil.displayLength).max
 
     val top = topLine(maxLength)
     val middle = lines match {
@@ -57,7 +57,7 @@ private[core] object Baloon {
   }
 
   private def line(textLine: String, textLength: Int, delims: DelimiterCouple) =
-    s"${delims.start} ${textLine.padTo(textLength, ' ')} ${delims.end}"
+    s"${delims.start} ${TextUtil.padToDisplayLength(textLine, textLength)} ${delims.end}"
 
   private def topLine(length: Int) = s" ${"_" * (length + 2)} "
 

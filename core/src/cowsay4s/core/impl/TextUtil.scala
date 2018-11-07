@@ -1,36 +1,91 @@
 package cowsay4s.core.impl
-import java.util.StringTokenizer
 
-import cowsay4s.core.StrictPositiveInt
+import java.text.BreakIterator
 
 private[core] object TextUtil {
 
-  def wrap(text: String, lineWidth: StrictPositiveInt): List[String] = {
-    val tokenizer = new StringTokenizer(text)
+  // http://tutorials.jenkov.com/java-internationalization/breakiterator.html
 
+  def softWrap(text: String, lineWidth: Int): List[String] = {
+    val breakIterator = BreakIterator.getLineInstance
+    breakIterator.setText(text)
+
+    var start = breakIterator.first
+    var end = breakIterator.next()
     var lines = List.empty[String]
-    var currentLine = ""
-    var spaceLeft = lineWidth.value
-    while (tokenizer.hasMoreTokens) {
-      val word = tokenizer.nextToken
-      if ((word.length + 1) > spaceLeft) {
-        lines = currentLine :: lines
-        currentLine = word
-        spaceLeft = lineWidth.value - word.length
+    var currentLine = new StringBuilder(lineWidth)
+    var currentLineLength = 0
+
+    while (end != BreakIterator.DONE) {
+      val word = text.substring(start, end)
+      val wordLength = displayLength(word)
+      if (currentLineLength == 0 || (currentLineLength + wordLength) <= lineWidth) {
+        currentLine.append(word)
+        currentLineLength += wordLength
       } else {
-        currentLine = if (currentLine.isEmpty) word else s"$currentLine $word"
-        spaceLeft = spaceLeft - (word.length + 1)
+        val trimmedWord = word.replaceAll("""(?m)\s+$""", "")
+        val trimmedWordLength = displayLength(trimmedWord)
+        if ((currentLineLength + trimmedWordLength) <= lineWidth) {
+          currentLine.append(trimmedWord)
+          lines = currentLine.mkString +: lines
+          currentLine = new StringBuilder(lineWidth)
+          currentLineLength = 0
+        } else {
+          lines = currentLine.mkString.replaceAll("""(?m)\s+$""", "") +: lines
+          currentLine = new StringBuilder(lineWidth).append(word)
+          currentLineLength = wordLength
+        }
       }
+      start = end
+      end = breakIterator.next()
     }
-    if (lines.isEmpty || currentLine.nonEmpty) {
-      lines = currentLine :: lines
-    }
+    lines = currentLine.mkString.replaceAll("""(?m)\s+$""", "") +: lines
+
     lines.reverse
   }
 
-  def normalizeLength(text: String, length: Int): String = {
-    assert(length > 0)
-    if (text.length >= length) text.take(length)
-    else text.padTo(length, ' ')
+  def displayLength(text: String): Int = {
+    val breakIterator = BreakIterator.getCharacterInstance
+    breakIterator.setText(text)
+
+    var length = 0
+    while (breakIterator.next() != BreakIterator.DONE) {
+      length += 1
+    }
+    length
+  }
+
+  def padToDisplayLength(text: String, targetLength: Int): String = {
+    val currentLength = displayLength(text)
+    if (currentLength >= targetLength)
+      text
+    else
+      doPad(text, currentLength, targetLength)
+  }
+
+  def normalizeToDisplayLength(text: String, targetLength: Int): String = {
+    val currentLength = displayLength(text)
+    if (currentLength > targetLength) {
+      doCut(text, targetLength)
+    } else if (currentLength < targetLength) {
+      doPad(text, currentLength, targetLength)
+    } else {
+      text
+    }
+  }
+
+  private def doPad(text: String, currentLength: Int, targetLength: Int) = {
+    val padding = " " * (targetLength - currentLength)
+    text + padding
+  }
+
+  private def doCut(text: String, targetLength: Int) = {
+    val breakIterator = BreakIterator.getCharacterInstance
+    breakIterator.setText(text)
+
+    for (_ <- 1 to targetLength) {
+      breakIterator.next()
+    }
+    text.substring(0, breakIterator.current())
   }
 }
