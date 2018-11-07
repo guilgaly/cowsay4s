@@ -10,13 +10,7 @@ trait Cowsay4sModule extends ScalaModule with ScalafmtModule {
   override def repositories = super.repositories ++ settings.customRepositories
 
   object test extends Tests with ScalafmtModule {
-    override def moduleDeps =
-      if (this == common.test) super.moduleDeps
-      else super.moduleDeps ++ Seq(common.test)
-    override def ivyDeps = Agg(
-      dependencies.scalatest,
-      dependencies.logging.slf4jSimple,
-    )
+    override def moduleDeps = super.moduleDeps :+ testCommon
     override def testFrameworks = Seq("org.scalatest.tools.Framework")
   }
 }
@@ -36,4 +30,12 @@ object cli extends Cowsay4sModule {
   )
 }
 
-object common extends Cowsay4sModule
+object testCommon extends ScalaModule with ScalafmtModule {
+  override def scalaVersion = settings.scalaVersion
+  override def scalacOptions = settings.defaultScalacOptions
+
+  override def ivyDeps = Agg(
+    dependencies.scalatest,
+    dependencies.logging.slf4jSimple,
+  )
+}
