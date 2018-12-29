@@ -1,4 +1,5 @@
 package cowsay4s.core.impl
+
 import cowsay4s.core.{CowAction, StrictPositiveInt}
 
 private[core] object Baloon {
@@ -27,16 +28,17 @@ private[core] object Baloon {
   }
 
   case object ThinkDelimiters extends Delimiters {
-    private final val parensDelims = DelimiterCouple('(', ')')
+    final private val parensDelims = DelimiterCouple('(', ')')
     override val first: DelimiterCouple = parensDelims
     override val middle: DelimiterCouple = parensDelims
     override val last: DelimiterCouple = parensDelims
     override val only: DelimiterCouple = parensDelims
   }
 
-  def format(text: String,
-             lineWidth: StrictPositiveInt,
-             delimiters: Delimiters): String = {
+  def format(
+      text: String,
+      lineWidth: StrictPositiveInt,
+      delimiters: Delimiters): String = {
     val lines = TextUtil.softWrap(text, lineWidth.value)
     val maxLength = lines.map(TextUtil.displayLength).max
 

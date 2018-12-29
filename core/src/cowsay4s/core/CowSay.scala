@@ -4,6 +4,6 @@ import cowsay4s.core.impl.TalkingCow
 
 object CowSay {
 
-  def withCustomCommand(command: CowCommand): Either[CowError, String] =
+  def withCustomCommand(command: CowCommand): String =
     TalkingCow.printToString(command)
 }

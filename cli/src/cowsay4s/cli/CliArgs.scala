@@ -1,12 +1,12 @@
 package cowsay4s.cli
-import cowsay4s.core.{CowAction, CowMode}
-import scopt.OptionParser
+import cowsay4s.core.{CowAction, CowMode, DefaultCow}
+import scopt.{OptionParser, Read}
 
 case class CliArgs(
     mode: CowMode,
     eyes: Option[String],
     tongue: Option[String],
-    cowfile: String,
+    cow: DefaultCow,
     list: Boolean,
     nowrap: Boolean,
     wrapcolumn: Int,
@@ -19,7 +19,7 @@ case class CliArgs(
     mode = CowMode.Default,
     eyes = None,
     tongue = None,
-    cowfile = "default",
+    cow = DefaultCow.Default,
     list = false,
     nowrap = false,
     wrapcolumn = 40,
@@ -64,12 +64,12 @@ object CliArgs {
           "appearance of the cow's tongue (only the first two characters are used)")
         .action((tongue, config) => config.copy(tongue = Some(tongue)))
 
-      opt[String]('f', "cowfile")
+      opt[DefaultCow]('f', "cowfile")
         .text("name of the cowfile to use")
-        .action((cowfile, config) => config.copy(cowfile = cowfile))
+        .action((cow, config) => config.copy(cow = cow))
 
       opt[Unit]('l', "list")
-        .text("list all cowfiles [NOT IMPLEMENTED YET]")
+        .text("list all cowfiles")
         .action((_, config) => config.copy(list = true))
 
       opt[Unit]('n', "nowrap")
@@ -113,4 +113,11 @@ object CliArgs {
           .text(s"$name mode")
           .action((_, config: CliArgs) => config.copy(mode = mode))
     }
+
+  implicit val cowRead: Read[DefaultCow] = Read.reads { cowStr =>
+    DefaultCow
+      .withCowName(cowStr)
+      .getOrElse(throw new IllegalArgumentException(
+        s"'$cowStr' is not a valid cowfile name."))
+  }
 }

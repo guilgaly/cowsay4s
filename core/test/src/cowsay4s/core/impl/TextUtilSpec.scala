@@ -1,6 +1,6 @@
 package cowsay4s.core.impl
 
-import cowsay.tests.UnitSpec
+import cowsay4s.tests.UnitSpec
 
 class TextUtilSpec extends UnitSpec {
 
@@ -39,17 +39,6 @@ class TextUtilSpec extends UnitSpec {
         TextUtil.softWrap(str, 40) shouldBe expected
       }
     }
-    "given a string with multipoint unicode characters" should {
-      "wrap it properly" in {
-        val str = "😀😀😀😀 🐮🐮🐮🐮 🤘🤘🤘🤘 👽👽👽👽👽 🦄🦄🦄"
-        val expected = Seq(
-          "😀😀😀😀 🐮🐮🐮🐮",
-          "🤘🤘🤘🤘 👽👽👽👽👽",
-          "🦄🦄🦄"
-        )
-        TextUtil.softWrap(str, 10) shouldBe expected
-      }
-    }
   }
 
   "displayLength" when {
@@ -63,11 +52,6 @@ class TextUtilSpec extends UnitSpec {
         TextUtil.displayLength("Cows love Scala!") shouldBe 16
       }
     }
-    "given a string with multipoint unicode characters" should {
-      "return the correct length" in {
-        TextUtil.displayLength("Cows ♥︎ Scala! 🐮") shouldBe 15
-      }
-    }
   }
 
   "padToDisplayLength" when {
@@ -78,8 +62,8 @@ class TextUtilSpec extends UnitSpec {
     }
     "given a too long string" should {
       "return it as-is" in {
-        TextUtil.padToDisplayLength("This 🗨 is way too long! 😱", 10) shouldBe
-          "This 🗨 is way too long! 😱"
+        TextUtil.padToDisplayLength("This string is way too long!", 10) shouldBe
+          "This string is way too long!"
       }
     }
     "given an exact string" should {
@@ -87,10 +71,10 @@ class TextUtilSpec extends UnitSpec {
         TextUtil.padToDisplayLength("0123456789", 10) shouldBe "0123456789"
       }
     }
-    "given a short string with multipoint unicode characters" should {
+    "given a short string " should {
       "pad it to the correct display length" in {
-        TextUtil.padToDisplayLength("Cows ♥︎ Scala! 🐮", 20) shouldBe
-          "Cows ♥︎ Scala! 🐮     "
+        TextUtil.padToDisplayLength("Cows love Scala!", 20) shouldBe
+          "Cows love Scala!    "
       }
     }
   }
@@ -101,10 +85,10 @@ class TextUtilSpec extends UnitSpec {
         TextUtil.normalizeToDisplayLength("", 10) shouldBe "          "
       }
     }
-    "given a too long string with multipoint unicode characters" should {
+    "given a too long string" should {
       "cut it to length" in {
-        TextUtil.normalizeToDisplayLength("This 🗨 is way too long! 😱", 10) shouldBe
-          "This 🗨 is "
+        TextUtil.normalizeToDisplayLength("This string is way too long!", 10) shouldBe
+          "This strin"
       }
     }
     "given an exact string" should {
@@ -112,10 +96,10 @@ class TextUtilSpec extends UnitSpec {
         TextUtil.normalizeToDisplayLength("0123456789", 10) shouldBe "0123456789"
       }
     }
-    "given a short string with multipoint unicode characters" should {
+    "given a short string" should {
       "pad it to the correct display length" in {
-        TextUtil.normalizeToDisplayLength("Cows ♥︎ Scala! 🐮", 20) shouldBe
-          "Cows ♥︎ Scala! 🐮     "
+        TextUtil.normalizeToDisplayLength("Cows love Scala!", 20) shouldBe
+          "Cows love Scala!    "
       }
     }
   }

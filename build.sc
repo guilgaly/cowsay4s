@@ -2,26 +2,55 @@ import $file.dependencies
 import $file.settings
 import mill._
 import mill.scalalib._
+import mill.scalajslib._
 import mill.scalalib.scalafmt.ScalafmtModule
 
-object core
-    extends Cross[CoreModule](settings.scalaVersion.v2_11,
-                              settings.scalaVersion.v2_12)
-class CoreModule(val crossScalaVersion: String)
-    extends CrossScalaModule
+trait CommonModule extends ScalaModule {
+  def platformSegment: String
+
+  override def sources = T.sources(
+    millSourcePath / "src",
+    millSourcePath / s"src-$platformSegment"
+  )
+}
+
+trait CoreModule
+    extends CommonModule
+    with CrossScalaModule
     with ScalafmtModule {
   override def scalacOptions = settings.scalacOptions(crossScalaVersion)
   override def repositories = super.repositories ++ settings.customRepositories
 
-  override def ivyDeps = Agg(
-    dependencies.logging.log4s,
-    dependencies.logging.slf4jApi,
-    dependencies.enumeratum,
-  )
+  override def ivyDeps = Agg(dependencies.enumeratum)
 
-  object test extends Tests with ScalafmtModule {
-    override def moduleDeps = super.moduleDeps :+ testCommon(crossScalaVersion)
+  override def millSourcePath = build.millSourcePath / "core"
+
+  trait CoreTestsModule extends Tests with CommonModule {
+    override def platformSegment = CoreModule.this.platformSegment
     override def testFrameworks = Seq("org.scalatest.tools.Framework")
+    override def ivyDeps = Agg(dependencies.scalatest)
+  }
+}
+
+object core extends Module {
+
+  object jvm extends Cross[JvmCoreModule](settings.scalaVersion.cross: _*)
+  class JvmCoreModule(val crossScalaVersion: String) extends CoreModule {
+    override def platformSegment = "jvm"
+
+    object test extends CoreTestsModule
+  }
+
+  object js extends Cross[JsCoreModule](settings.scalaVersion.cross: _*)
+  class JsCoreModule(val crossScalaVersion: String)
+      extends CoreModule
+      with ScalaJSModule {
+    override def platformSegment = "js"
+    override def scalaJSVersion = settings.scalaJsVersion.default
+
+    object test extends CoreTestsModule with TestScalaJSModule {
+      def scalaJSVersion = settings.scalaJsVersion.default
+    }
   }
 }
 
@@ -29,29 +58,13 @@ object cli extends ScalaModule with ScalafmtModule {
   override def scalaVersion = settings.scalaVersion.default
   override def scalacOptions =
     settings.scalacOptions(settings.scalaVersion.default)
-  override def moduleDeps = Seq(core(settings.scalaVersion.default))
+  override def moduleDeps = Seq(core.jvm(settings.scalaVersion.default))
   override def ivyDeps = Agg(
     dependencies.scopt,
   )
 
   object test extends Tests with ScalafmtModule {
-    override def moduleDeps =
-      super.moduleDeps :+ testCommon(settings.scalaVersion.default)
     override def testFrameworks = Seq("org.scalatest.tools.Framework")
+    override def ivyDeps = Agg(dependencies.scalatest)
   }
-}
-
-object testCommon
-    extends Cross[TestCommonModule](settings.scalaVersion.v2_11,
-                                    settings.scalaVersion.v2_12)
-class TestCommonModule(val crossScalaVersion: String)
-    extends ScalaModule
-    with ScalafmtModule
-    with CrossScalaModule {
-  override def scalacOptions = settings.scalacOptions(crossScalaVersion)
-
-  override def ivyDeps = Agg(
-    dependencies.scalatest,
-    dependencies.logging.slf4jSimple,
-  )
 }

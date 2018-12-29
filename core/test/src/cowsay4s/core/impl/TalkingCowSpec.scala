@@ -1,7 +1,7 @@
 package cowsay4s.core.impl
 
-import cowsay.tests.UnitSpec
 import cowsay4s.core._
+import cowsay4s.tests.UnitSpec
 
 class TalkingCowSpec extends UnitSpec {
 
@@ -9,14 +9,14 @@ class TalkingCowSpec extends UnitSpec {
     "given a simple custom command" should {
       val command = CowCommand(
         action = CowAction.CowSay,
-        provider = CowName("default"),
-        face = CowMode.Stoned.face,
+        cow = DefaultCow.Default,
+        mode = CowMode.Stoned,
         wrap = StrictPositiveInt(40),
         message = "Cows love Scala!"
       )
       "construct a single line cowsay output" in {
         val cowsayCommand = command
-        val expected = Right(
+        val expected =
           """ __________________ 
             |< Cows love Scala! >
             | ------------------ 
@@ -26,13 +26,12 @@ class TalkingCowSpec extends UnitSpec {
             |             U  ||----w |
             |                ||     ||
             |""".stripMargin
-        )
         TalkingCow.printToString(cowsayCommand) shouldBe expected
       }
       "construct a multiline cowsay output" in {
         val cowsayCommand = command.copy(message =
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nec cursus sapien, quis sagittis quam. In ultrices fringilla mauris, eget euismod mi faucibus vel. Nulla vel vulputate neque, nec feugiat massa.")
-        val expected = Right(
+        val expected =
           """ __________________________________________ 
             |/ Lorem ipsum dolor sit amet, consectetur  \
             || adipiscing elit. Aliquam nec cursus      |
@@ -47,12 +46,11 @@ class TalkingCowSpec extends UnitSpec {
             |             U  ||----w |
             |                ||     ||
             |""".stripMargin
-        )
         TalkingCow.printToString(cowsayCommand) shouldBe expected
       }
       "construct a single line cowthink output" in {
         val cowthinkCommand = command.copy(action = CowAction.CowThink)
-        val expected = Right(
+        val expected =
           """ __________________ 
             |( Cows love Scala! )
             | ------------------ 
@@ -62,7 +60,6 @@ class TalkingCowSpec extends UnitSpec {
             |             U  ||----w |
             |                ||     ||
             |""".stripMargin
-        )
         TalkingCow.printToString(cowthinkCommand) shouldBe expected
       }
       "construct a multiline cowthink output" in {
@@ -70,7 +67,7 @@ class TalkingCowSpec extends UnitSpec {
           .copy(action = CowAction.CowThink)
           .copy(message =
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nec cursus sapien, quis sagittis quam. In ultrices fringilla mauris, eget euismod mi faucibus vel. Nulla vel vulputate neque, nec feugiat massa.")
-        val expected = Right(
+        val expected =
           """ __________________________________________ 
             |( Lorem ipsum dolor sit amet, consectetur  )
             |( adipiscing elit. Aliquam nec cursus      )
@@ -85,7 +82,6 @@ class TalkingCowSpec extends UnitSpec {
             |             U  ||----w |
             |                ||     ||
             |""".stripMargin
-        )
         TalkingCow.printToString(cowsayCommand) shouldBe expected
       }
     }

@@ -1,7 +1,7 @@
 import mill.scalalib._
 
 /** Command-line args parsing. */
-val scopt = ivy"com.github.scopt::scopt:3.7.0"
+val scopt = ivy"com.github.scopt::scopt:3.7.1"
 
 /** Logging. */
 object logging {
@@ -12,7 +12,7 @@ object logging {
 }
 
 /** Enumerations. */
-val enumeratum = ivy"com.beachape::enumeratum:1.5.13"
+val enumeratum = ivy"com.beachape::enumeratum::1.5.13"
 
 /** Tests. */
-val scalatest = ivy"org.scalatest::scalatest:3.0.5"
+val scalatest = ivy"org.scalatest::scalatest::3.0.5"
