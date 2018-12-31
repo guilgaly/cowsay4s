@@ -1,8 +1,9 @@
+import $file.cowgen
 import $file.dependencies
 import $file.settings
 import mill._
-import mill.scalalib._
 import mill.scalajslib._
+import mill.scalalib._
 import mill.scalalib.scalafmt.ScalafmtModule
 
 trait CommonModule extends ScalaModule {
@@ -23,7 +24,28 @@ trait CoreModule
 
   override def ivyDeps = Agg(dependencies.enumeratum)
 
-  override def millSourcePath = build.millSourcePath / "core"
+  override def millSourcePath: os.Path = build.millSourcePath / 'core
+
+  def cowfiles = T.sources { millSourcePath / 'cowfiles }
+
+  def allCowfiles = T {
+    def isHiddenFile(path: os.Path) = path.last.startsWith(".")
+    for {
+      root <- cowfiles()
+      if os.exists(root.path)
+      path <- if (os.isDir(root.path)) os.walk(root.path) else Seq(root.path)
+      if os.isFile(path) && path.ext == "cow" && !isHiddenFile(path)
+    } yield PathRef(path)
+  }
+
+  override def generatedSources = T {
+    val cowfiles = allCowfiles().map(_.path)
+    val dir = T.ctx().dest
+
+    cowgen.generateDefaultCows(dir, cowfiles)
+
+    Seq(PathRef(dir))
+  }
 
   trait CoreTestsModule extends Tests with CommonModule {
     override def platformSegment = CoreModule.this.platformSegment
