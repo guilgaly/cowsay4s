@@ -26,7 +26,7 @@ trait CoreModule extends CommonModule with CrossScalaModule with PublishModule {
   override def millSourcePath: os.Path = build.millSourcePath / 'core
 
   override def artifactName = "cowsay4s-core"
-  override def publishVersion = "0.1.0"
+  override def publishVersion = "0.1.1-SNAPSHOT"
   override def pomSettings = PomSettings(
     description = "Cowsay implemented as a Scala library",
     organization = "fr.ggaly",
