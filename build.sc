@@ -4,6 +4,7 @@ import $file.settings
 import mill._
 import mill.scalajslib._
 import mill.scalalib._
+import mill.scalalib.publish.{Developer, License, PomSettings, VersionControl}
 import mill.scalalib.scalafmt.ScalafmtModule
 
 trait CommonModule extends ScalaModule with ScalafmtModule {
@@ -15,15 +16,27 @@ trait CommonModule extends ScalaModule with ScalafmtModule {
   )
 }
 
-trait CoreModule
-    extends CommonModule
-    with CrossScalaModule {
+trait CoreModule extends CommonModule with CrossScalaModule with PublishModule {
+
   override def scalacOptions = settings.scalacOptions(crossScalaVersion)
   override def repositories = super.repositories ++ settings.customRepositories
 
   override def ivyDeps = Agg(dependencies.enumeratum)
 
   override def millSourcePath: os.Path = build.millSourcePath / 'core
+
+  override def artifactName = "cowsay4s-core"
+  override def publishVersion = "0.1.0-SNAPSHOT"
+  override def pomSettings = PomSettings(
+    description = "Cowsay implemented as a Scala library",
+    organization = "fr.ggaly",
+    url = "https://github.com/guilgaly/cowsay4s",
+    licenses = Seq(License.MIT),
+    versionControl = VersionControl.github("guilgaly", "cowsay4s"),
+    developers = Seq(
+      Developer("guilgaly", "Guillaume Galy", "https://github.com/guilgaly")
+    )
+  )
 
   def cowfiles = T.sources { millSourcePath / 'cowfiles }
 

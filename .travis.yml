@@ -8,10 +8,27 @@ before_install:
 language: scala
 jdk: openjdk8
 
-matrix:
+stages:
+  - name: test
+  - name: publish
+    if: branch = master
+
+jobs:
   include:
-    - script: ./.ci_scripts/build_cli.sh
-    - script: ./.ci_scripts/build_core.sh "jvm" "2.11.12"
-    - script: ./.ci_scripts/build_core.sh "jvm" "2.12.8"
-    - script: ./.ci_scripts/build_core.sh "js" "2.11.12"
-    - script: ./.ci_scripts/build_core.sh "js" "2.12.8"
+    - stage: test
+      name: CLI build
+      script: ./.ci_scripts/build_cli.sh
+    - stage: test
+      name: Core build (JVM/2.11)
+      script: ./.ci_scripts/build_core.sh "jvm" "2.11.12"
+    - stage: test
+      name: Core build (JVM/2.12)
+      script: ./.ci_scripts/build_core.sh "jvm" "2.12.8"
+    - stage: test
+      name: Core build (JS/2.11)
+      script: ./.ci_scripts/build_core.sh "js" "2.11.12"
+    - stage: test
+      name: Core build (JS/2.12)
+      script: ./.ci_scripts/build_core.sh "js" "2.12.8"
+    - stage: publish
+      script: ./.ci_scripts/publish.sh
