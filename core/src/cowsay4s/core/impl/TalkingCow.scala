@@ -7,7 +7,7 @@ private[core] object TalkingCow {
   def printToString(command: CowCommand): String = {
     val pimpedCow = pimpCow(command.cow, command.face, command.action)
     val baloon = printBaloon(command: CowCommand)
-    assembleTalkingCow(pimpedCow, baloon)
+    assembleCow(pimpedCow, baloon)
   }
 
   private def pimpCow(cow: Cow, face: CowFace, action: CowAction): String = {
@@ -37,6 +37,6 @@ private[core] object TalkingCow {
     Baloon.format(command.message, command.wrap, delimiters)
   }
 
-  private def assembleTalkingCow(pimpedCow: String, baloon: String) =
+  private def assembleCow(pimpedCow: String, baloon: String) =
     baloon + pimpedCow
 }

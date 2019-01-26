@@ -20,6 +20,6 @@ by the original cowsay program written by Tony Monroe.
 
 See also:
 
-  - [Wikipedia](https://en.wikipedia.org/wiki/Cowsay) for more info on cowsay
-  - [tnalpgge/rank-amateur-cowsay](https://github.com/tnalpgge/rank-amateur-cowsay)
+- [Wikipedia](https://en.wikipedia.org/wiki/Cowsay) for more info on cowsay
+- [tnalpgge/rank-amateur-cowsay](https://github.com/tnalpgge/rank-amateur-cowsay)
 for the original program
