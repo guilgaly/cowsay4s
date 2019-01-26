@@ -1,20 +1,17 @@
-sudo: required
 before_install:
-- openssl aes-256-cbc -K $encrypted_a619f2099269_key -iv $encrypted_a619f2099269_iv
-  -in key.asc.enc -out key.asc -d
+  - openssl aes-256-cbc -K $encrypted_a619f2099269_key -iv $encrypted_a619f2099269_iv
+    -in key.asc.enc -out key.asc -d
+  - gpg --import key.asc
+  - curl -L -o ~/bin/mill "https://github.com/lihaoyi/mill/releases/download/0.3.5/0.3.5" && chmod +x ~/bin/mill
+  - PATH=~/bin/mill:$PATH
+
 language: scala
-jdk:
-- openjdk8
-cache:
-  directories:
-  - "$HOME/.coursier"
-before_script:
-- gpg --import key.asc
-script:
-- curl -L -o ~/bin/mill "https://github.com/lihaoyi/mill/releases/download/0.3.5/0.3.5"
-  && chmod +x ~/bin/mill
-- export PATH=~/bin/mill:$PATH
-- git clean -xdf
-- mill __.reformat
-- git diff-index --quiet HEAD
-- mill '__.test'
+jdk: openjdk8
+
+matrix:
+  include:
+    - script: ./.ci_scripts/build_cli.sh
+    - script: ./.ci_scripts/build_core.sh "jvm" "2.11.12"
+    - script: ./.ci_scripts/build_core.sh "jvm" "2.12.8"
+    - script: ./.ci_scripts/build_core.sh "js" "2.11.12"
+    - script: ./.ci_scripts/build_core.sh "js" "2.12.8"

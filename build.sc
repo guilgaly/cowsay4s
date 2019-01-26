@@ -6,7 +6,7 @@ import mill.scalajslib._
 import mill.scalalib._
 import mill.scalalib.scalafmt.ScalafmtModule
 
-trait CommonModule extends ScalaModule {
+trait CommonModule extends ScalaModule with ScalafmtModule {
   def platformSegment: String
 
   override def sources = T.sources(
@@ -17,8 +17,7 @@ trait CommonModule extends ScalaModule {
 
 trait CoreModule
     extends CommonModule
-    with CrossScalaModule
-    with ScalafmtModule {
+    with CrossScalaModule {
   override def scalacOptions = settings.scalacOptions(crossScalaVersion)
   override def repositories = super.repositories ++ settings.customRepositories
 
