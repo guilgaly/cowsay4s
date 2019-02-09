@@ -22,7 +22,8 @@ def generateDefaultCows(dir: os.Path, cowfiles: Seq[os.Path]): Unit = {
     val cowName = cowfile.last.dropRight(4)
     val scalaName = CaseUtils.toCamelCase(cowName, true, '.', '-', '_')
     val rawCowValue = loadCowFromFile(cowName, cowfile)
-    val cowValue = StringEscapeUtils.escapeJava(rawCowValue)
+    val unescapedCowValue = unescapePerlString(rawCowValue)
+    val cowValue = StringEscapeUtils.escapeJava(unescapedCowValue)
 
     val scalaObjectSource =
       s"""package cowsay4s.core.cows
@@ -38,6 +39,11 @@ def generateDefaultCows(dir: os.Path, cowfiles: Seq[os.Path]): Unit = {
     ammonite.ops.write(scalaFile, scalaObjectSource, createFolders = true)
 
     scalaName
+  }
+
+  def unescapePerlString(str: String) = {
+    val regex = """(\\)(.)""".r
+    regex.replaceAllIn(str, "$2")
   }
 
   def generateDefaultCowEnum(scalaNames: Seq[String]): Unit = {

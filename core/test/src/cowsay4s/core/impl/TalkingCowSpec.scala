@@ -21,8 +21,8 @@ class TalkingCowSpec extends UnitSpec {
             |< Cows love Scala! >
             | ------------------ 
             |        \   ^__^
-            |         \  (**)\\_______
-            |            (__)\\       )\\/\\
+            |         \  (**)\_______
+            |            (__)\       )\/\
             |             U  ||----w |
             |                ||     ||
             |""".stripMargin
@@ -41,8 +41,8 @@ class TalkingCowSpec extends UnitSpec {
             |\ nec feugiat massa.                       /
             | ------------------------------------------ 
             |        \   ^__^
-            |         \  (**)\\_______
-            |            (__)\\       )\\/\\
+            |         \  (**)\_______
+            |            (__)\       )\/\
             |             U  ||----w |
             |                ||     ||
             |""".stripMargin
@@ -55,8 +55,8 @@ class TalkingCowSpec extends UnitSpec {
             |( Cows love Scala! )
             | ------------------ 
             |        o   ^__^
-            |         o  (**)\\_______
-            |            (__)\\       )\\/\\
+            |         o  (**)\_______
+            |            (__)\       )\/\
             |             U  ||----w |
             |                ||     ||
             |""".stripMargin
@@ -77,8 +77,8 @@ class TalkingCowSpec extends UnitSpec {
             |( nec feugiat massa.                       )
             | ------------------------------------------ 
             |        o   ^__^
-            |         o  (**)\\_______
-            |            (__)\\       )\\/\\
+            |         o  (**)\_______
+            |            (__)\       )\/\
             |             U  ||----w |
             |                ||     ||
             |""".stripMargin
