@@ -2,7 +2,7 @@
 
 set -e
 
-echo "[INFO] Publish artefacts"
+echo "[INFO] Publish artifacts"
 
 mill mill.scalalib.PublishModule/publishAll \
   guilgaly:$SONATYPE_PASSWORD \
