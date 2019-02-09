@@ -35,7 +35,7 @@ def generateDefaultCows(dir: os.Path, cowfiles: Seq[os.Path]): Unit = {
          |}""".stripMargin
 
     val scalaFile = dir / 'cows / s"$scalaName.scala"
-    ammonite.ops.write(scalaFile, scalaObjectSource)
+    ammonite.ops.write(scalaFile, scalaObjectSource, createFolders = true)
 
     scalaName
   }
@@ -75,7 +75,7 @@ def generateDefaultCows(dir: os.Path, cowfiles: Seq[os.Path]): Unit = {
          |}""".stripMargin
 
     val scalaFile = dir / "DefaultCow.scala"
-    ammonite.ops.write(scalaFile, scalaEnumSource)
+    ammonite.ops.write(scalaFile, scalaEnumSource, createFolders = true)
   }
 
   val scalaNames = generateCowContents()
