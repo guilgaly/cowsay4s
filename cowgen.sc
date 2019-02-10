@@ -58,7 +58,7 @@ def generateDefaultCows(dir: os.Path, cowfiles: Seq[os.Path]): Unit = {
       s"""package cowsay4s.core
          |
          |import cowsay4s.core.cows.DefaultCowContent
-         |import enumeratum.{Enum, EnumEntry}
+         |import enumeratum.EnumEntry
          |import scala.collection.immutable
          |
          |sealed abstract class DefaultCow(content: DefaultCowContent)
@@ -68,11 +68,13 @@ def generateDefaultCows(dir: os.Path, cowfiles: Seq[os.Path]): Unit = {
          |  override def cowValue: String = content.cowValue
          |}
          |
-         |object DefaultCow extends Enum[DefaultCow] {
+         |object DefaultCow extends EnumWithDefault[DefaultCow] {
          |
          |$cowObjects
          |
          |  override def values: immutable.IndexedSeq[DefaultCow] = findValues
+         |
+         |  override def defaultValue: DefaultCow = Default
          |
          |  def cowNames: immutable.IndexedSeq[String] = values.map(_.cowName)
          |

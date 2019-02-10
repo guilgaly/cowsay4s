@@ -2,11 +2,11 @@ package cowsay4s.core
 
 import scala.collection.immutable
 
-import enumeratum.{Enum, EnumEntry}
+import enumeratum.EnumEntry
 
 sealed abstract class CowMode(val face: CowFace) extends EnumEntry
 
-object CowMode extends Enum[CowMode] {
+object CowMode extends EnumWithDefault[CowMode] {
 
   case object Default extends CowMode(CowFace("oo", "  "))
 
@@ -20,4 +20,6 @@ object CowMode extends Enum[CowMode] {
   case object Youthful extends CowMode(CowFace("..", "  ")) // y
 
   override def values: immutable.IndexedSeq[CowMode] = findValues
+
+  override def defaultValue: CowMode = Default
 }
