@@ -40,10 +40,16 @@ private[core] object Baloon {
       lineWidth: StrictPositiveInt,
       delimiters: Delimiters): String = {
     val lines = TextUtil.softWrap(text, lineWidth.value)
-    val maxLength = lines.map(TextUtil.displayLength).max
+    /* TODO This is a bit of a hack, should fix TextUtil.softWrap to properly
+     * handle texts which already contain new lines are not properly handled.
+     * As-is, it will lead to bad wrapping in some cases but at least baloons
+     * are properly formatted. */
+    val lines2 = lines.flatMap(_.lines)
+    val lines3 = if (lines2.isEmpty) List("") else lines2
+    val maxLength = lines3.map(TextUtil.displayLength).max
 
     val top = topLine(maxLength)
-    val middle = lines match {
+    val middle = lines3 match {
       case Nil =>
         Nil
       case one +: Nil =>

@@ -56,5 +56,24 @@ class BaloonSpec extends UnitSpec {
         Baloon.format(str, StrictPositiveInt(40), delimiters) shouldBe expected
       }
     }
+    "given a multi-line string" should {
+      "pad lines properly" ignore {
+        val str =
+          """Lorem ipsum dolor sit amet,
+            |adipiscing elit.
+            |Vestibulum vel orci tempor,
+            |elementum odio in,
+            |bibendum odio""".stripMargin
+        val expected =
+          """ _____________________________
+            |1 Lorem ipsum dolor sit amet, 2
+            |3 adipiscing elit.            4
+            |3 Vestibulum vel orci tempor, 4
+            |3 elementum odio in,          4
+            |5 bibendum odio               6
+            | ----------------------------- """.stripMargin
+        Baloon.format(str, StrictPositiveInt(40), delimiters) shouldBe expected
+      }
+    }
   }
 }
