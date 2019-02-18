@@ -10,12 +10,16 @@ def generateDefaultCows(dir: os.Path, cowfiles: Seq[os.Path]): Unit = {
       new String(ammonite.ops.read.bytes(cowfile), StandardCharsets.UTF_8)
     val cowString = rawCowString.replace("\r\n", "\n").replace('\r', '\n')
 
-    val pattern = """(?s).*\$the_cow\s*=\s*<<"?EOC"?;(.*)EOC.*""".r
+    val pattern = """(?s).*\$the_cow\s*=\s*<<"?EOC"?;?(.*)EOC.*""".r
 
-    cowString match {
+    val filteredCowString = cowString match {
       case pattern(cowValue) => cowValue
       case _                 => cowString
     }
+
+    filteredCowString
+      .replace("${eyes}", "$eyes")
+      .replace("${tongue}", "$tongue")
   }
 
   def generateCowContents() = cowfiles.map { cowfile =>
