@@ -4,7 +4,11 @@ private[core] object TextUtil {
 
   // java.text.BreakIterator isn't supported on Scala.js
 
-  def softWrap(text: String, lineWidth: Int): List[String] = {
+  def softWrap(text: String, lineWidth: Int): List[String] =
+    if (text.isEmpty) List(text)
+    else text.lines.flatMap(softWrapLine(_, lineWidth)).toList
+
+  private def softWrapLine(text: String, lineWidth: Int): List[String] = {
     var lines = List.empty[String]
     var currentLine = ""
     var spaceLeft = lineWidth

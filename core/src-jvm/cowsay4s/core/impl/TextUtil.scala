@@ -6,7 +6,11 @@ private[core] object TextUtil {
 
   // http://tutorials.jenkov.com/java-internationalization/breakiterator.html
 
-  def softWrap(text: String, lineWidth: Int): List[String] = {
+  def softWrap(text: String, lineWidth: Int): List[String] =
+    if (text.isEmpty) List(text)
+    else text.lines.flatMap(softWrapLine(_, lineWidth)).toList
+
+  private def softWrapLine(text: String, lineWidth: Int): List[String] = {
     val breakIterator = BreakIterator.getLineInstance
     breakIterator.setText(text)
 

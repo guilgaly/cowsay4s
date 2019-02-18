@@ -57,7 +57,7 @@ class BaloonSpec extends UnitSpec {
       }
     }
     "given a multi-line string" should {
-      "pad lines properly" ignore {
+      "pad lines properly" in {
         val str =
           """Lorem ipsum dolor sit amet,
             |adipiscing elit.
@@ -65,7 +65,7 @@ class BaloonSpec extends UnitSpec {
             |elementum odio in,
             |bibendum odio""".stripMargin
         val expected =
-          """ _____________________________
+          """ _____________________________ 
             |1 Lorem ipsum dolor sit amet, 2
             |3 adipiscing elit.            4
             |3 Vestibulum vel orci tempor, 4
