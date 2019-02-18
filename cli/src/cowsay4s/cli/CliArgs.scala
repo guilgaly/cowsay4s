@@ -116,7 +116,7 @@ object CliArgs {
 
   implicit val cowRead: Read[DefaultCow] = Read.reads { cowStr =>
     DefaultCow
-      .withCowName(cowStr)
+      .withCowNameInsensitive(cowStr)
       .getOrElse(throw new IllegalArgumentException(
         s"'$cowStr' is not a valid cowfile name."))
   }

@@ -80,10 +80,19 @@ def generateDefaultCows(dir: os.Path, cowfiles: Seq[os.Path]): Unit = {
          |
          |  override def defaultValue: DefaultCow = Default
          |
-         |  def cowNames: immutable.IndexedSeq[String] = values.map(_.cowName)
+         |  lazy val cowNames: immutable.IndexedSeq[String] = values.map(_.cowName)
+         |
+         |  lazy val cowNamesToValuesMap: Map[String, DefaultCow] =
+         |    values.map(v => v.cowName -> v).toMap
+         |
+         |  lazy val lowerCaseCowNamesToValuesMap: Map[String, DefaultCow] =
+         |    cowNamesToValuesMap.map{ case (k, v) => k.toLowerCase -> v }
          |
          |  def withCowName(cowName: String): Option[DefaultCow] =
-         |    values.find(_.cowName == cowName)
+         |    cowNamesToValuesMap.get(cowName)
+         |
+         |  def withCowNameInsensitive(cowName: String): Option[DefaultCow] =
+         |    lowerCaseCowNamesToValuesMap.get(cowName.toLowerCase)
          |}""".stripMargin
 
     val scalaFile = dir / "DefaultCow.scala"
