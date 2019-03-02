@@ -10,6 +10,3 @@ To fix, format your sources using 'mill __.reformat'.
 EOF
 false
 )
-
-echo "[INFO] Running tests (CLI)"
-mill cli.test

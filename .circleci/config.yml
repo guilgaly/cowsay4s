@@ -1,0 +1,106 @@
+version: 2.1
+
+executors:
+  openjdk-8-executor:
+    docker:
+      - image: circleci/openjdk:8
+    working_directory: /tmp/cowsay4s
+    environment:
+      JVM_OPTS: -Xmx2g
+  openjdk-8-node-executor:
+    docker:
+      - image: timbru31/java-node:8
+    working_directory: /tmp/cowsay4s
+    environment:
+      JVM_OPTS: -Xmx2g
+
+commands:
+  setup_mill:
+    steps:
+      - restore_cache:
+          keys:
+            - v3-mill-binary-0.3.6
+      - run: ./.circleci/setup_mill.sh "0.3.6"
+      - save_cache:
+          key: v3-mill-binary-0.3.6
+          paths:
+            - /tmp/mill
+      - run: echo "$PATH"
+
+jobs:
+  check-format:
+    executor: openjdk-8-executor
+    steps:
+      - checkout
+      - setup_mill
+      - restore_cache:
+          keys:
+            - v1-coursier-scalafmt-{{ checksum "dependencies.sc" }}
+            - v1-coursier-scalafmt-
+      - run: ./.circleci/check_formatting.sh
+      - save_cache:
+          key: v1-coursier-scalafmt-{{ checksum "dependencies.sc" }}
+          paths:
+            - ~/.cache/coursier
+      - persist_to_workspace:
+          root: /tmp
+          paths:
+            - cowsay4s
+            - mill
+  test-publish:
+    parameters:
+      scala-flavor:
+        type: string
+      scala-version:
+        type: string
+      add-build:
+        type: string
+        default: ""
+    executor: openjdk-8-node-executor
+    steps:
+      - attach_workspace:
+          at: /tmp
+      - run: echo 'export PATH="/tmp/mill:$PATH"' >> $BASH_ENV
+      - restore_cache:
+          keys:
+            - v1-coursier-<< parameters.scala-flavor >>-<< parameters.scala-version >>-{{ checksum "dependencies.sc" }}
+            - v1-coursier-<< parameters.scala-flavor >>-<< parameters.scala-version >>-
+      - run: ./.circleci/execute_tests.sh << parameters.scala-flavor >> << parameters.scala-version >> << parameters.add-build >>
+      - run: ./.circleci/publish.sh << parameters.scala-flavor >> << parameters.scala-version >>
+      - save_cache:
+          key: v1-coursier-<< parameters.scala-flavor >>-<< parameters.scala-version >>-{{ checksum "dependencies.sc" }}
+          paths:
+            - ~/.cache/coursier
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - check-format:
+          name: "Scalafmt"
+
+      - test-publish:
+          name: "JVM 2.11"
+          requires:
+            - "Scalafmt"
+          scala-flavor: "jvm"
+          scala-version: "2.11.12"
+      - test-publish:
+          name: "JVM 2.12 + CLI"
+          requires:
+            - "Scalafmt"
+          scala-flavor: "jvm"
+          scala-version: "2.12.8"
+          add-build: "cli"
+      - test-publish:
+          name: "JS 2.11"
+          requires:
+            - "Scalafmt"
+          scala-flavor: "js"
+          scala-version: "2.11.12"
+      - test-publish:
+          name: "JS 2.12"
+          requires:
+            - "Scalafmt"
+          scala-flavor: "js"
+          scala-version: "2.12.8"
