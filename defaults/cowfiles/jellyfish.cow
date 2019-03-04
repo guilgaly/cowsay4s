@@ -1,0 +1,24 @@
+# from: https://github.com/paulkaefer/cowsay-files
+#
+# jellyfish
+#
+# from http://ascii.co.uk/art/jellyfish
+$the_cow = <<EOC;
+     $thoughts
+      $thoughts
+
+         .-;\':\':\'-.
+        {\'.\'.\'.\'.\'.}
+         )        \'`.
+        \'-. ._ ,_.-=\'
+          `). ( `);(
+          (\'. .)(,\'.)
+           ) ( ,\').(
+          ( .\').\'(\').
+          .) (\' ).(\'
+           '  ) (  ).
+            .\'( .)\'
+              .).\'
+jgs
+
+EOC

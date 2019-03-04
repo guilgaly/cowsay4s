@@ -1,0 +1,12 @@
+# from: https://github.com/paulkaefer/cowsay-files
+#
+# Cthulhu
+#
+$the_cow = <<EOC;
+  $thoughts
+   $thoughts
+
+      ^(;,;)^
+
+EOC
+

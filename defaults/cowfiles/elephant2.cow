@@ -1,0 +1,13 @@
+# from: https://github.com/paulkaefer/cowsay-files
+#
+# Elephant
+$the_cow = <<EOC;
+  $thoughts
+   $thoughts                                 
+      /  \\~~~/  \\         
+     (    ..     )----,      
+      \\__     __/      \\     
+        )|  /)         |\\    
+         | /\\  /___\\   / ^   
+          "-|__|   |__|      
+EOC

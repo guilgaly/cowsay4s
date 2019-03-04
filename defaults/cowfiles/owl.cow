@@ -1,0 +1,13 @@
+# from: https://github.com/paulkaefer/cowsay-files
+#
+##
+## An owl
+##
+$the_cow = <<EOC;
+         $thoughts
+          $thoughts
+           ___
+          (o o)
+         (  V  )
+        /--m-m-
+EOC
