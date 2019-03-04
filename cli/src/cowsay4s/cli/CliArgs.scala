@@ -1,11 +1,13 @@
 package cowsay4s.cli
-import cowsay4s.core.{CowAction, CowMode, DefaultCow}
+
+import cowsay4s.core.{CowAction, CowEyes, CowMode, CowTongue}
+import cowsay4s.defaults.{DefaultCow, DefaultCowMode}
 import scopt.{OptionParser, Read}
 
 case class CliArgs(
     mode: CowMode,
-    eyes: Option[String],
-    tongue: Option[String],
+    eyes: Option[CowEyes],
+    tongue: Option[CowTongue],
     cow: DefaultCow,
     list: Boolean,
     nowrap: Boolean,
@@ -16,7 +18,7 @@ case class CliArgs(
 
   /** No-args constructor used only for the scopt parser. */
   private def this() = this(
-    mode = CowMode.Default,
+    mode = DefaultCowMode.Default,
     eyes = None,
     tongue = None,
     cow = DefaultCow.Default,
@@ -45,21 +47,16 @@ object CliArgs {
 
       help("help").abbr("h").text("prints this usage text")
 
-      modeSwitch('b', "borg", CowMode.Borg)
-      modeSwitch('d', "dead", CowMode.Dead)
-      modeSwitch('g', "greedy", CowMode.Greedy)
-      modeSwitch('p', "paranoia", CowMode.Paranoia)
-      modeSwitch('s', "stoned", CowMode.Stoned)
-      modeSwitch('t', "tired", CowMode.Tired)
-      modeSwitch('w', "wired", CowMode.Wired)
-      modeSwitch('y', "youthful", CowMode.Youthful)
+      DefaultCowMode.values.foreach { mode =>
+        modeSwitch(mode.modeName.charAt(0), mode.modeName, mode)
+      }
 
-      opt[String]('e', "eyes")
+      opt[CowEyes]('e', "eyes")
         .text(
           "appearance of the cow's eyes (only the first two characters are used)")
         .action((eyes, config) => config.copy(eyes = Some(eyes)))
 
-      opt[String]('T', "tongue")
+      opt[CowTongue]('T', "tongue")
         .text(
           "appearance of the cow's tongue (only the first two characters are used)")
         .action((tongue, config) => config.copy(tongue = Some(tongue)))
@@ -120,4 +117,8 @@ object CliArgs {
       .getOrElse(throw new IllegalArgumentException(
         s"'$cowStr' is not a valid cowfile name."))
   }
+
+  implicit val cowEyesRead: Read[CowEyes] = Read.reads(CowEyes(_))
+
+  implicit val cowTongueRead: Read[CowTongue] = Read.reads(CowTongue(_))
 }

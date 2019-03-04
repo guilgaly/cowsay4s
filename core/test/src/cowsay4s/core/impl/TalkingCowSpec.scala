@@ -1,7 +1,7 @@
 package cowsay4s.core.impl
 
 import cowsay4s.core._
-import cowsay4s.tests.UnitSpec
+import cowsay4s.tests.{TestCow, UnitSpec}
 
 class TalkingCowSpec extends UnitSpec {
 
@@ -9,10 +9,11 @@ class TalkingCowSpec extends UnitSpec {
     "given a simple custom command" should {
       val command = CowCommand(
         action = CowAction.CowSay,
-        cow = DefaultCow.Default,
-        mode = CowMode.Stoned,
-        wrap = StrictPositiveInt(40),
-        message = "Cows love Scala!"
+        cow = TestCow,
+        message = "Cows love Scala!",
+        eyes = CowEyes("**"),
+        tongue = CowTongue("U "),
+        wrap = MessageWrapping(40)
       )
       "construct a single line cowsay output" in {
         val cowsayCommand = command

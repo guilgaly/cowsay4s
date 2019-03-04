@@ -1,6 +1,6 @@
 package cowsay4s.core.impl
 
-import cowsay4s.core.StrictPositiveInt
+import cowsay4s.core.MessageWrapping
 import cowsay4s.core.impl.Baloon.{DelimiterCouple, Delimiters}
 import cowsay4s.tests.UnitSpec
 
@@ -20,7 +20,7 @@ class BaloonSpec extends UnitSpec {
           """ __ 
             |7  8
             | -- """.stripMargin
-        Baloon.format("", StrictPositiveInt(1), delimiters) shouldBe expected
+        Baloon.format("", MessageWrapping(1), delimiters) shouldBe expected
       }
     }
     "given a short string" should {
@@ -30,7 +30,7 @@ class BaloonSpec extends UnitSpec {
           """ _____________________ 
             |7 The cow says hello! 8
             | --------------------- """.stripMargin
-        Baloon.format(str, StrictPositiveInt(20), delimiters) shouldBe expected
+        Baloon.format(str, MessageWrapping(20), delimiters) shouldBe expected
       }
     }
     "given a long string" should {
@@ -53,7 +53,7 @@ class BaloonSpec extends UnitSpec {
             |3 urna. Ut ullamcorper est eu risus        4
             |5 luctus, et accumsan enim pellentesque.   6
             | ------------------------------------------ """.stripMargin
-        Baloon.format(str, StrictPositiveInt(40), delimiters) shouldBe expected
+        Baloon.format(str, MessageWrapping(40), delimiters) shouldBe expected
       }
     }
     "given a multi-line string" should {
@@ -72,7 +72,7 @@ class BaloonSpec extends UnitSpec {
             |3 elementum odio in,          4
             |5 bibendum odio               6
             | ----------------------------- """.stripMargin
-        Baloon.format(str, StrictPositiveInt(40), delimiters) shouldBe expected
+        Baloon.format(str, MessageWrapping(40), delimiters) shouldBe expected
       }
     }
   }

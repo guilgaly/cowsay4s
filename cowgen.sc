@@ -30,9 +30,9 @@ def generateDefaultCows(dir: os.Path, cowfiles: Seq[os.Path]): Unit = {
     val cowValue = StringEscapeUtils.escapeJava(unescapedCowValue)
 
     val scalaObjectSource =
-      s"""package cowsay4s.core.cows
+      s"""package cowsay4s.defaults.cows
          |
-         |private[core] object $scalaName extends DefaultCowContent {
+         |private[defaults] object $scalaName extends DefaultCowContent {
          |
          |  override def cowName: String = "$cowName"
          |
@@ -59,9 +59,11 @@ def generateDefaultCows(dir: os.Path, cowfiles: Seq[os.Path]): Unit = {
         .mkString("\n")
 
     val scalaEnumSource =
-      s"""package cowsay4s.core
+      s"""package cowsay4s.defaults
          |
-         |import cowsay4s.core.cows.DefaultCowContent
+         |import cowsay4s.core.Cow
+         |import cowsay4s.core.EnumWithDefault
+         |import cowsay4s.defaults.cows.DefaultCowContent
          |import enumeratum.EnumEntry
          |import scala.collection.immutable
          |

@@ -5,20 +5,24 @@ import cowsay4s.core._
 private[core] object TalkingCow {
 
   def printToString(command: CowCommand): String = {
-    val pimpedCow = pimpCow(command.cow, command.face, command.action)
+    val pimpedCow =
+      pimpCow(command.cow, command.eyes, command.tongue, command.action)
     val baloon = printBaloon(command: CowCommand)
     assembleCow(pimpedCow, baloon)
   }
 
-  private def pimpCow(cow: Cow, face: CowFace, action: CowAction): String = {
-    val eyes = face.eyes.value
-    val tongue = face.tongue.value
+  private def pimpCow(
+      cow: Cow,
+      eyes: CowEyes,
+      tongue: CowTongue,
+      action: CowAction): String = {
+
     val thoughts = action match {
       case CowAction.CowSay   => """\"""
       case CowAction.CowThink => "o"
     }
 
-    doPimpCow(cow, eyes, tongue, thoughts)
+    doPimpCow(cow, eyes.value, tongue.value, thoughts)
   }
 
   private def doPimpCow(

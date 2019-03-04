@@ -4,6 +4,6 @@ import cowsay4s.core.impl.TalkingCow
 
 object CowSay {
 
-  def withCustomCommand(command: CowCommand): String =
+  def talk(command: CowCommand): String =
     TalkingCow.printToString(command)
 }

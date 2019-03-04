@@ -1,6 +1,6 @@
 package cowsay4s.core.impl
 
-import cowsay4s.core.{CowAction, StrictPositiveInt}
+import cowsay4s.core.{CowAction, MessageWrapping}
 
 private[core] object Baloon {
 
@@ -37,7 +37,7 @@ private[core] object Baloon {
 
   def format(
       text: String,
-      lineWidth: StrictPositiveInt,
+      lineWidth: MessageWrapping,
       delimiters: Delimiters): String = {
     val lines = TextUtil.softWrap(text, lineWidth.value)
     val maxLength = lines.map(TextUtil.displayLength).max

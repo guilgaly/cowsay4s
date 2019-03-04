@@ -1,6 +1,7 @@
 package cowsay4s.cli
 
 import cowsay4s.core._
+import cowsay4s.defaults.DefaultCow
 
 object Main {
 
@@ -20,17 +21,18 @@ object Main {
 
   private def execute(config: CliArgs): Unit = {
     val message = config.message.getOrElse("")
-    val eyes = config.eyes.getOrElse(config.mode.face.eyes.value)
-    val tongue = config.tongue.getOrElse(config.mode.face.tongue.value)
+    val eyes = config.eyes.getOrElse(config.mode.eyes)
+    val tongue = config.tongue.getOrElse(config.mode.tongue)
     val command = CowCommand(
       config.action,
       config.cow,
-      CowFace(eyes, tongue),
-      StrictPositiveInt(config.wrapcolumn),
-      message
+      message,
+      eyes,
+      tongue,
+      MessageWrapping(config.wrapcolumn)
     )
 
-    val cowsayOutput = CowSay.withCustomCommand(command)
+    val cowsayOutput = CowSay.talk(command)
 
     Console.out.println(cowsayOutput)
   }
