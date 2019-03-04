@@ -1,6 +1,6 @@
 package cowsay4s.defaults
 
-import cowsay4s.core.{CowEyes, CowMode, CowTongue, EnumWithDefault}
+import cowsay4s.core._
 import enumeratum.EnumEntry
 
 import scala.collection.immutable

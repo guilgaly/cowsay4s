@@ -61,11 +61,11 @@ def generateDefaultCows(dir: os.Path, cowfiles: Seq[os.Path]): Unit = {
     val scalaEnumSource =
       s"""package cowsay4s.defaults
          |
-         |import cowsay4s.core.Cow
-         |import cowsay4s.core.EnumWithDefault
+         |import scala.collection.immutable
+         |
+         |import cowsay4s.core._
          |import cowsay4s.defaults.cows.DefaultCowContent
          |import enumeratum.EnumEntry
-         |import scala.collection.immutable
          |
          |sealed abstract class DefaultCow(content: DefaultCowContent)
          |    extends EnumEntry
