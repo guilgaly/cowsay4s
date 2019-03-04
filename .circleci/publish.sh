@@ -21,7 +21,7 @@ if [[ "$CIRCLE_BRANCH" == "master" ]]; then
   mill mill.scalalib.PublishModule/publishAll \
     --sonatypeCreds "guilgaly:$SONATYPE_PASSWORD" \
     --signed "true" \
-    --publishArtifacts "core.$scala_flavor[$scala_version].publishArtifacts"
+    --publishArtifacts "_.$scala_flavor[$scala_version].publishArtifacts"
 
 else
 
