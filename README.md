@@ -63,11 +63,11 @@ val myCustomCow: Cow = CustomCow(
 )
 
 val myCommand: CowCommand = CowCommand(
-  action = CowAction.CowSay,
   cow = myCustomCow,
   message = "Cows ♥ Scala!",
-  eyes = CowEyes("oo"), // optional, defaults to 'CowEyes.default' (same as this example)
-  tongue = CowTongue("  "), // optional, defaults to 'CowTongue.default' (same as this example)
+  eyes = CowEyes.default, // optional, defaults to 'CowEyes.default' (same as this example)
+  tongue = CowTongue.default, // optional, defaults to 'CowTongue.default' (same as this example)
+  action = CowAction.CowSay, // Optional, defaults to CowAction.defaultValue (same as this example)
   wrap = MessageWrapping(40) // optional, defaults to 'MessageWrapping.default' (same as this example)
 )
 
@@ -86,10 +86,10 @@ import cowsay4s.core._
 import cowsay4s.defaults.{DefaultCow, DefaultCowMode}
 
 val myCommand: CowCommand = CowCommand(
-  action = CowAction.CowSay,
-  cow = DefaultCow.Default, // There are many other cows to choose from in 'DefaultCow'!
+  cow = DefaultCow.Default, // There are many other cows to choose from in 'DefaultCow'
   message = "Cows ♥ Scala!",
   mode = DefaultCowMode.Default, // Optional, defaults to DefaultCowMode.defaultValue (same as this example)
+  action = CowAction.CowSay, // Optional, defaults to CowAction.defaultValue (same as this example)
   wrap = MessageWrapping(40) // optional, defaults to 'MessageWrapping.default' (same as this example)
 )
 

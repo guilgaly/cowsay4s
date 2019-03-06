@@ -24,11 +24,11 @@ object Main {
     val eyes = config.eyes.getOrElse(config.mode.eyes)
     val tongue = config.tongue.getOrElse(config.mode.tongue)
     val command = CowCommand(
-      config.action,
       config.cow,
       message,
       eyes,
       tongue,
+      config.action,
       MessageWrapping(config.wrapcolumn)
     )
 

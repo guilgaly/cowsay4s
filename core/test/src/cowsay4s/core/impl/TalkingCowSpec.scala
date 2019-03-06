@@ -8,12 +8,12 @@ class TalkingCowSpec extends UnitSpec {
   "TalkingCow" when {
     "given a simple custom command" should {
       val command = CowCommand(
-        action = CowAction.CowSay,
-        cow = TestCow,
-        message = "Cows love Scala!",
-        eyes = CowEyes("**"),
-        tongue = CowTongue("U "),
-        wrap = MessageWrapping(40)
+        TestCow,
+        "Cows love Scala!",
+        CowEyes("**"),
+        CowTongue("U "),
+        CowAction.CowSay,
+        MessageWrapping(40)
       )
       "construct a single line cowsay output" in {
         val cowsayCommand = command
