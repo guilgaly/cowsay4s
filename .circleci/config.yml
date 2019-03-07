@@ -1,15 +1,9 @@
 version: 2.1
 
 executors:
-  openjdk-8-executor:
+  openjdk-8-node:
     docker:
-      - image: circleci/openjdk:8
-    working_directory: /tmp/cowsay4s
-    environment:
-      JVM_OPTS: -Xmx2g
-  openjdk-8-node-executor:
-    docker:
-      - image: timbru31/java-node:8
+      - image: circleci/openjdk:8-jdk-stretch-node
     working_directory: /tmp/cowsay4s
     environment:
       JVM_OPTS: -Xmx2g
@@ -29,17 +23,17 @@ commands:
 
 jobs:
   check-format:
-    executor: openjdk-8-executor
+    executor: openjdk-8-node
     steps:
       - checkout
       - setup_mill
       - restore_cache:
           keys:
-            - v1-coursier-scalafmt-{{ checksum "dependencies.sc" }}
-            - v1-coursier-scalafmt-
+            - v2-coursier-scalafmt-{{ checksum "dependencies.sc" }}
+            - v2-coursier-scalafmt-
       - run: ./.circleci/check_formatting.sh
       - save_cache:
-          key: v1-coursier-scalafmt-{{ checksum "dependencies.sc" }}
+          key: v2-coursier-scalafmt-{{ checksum "dependencies.sc" }}
           paths:
             - ~/.cache/coursier
       - persist_to_workspace:
@@ -56,19 +50,19 @@ jobs:
       add-build:
         type: string
         default: ""
-    executor: openjdk-8-node-executor
+    executor: openjdk-8-node
     steps:
       - attach_workspace:
           at: /tmp
       - run: echo 'export PATH="/tmp/mill:$PATH"' >> $BASH_ENV
       - restore_cache:
           keys:
-            - v1-coursier-<< parameters.scala-flavor >>-<< parameters.scala-version >>-{{ checksum "dependencies.sc" }}
-            - v1-coursier-<< parameters.scala-flavor >>-<< parameters.scala-version >>-
+            - v2-coursier-<< parameters.scala-flavor >>-<< parameters.scala-version >>-{{ checksum "dependencies.sc" }}
+            - v2-coursier-<< parameters.scala-flavor >>-<< parameters.scala-version >>-
       - run: ./.circleci/execute_tests.sh << parameters.scala-flavor >> << parameters.scala-version >> << parameters.add-build >>
       - run: ./.circleci/publish.sh << parameters.scala-flavor >> << parameters.scala-version >>
       - save_cache:
-          key: v1-coursier-<< parameters.scala-flavor >>-<< parameters.scala-version >>-{{ checksum "dependencies.sc" }}
+          key: v2-coursier-<< parameters.scala-flavor >>-<< parameters.scala-version >>-{{ checksum "dependencies.sc" }}
           paths:
             - ~/.cache/coursier
 
