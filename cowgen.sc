@@ -50,6 +50,11 @@ def generateDefaultCows(dir: os.Path, cowfiles: Seq[os.Path]): Unit = {
     regex.replaceAllIn(str, "$2")
   }
 
+  def orderNames(names: Seq[String]): Seq[String] = {
+    val sortedNames = names.filterNot(_ == "Default").sorted
+    "Default" +: sortedNames
+  }
+
   def generateDefaultCowEnum(scalaNames: Seq[String]): Unit = {
     val cowObjects =
       scalaNames
@@ -102,5 +107,6 @@ def generateDefaultCows(dir: os.Path, cowfiles: Seq[os.Path]): Unit = {
   }
 
   val scalaNames = generateCowContents()
-  generateDefaultCowEnum(scalaNames)
+  val orderedScalaNames = orderNames(scalaNames)
+  generateDefaultCowEnum(orderedScalaNames)
 }
