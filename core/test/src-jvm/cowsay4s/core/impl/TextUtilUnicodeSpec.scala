@@ -1,6 +1,6 @@
 package cowsay4s.core.impl
 
-import cowsay4s.tests.UnitSpec
+import cowsay4s.testutils.UnitSpec
 
 /**
  * Tests proper unicode support (mainly: a multipoint unicode character should

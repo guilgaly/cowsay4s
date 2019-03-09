@@ -3,30 +3,17 @@ version: 2.1
 executors:
   openjdk-8-node:
     docker:
-      - image: circleci/openjdk:8-jdk-stretch-node
+      - image: guilgaly/openjdk-mill-node-heroku:8u181-0.3.6-stretch
     working_directory: /tmp/cowsay4s
     environment:
       JVM_OPTS: -Xmx2g
-
-commands:
-  setup_mill:
-    steps:
-      - restore_cache:
-          keys:
-            - v3-mill-binary-0.3.6
-      - run: ./.circleci/setup_mill.sh "0.3.6"
-      - save_cache:
-          key: v3-mill-binary-0.3.6
-          paths:
-            - /tmp/mill
-      - run: echo "$PATH"
+      TERM: dumb
 
 jobs:
   check-format:
     executor: openjdk-8-node
     steps:
       - checkout
-      - setup_mill
       - restore_cache:
           keys:
             - v2-coursier-scalafmt-{{ checksum "dependencies.sc" }}
@@ -40,7 +27,6 @@ jobs:
           root: /tmp
           paths:
             - cowsay4s
-            - mill
   test-publish:
     parameters:
       scala-flavor:
@@ -54,7 +40,6 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp
-      - run: echo 'export PATH="/tmp/mill:$PATH"' >> $BASH_ENV
       - restore_cache:
           keys:
             - v2-coursier-<< parameters.scala-flavor >>-<< parameters.scala-version >>-{{ checksum "dependencies.sc" }}

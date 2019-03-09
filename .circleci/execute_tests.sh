@@ -13,7 +13,7 @@ echo "Scala version: $scala_version"
 additional_build="$3"
 echo "Additional build: $additional_build"
 
-mill "core.$scala_flavor[$scala_version].test"
+mill "_.$scala_flavor[$scala_version].test"
 
 if [[ "$additional_build" == "cli" ]]; then
   echo "[INFO] Running tests (CLI)"

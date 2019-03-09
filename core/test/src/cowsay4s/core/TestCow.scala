@@ -1,6 +1,4 @@
-package cowsay4s.tests
-
-import cowsay4s.core.Cow
+package cowsay4s.core
 
 object TestCow extends Cow {
   override def cowValue: String =

@@ -32,7 +32,7 @@ object Main {
       MessageWrapping(config.wrapcolumn)
     )
 
-    val cowsayOutput = CowSay.talk(command)
+    val cowsayOutput = CowSay.default.talk(command)
 
     Console.out.println(cowsayOutput)
   }
