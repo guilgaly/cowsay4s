@@ -172,10 +172,14 @@ object asciimojis extends LibraryModule {
 // *************** CLI application module ***************
 
 object cli extends ScalaModule with ScalafmtModule {
-  override def scalaVersion = settings.scalaVersion.default
-  override def scalacOptions =
-    settings.scalacOptions(settings.scalaVersion.default)
-  override def moduleDeps = Seq(defaults.jvm(settings.scalaVersion.default))
+  private def scalaVers = settings.scalaVersion.default
+
+  override def scalaVersion = scalaVers
+  override def scalacOptions = settings.scalacOptions(scalaVers)
+  override def moduleDeps = Seq(
+    defaults.jvm(scalaVers),
+    asciimojis.jvm(scalaVers),
+  )
   override def ivyDeps = Agg(
     dependencies.scopt,
   )
