@@ -72,6 +72,12 @@ workflows:
           scala-version: "2.12.8"
           add-build: "cli"
       - test-publish:
+          name: "JVM 2.13"
+          requires:
+            - "Scalafmt"
+          scala-flavor: "jvm"
+          scala-version: "2.13.0-M5"
+      - test-publish:
           name: "JS 2.11"
           requires:
             - "Scalafmt"
@@ -83,3 +89,9 @@ workflows:
             - "Scalafmt"
           scala-flavor: "js"
           scala-version: "2.12.8"
+      - test-publish:
+          name: "JS 2.13"
+          requires:
+            - "Scalafmt"
+          scala-flavor: "js"
+          scala-version: "2.13.0-M5"

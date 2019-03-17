@@ -15,4 +15,4 @@ object logging {
 val enumeratum = ivy"com.beachape::enumeratum::1.5.13"
 
 /** Tests. */
-val scalatest = ivy"org.scalatest::scalatest::3.0.5"
+val scalatest = ivy"org.scalatest::scalatest::3.0.6"
