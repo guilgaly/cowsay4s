@@ -71,7 +71,7 @@ val myCommand: CowCommand = CowCommand(
   wrap = MessageWrapping(40) // optional, defaults to 'MessageWrapping.default' (same as this example)
 )
 
-val result: String = CowSay.talk(myCommand)
+val result: String = CowSay.default.talk(myCommand)
 
 println(result)
 ```
@@ -93,7 +93,7 @@ val myCommand: CowCommand = CowCommand(
   wrap = MessageWrapping(40) // optional, defaults to 'MessageWrapping.default' (same as this example)
 )
 
-val result: String = CowSay.talk(myCommand)
+val result: String = CowSay.default.talk(myCommand)
 
 println(result)
 ```
@@ -113,3 +113,47 @@ called `mode`.
 `wrap` determines the maximum width of the text before it gets wrapped
 with line breaks. This works reasonably well with most unicode
 characters on the JVM, less so if you use the Scala.js variant.
+
+## Using bitmap outputs
+
+On the JVM platform only (not available on Scala.js), you can render a
+cow as a bitmap image instead of plain text. You just need to
+`import cowsay4s.core.BitmapCows._` to add the necessary methods to an
+instance of `Cowsay`.
+
+**A note on performance:** the first time your program renders a
+bitmap cow, it may be pretty slow, presumably because of some
+initialization being performed inside the Java graphics APIs. The
+following renders should be much faster. On my computer, a simple
+example can take about 1200 ms to render on the first iteration
+and about 15 to 20 ms on following iterations.
+
+### Bitmap output examples:
+
+```scala
+import java.awt.{Color, Font}
+import java.awt.image.BufferedImage
+import java.nio.file.Paths
+import cowsay4s.core._
+import cowsay4s.core.BitmapCows._
+
+val cowsay = CowSay.default
+
+val myCommand: CowCommand = ??? // Any CowCommand you want
+val font = new Font("VT323", Font.PLAIN, 18)
+val fontColor = Color.BLACK
+// If you don't provide a background color, it will be kept transparent
+val backgroundColor = Some(Color.WHITE)
+
+// Output to a Java BufferedImage
+val bufferedImage: BufferedImage =
+  cowsay.talkToBufferedImage(command, font, fontColor, backgroundColor)
+
+// Output to a PNG (in memory)
+val pngBytes: Array[Byte] =
+  cowsay.talkToPng(command, font, fontColor, backgroundColor)
+
+// Output to a PNG file
+val path = Paths.get("/tmp/cowsay.png")
+cowsay.talkToPngFile(path, command, font, fontColor, backgroundColor)
+```
