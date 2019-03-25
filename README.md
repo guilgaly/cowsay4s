@@ -26,22 +26,28 @@ for the original program
 
 ## Getting started with the library
 
-Cowsay4s is made up of two libraries: `cowsay4s-core` (which implements
-the Cowsay mechanics) and `cowsay4s-defaults` (which provides a bunch of
-default "cows" and "modes" to choose from).
+Cowsay4s is made up of three libraries:
+
+- `cowsay4s-core` (which implements the Cowsay mechanics)
+- `cowsay4s-defaults` (which provides a bunch of default "cows" and
+"modes" to choose from)
+- `cowsay4s-asciimojis` which adds support for "asciimojis" in the text
+messages displayed by cowsay4s
 
 Dependencies when building with Mill:
 
 ```scala
-ivy"fr.ggaly::cowsay4s-core:0.2.0" // or ivy"fr.ggaly::cowsay4s-core::0.2.0" for Scala.js
-ivy"fr.ggaly::cowsay4s-defaults:0.2.0" // or ivy"fr.ggaly::cowsay4s-defaults::0.2.0" for Scala.js
+ivy"fr.ggaly::cowsay4s-core:0.2.2" // or ivy"fr.ggaly::cowsay4s-core::0.2.2" for Scala.js
+ivy"fr.ggaly::cowsay4s-defaults:0.2.2" // or ivy"fr.ggaly::cowsay4s-defaults::0.2.2" for Scala.js
+ivy"fr.ggaly::cowsay4s-asciimojis:0.2.2" // or ivy"fr.ggaly::cowsay4s-asciimojis::0.2.2" for Scala.js
 ```
 
 Dependencies when building with SBT:
 
 ```scala
-"fr.ggaly" %% "cowsay4s-core" % "0.2.0" // or "fr.ggaly" %%% "cowsay4s-core" % "0.2.0" for Scala.js
-"fr.ggaly" %% "cowsay4s-defaults" % "0.2.0" // or "fr.ggaly" %%% "cowsay4s-defaults" % "0.2.0" for Scala.js
+"fr.ggaly" %% "cowsay4s-core" % "0.2.2" // or "fr.ggaly" %%% "cowsay4s-core" % "0.2.2" for Scala.js
+"fr.ggaly" %% "cowsay4s-defaults" % "0.2.2" // or "fr.ggaly" %%% "cowsay4s-defaults" % "0.2.2" for Scala.js
+"fr.ggaly" %% "cowsay4s-asciimojis" % "0.2.2" // or "fr.ggaly" %%% "cowsay4s-asciimojis" % "0.2.2" for Scala.js
 ```
 
 ### Example with only the `core` module
@@ -156,4 +162,42 @@ val pngBytes: Array[Byte] =
 // Output to a PNG file
 val path = Paths.get("/tmp/cowsay.png")
 cowsay.talkToPngFile(path, command, font, fontColor, backgroundColor)
+```
+
+## Using transformers
+
+The `CowSay` implementation can be customized by the use of
+`CommandTransformer`s, which are juste functions to transform the
+commands received by the `CowSay` implementation.
+
+Here's an example :
+
+```scala
+import cowsay4s.core._
+
+val muteTransformer: CowSay.CommandTransformer =
+  (command: CowCommand) => command.copy(message = "")
+val thinkingTransformer: CowSay.CommandTransformer =
+  (command: CowCommand) => command.copy(action = CowAction.CowThink)
+
+// This CowSay will allways be thinking and mute, not matter what
+// command you feed it.
+val thinkingAndMuteCowSay =
+  CowSay.withTransformers(thinkingTransformer, muteTransformer)
+```
+
+### Asciimojis support
+
+Asciimojis are supported by way of a transformer, available with the
+`cowsay4s-asciimojis` module. Here's how to setup your `CowSay` to use
+it:
+
+```scala
+import cowsay4s.core.CowSay
+import cowsay4s.asciimojis.AsciimojisTransformer
+
+// This CowSay will allways be thinking and mute, not matter what
+// command you feed it.
+val cowSayWithAsciimojisSupport =
+  CowSay.withTransformers(AsciimojisTransformer)
 ```

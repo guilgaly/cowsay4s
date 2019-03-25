@@ -30,6 +30,7 @@ class AsciimojisTransformerSpec
           ("word", "asciimoji"),
           (for {
             asciimoji <- AsciimojisTransformer.asciimojis
+              .filterNot(_.name == "rolldice")
             word <- asciimoji.words
           } yield (word, asciimoji)): _*
         )

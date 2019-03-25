@@ -4,13 +4,14 @@ import cowsay4s.core.CowCommand
 import cowsay4s.core.CowSay.CommandTransformer
 
 import scala.util.matching.Regex
+import scala.util.{Random, Try}
 
 object AsciimojisTransformer extends CommandTransformer {
 
   override def apply(command: CowCommand): CowCommand =
     command.copy(message = replace(command.message))
 
-  private val pattern = """\(([^\(\)]+)(?:,(.*))?\)""".r("word", "param")
+  private val pattern = """\(([^\(\),]+)(?:,([^\(\)]*))?\)""".r("word", "param")
 
   private[asciimojis] def replace(text: String) = {
     val replacer = (mtch: Regex.Match) => {
@@ -99,8 +100,27 @@ object AsciimojisTransformer extends CommandTransformer {
     Asciimoji.Simple("dj", Seq("dj"), "d[-_-]b"),
     Asciimoji.Simple("dog", Seq("dog"), "(◕ᴥ◕ʋ)"),
     Asciimoji.Simple("dollar", Seq("dollar"), "$"),
-    Asciimoji
-      .Simple("dollarbill", Seq("dollarbill", "$"), "[̲̅$̲̅(̲̅ιο̲̲̅)̲̅$̲̅]"),
+    Asciimoji.Parameterized(
+      "dollarbill",
+      Seq("dollarbill", "$"),
+      "20",
+      maybeAmount => {
+        val amount = maybeAmount.getOrElse("10").flatMap {
+          case '0'   => "ο̲̅"
+          case '1'   => "̅ι"
+          case '2'   => "2̅"
+          case '3'   => "3̅"
+          case '4'   => "4̅"
+          case '5'   => "5̲̅"
+          case '6'   => "6̅"
+          case '7'   => "7̅"
+          case '8'   => "8̅"
+          case '9'   => "9̅"
+          case other => String.valueOf(other)
+        }
+        "[̲̅$̲̅(̲" + amount + "̅)̲̅$̲̅]"
+      }
+    ),
     Asciimoji.Simple("dong", Seq("dong"), "(̿▀̿ ̿Ĺ̯̿̿▀̿ ̿)̄"),
     Asciimoji.Simple("donger", Seq("donger"), "ヽ༼ຈل͜ຈ༽ﾉ"),
     Asciimoji.Simple("dontcare", Seq("dontcare", "idc"), "(- ʖ̯-)"),
@@ -134,7 +154,40 @@ object AsciimojisTransformer extends CommandTransformer {
     Asciimoji.Simple("execution", Seq("execution"), "(⌐■_■)︻╦╤─   (╥﹏╥)"),
     Asciimoji.Simple("facebook", Seq("facebook"), "(╯°□°)╯︵ ʞooqǝɔɐɟ"),
     Asciimoji.Simple("facepalm", Seq("facepalm"), "(－‸ლ)"),
-    // "fancytext",
+    Asciimoji.Parameterized(
+      "fancytext",
+      Seq("fancytext"),
+      "beware, i am fancy!",
+      _.getOrElse("beware, i am fancy!").map {
+        case 'a'   => 'α'
+        case 'b'   => 'в'
+        case 'c'   => '¢'
+        case 'd'   => '∂'
+        case 'e'   => 'є'
+        case 'f'   => 'ƒ'
+        case 'g'   => 'g'
+        case 'h'   => 'н'
+        case 'i'   => 'ι'
+        case 'j'   => 'נ'
+        case 'k'   => 'к'
+        case 'l'   => 'ℓ'
+        case 'm'   => 'м'
+        case 'n'   => 'η'
+        case 'o'   => 'σ'
+        case 'p'   => 'ρ'
+        case 'q'   => 'q'
+        case 'r'   => 'я'
+        case 's'   => 'ѕ'
+        case 't'   => 'т'
+        case 'u'   => 'υ'
+        case 'v'   => 'ν'
+        case 'w'   => 'ω'
+        case 'x'   => 'χ'
+        case 'y'   => 'у'
+        case 'z'   => 'z'
+        case other => other
+      }
+    ),
     Asciimoji.Simple("fart", Seq("fart"), "(ˆ⺫ˆ๑)<3"),
     Asciimoji.Simple("fight", Seq("fight"), "(ง •̀_•́)ง"),
     Asciimoji.Simple("finn", Seq("finn"), "| (• ◡•)|"),
@@ -143,8 +196,18 @@ object AsciimojisTransformer extends CommandTransformer {
     Asciimoji.Simple("5/8", Seq("5/8"), "⅝"),
     Asciimoji.Simple("flat", Seq("flat", "bemolle"), "♭"),
     Asciimoji.Simple("flexing", Seq("flexing"), "ᕙ(`▽´)ᕗ"),
-    // "fliptext",
-    // "fliptexttable"],
+    Asciimoji.Parameterized(
+      "fliptext",
+      Seq("fliptext"),
+      "flip me like a table",
+      fliptext
+    ),
+    Asciimoji.Parameterized(
+      "fliptexttable",
+      Seq("fliptexttable"),
+      "flip me like a table",
+      maybeStr => "(ノ ゜Д゜)ノ ︵  " + fliptext(maybeStr)
+    ),
     Asciimoji
       .Simple("flipped", Seq("flipped", "heavytable"), "┬─┬﻿ ︵ /(.□. \\）"),
     Asciimoji.Simple("flower", Seq("flower", "flor"), "(✿◠‿◠)"),
@@ -214,7 +277,24 @@ object AsciimojisTransformer extends CommandTransformer {
     Asciimoji.Simple("lennystrong", Seq("lennystrong"), "ᕦ( ͡° ͜ʖ ͡°)ᕤ"),
     Asciimoji
       .Simple("lennywizard", Seq("lennywizard"), "╰( ͡° ͜ʖ ͡° )つ──☆*:・ﾟ"),
-    Asciimoji.Simple("loading", Seq("loading"), "███▒▒▒▒▒▒▒"),
+    Asciimoji.Parameterized(
+      "loading",
+      Seq("loading"),
+      "30",
+      maybeStr => {
+        val percent =
+          (for {
+            str <- maybeStr
+            number <- Try(str.toInt).toOption
+            if 0 <= number && number <= 100
+          } yield number).getOrElse(30).toDouble
+        val filledBlocks =
+          if (Math.round(percent / 10) > 10) 10
+          else Math.round(percent / 10).toInt
+        val emptyBlocks = 10 - filledBlocks
+        ("█" * filledBlocks) + ("▒" * emptyBlocks)
+      }
+    ),
     Asciimoji.Simple("lol", Seq("lol"), "L(° O °L)"),
     Asciimoji.Simple("look", Seq("look"), "(ಡ_ಡ)☞"),
     Asciimoji.Simple("loud", Seq("loud", "noise"), "ᕦ(⩾﹏⩽)ᕥ"),
@@ -269,7 +349,21 @@ object AsciimojisTransformer extends CommandTransformer {
     Asciimoji.Simple("r", Seq("r"), "®"),
     Asciimoji.Simple("right", Seq("right", "->"), "→"),
     Asciimoji.Simple("riot", Seq("riot"), "୧༼ಠ益ಠ༽୨"),
-    // "rolldice",
+    Asciimoji.Parameterized(
+      "rolldice",
+      Seq("rolldice"),
+      "2",
+      maybeStr => {
+        val amount =
+          (for {
+            str <- maybeStr
+            number <- Try(str.toInt).toOption
+            if 0 < number && number < 100 // Let's add a sensible max limit...
+          } yield number).getOrElse(1)
+        val dice = Seq("⚀", "⚁", "⚂", "⚃", "⚄", "⚅")
+        (1 to amount).map(_ => dice(Random.nextInt(6))).mkString(" ")
+      }
+    ),
     Asciimoji.Simple("rolleyes", Seq("rolleyes"), "(◔_◔)"),
     Asciimoji.Simple("rose", Seq("rose"), "✿ڿڰۣ—"),
     Asciimoji.Simple("run", Seq("run"), "(╯°□°)╯"),
@@ -328,7 +422,40 @@ object AsciimojisTransformer extends CommandTransformer {
     Asciimoji.Simple("whistle", Seq("whistle"), "(っ^з^)♪♬"),
     Asciimoji.Simple("whoa", Seq("whoa"), "(°o•)"),
     Asciimoji.Simple("why", Seq("why"), "ლ(`◉◞౪◟◉‵ლ)"),
-    // "witchtext"
+    Asciimoji.Parameterized(
+      "witchtext",
+      Seq("witchtext"),
+      "when shall we three meet again?",
+      _.getOrElse("when shall we three meet again?").map {
+        case 'a'   => 'Λ'
+        case 'b'   => 'ß'
+        case 'c'   => '¢'
+        case 'd'   => 'Ð'
+        case 'e'   => 'Σ'
+        case 'f'   => 'Ŧ'
+        case 'g'   => 'G'
+        case 'h'   => 'H'
+        case 'i'   => '|'
+        case 'j'   => '⅃'
+        case 'k'   => 'Ҡ'
+        case 'l'   => 'L'
+        case 'm'   => 'M'
+        case 'n'   => 'И'
+        case 'o'   => 'Ө'
+        case 'p'   => 'þ'
+        case 'q'   => 'Q'
+        case 'r'   => 'Я'
+        case 's'   => '$'
+        case 't'   => '†'
+        case 'u'   => 'V'
+        case 'v'   => 'V'
+        case 'w'   => 'W'
+        case 'x'   => 'X'
+        case 'y'   => 'Ұ'
+        case 'z'   => 'Z'
+        case other => other
+      }
+    ),
     Asciimoji.Simple("woo", Seq("woo"), "＼(＾O＾)／"),
     Asciimoji.Simple("wtf", Seq("wtf"), "(⊙＿⊙')"),
     Asciimoji.Simple("wut", Seq("wut"), "⊙ω⊙"),
@@ -344,8 +471,55 @@ object AsciimojisTransformer extends CommandTransformer {
     Asciimoji.Simple("zombie", Seq("zombie"), "[¬º-°]¬")
   )
 
+  def samples: Seq[(Asciimoji, String)] = asciimojis.map {
+    case s: Asciimoji.Simple        => (s, s.ascii)
+    case p: Asciimoji.Parameterized => (p, p.render(Some(p.exampleParam)))
+  }
+
   private val dictionnary: Map[String, Asciimoji] =
     asciimojis.flatMap { asciimoji =>
       asciimoji.words.map(word => (word, asciimoji))
     }.toMap
+
+  private def fliptext(maybeStr: Option[String]) =
+    maybeStr.getOrElse("flip me like a table").map {
+      case 'a'      => '\u0250'
+      case 'b'      => 'q'
+      case 'c'      => '\u0254'
+      case 'd'      => 'p'
+      case 'e'      => '\u01DD'
+      case 'f'      => '\u025F'
+      case 'g'      => '\u0183'
+      case 'h'      => '\u0265'
+      case 'i'      => '\u0131'
+      case 'j'      => '\u027E'
+      case 'k'      => '\u029E'
+      case 'l'      => '\u05DF'
+      case 'm'      => '\u026F'
+      case 'n'      => 'u'
+      case 'p'      => 'd'
+      case 'q'      => 'b'
+      case 'r'      => '\u0279'
+      case 't'      => '\u0287'
+      case 'u'      => 'n'
+      case 'v'      => '\u028C'
+      case 'w'      => '\u028D'
+      case 'y'      => '\u028E'
+      case '.'      => '\u02D9'
+      case '['      => ']'
+      case '('      => ')'
+      case '{'      => '}'
+      case '?'      => '\u00BF'
+      case '!'      => '\u00A1'
+      case '\''     => ','
+      case '<'      => '>'
+      case '_'      => '\u203E'
+      case '"'      => '\u201E'
+      case '\\'     => '\\'
+      case ';'      => '\u061B'
+      case '\u203F' => '\u2040'
+      case '\u2045' => '\u2046'
+      case '\u2234' => '\u2235'
+      case other    => other
+    }
 }
