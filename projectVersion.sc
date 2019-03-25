@@ -1,1 +1,1 @@
-val projectVersion = "0.2.2-SNAPSHOT"
+val projectVersion = "0.2.2"
