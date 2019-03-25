@@ -29,8 +29,6 @@ jobs:
             - cowsay4s
   test-publish:
     parameters:
-      scala-flavor:
-        type: string
       scala-version:
         type: string
       add-build:
@@ -42,12 +40,12 @@ jobs:
           at: /tmp
       - restore_cache:
           keys:
-            - v2-coursier-<< parameters.scala-flavor >>-<< parameters.scala-version >>-{{ checksum "dependencies.sc" }}
-            - v2-coursier-<< parameters.scala-flavor >>-<< parameters.scala-version >>-
-      - run: ./.circleci/execute_tests.sh << parameters.scala-flavor >> << parameters.scala-version >> << parameters.add-build >>
-      - run: ./.circleci/publish.sh << parameters.scala-flavor >> << parameters.scala-version >>
+            - v2-coursier-<< parameters.scala-version >>-{{ checksum "dependencies.sc" }}
+            - v2-coursier-<< parameters.scala-version >>-
+      - run: ./.circleci/execute_tests.sh << parameters.scala-version >> << parameters.add-build >>
+      - run: ./.circleci/publish.sh << parameters.scala-version >>
       - save_cache:
-          key: v2-coursier-<< parameters.scala-flavor >>-<< parameters.scala-version >>-{{ checksum "dependencies.sc" }}
+          key: v2-coursier-<< parameters.scala-version >>-{{ checksum "dependencies.sc" }}
           paths:
             - ~/.cache/coursier
 
@@ -59,39 +57,18 @@ workflows:
           name: "Scalafmt"
 
       - test-publish:
-          name: "JVM 2.11"
+          name: "2.11"
           requires:
             - "Scalafmt"
-          scala-flavor: "jvm"
           scala-version: "2.11.12"
       - test-publish:
-          name: "JVM 2.12 + CLI"
+          name: "2.12 (+ CLI)"
           requires:
             - "Scalafmt"
-          scala-flavor: "jvm"
           scala-version: "2.12.8"
           add-build: "cli"
       - test-publish:
-          name: "JVM 2.13"
+          name: "2.13"
           requires:
             - "Scalafmt"
-          scala-flavor: "jvm"
-          scala-version: "2.13.0-M5"
-      - test-publish:
-          name: "JS 2.11"
-          requires:
-            - "Scalafmt"
-          scala-flavor: "js"
-          scala-version: "2.11.12"
-      - test-publish:
-          name: "JS 2.12"
-          requires:
-            - "Scalafmt"
-          scala-flavor: "js"
-          scala-version: "2.12.8"
-      - test-publish:
-          name: "JS 2.13"
-          requires:
-            - "Scalafmt"
-          scala-flavor: "js"
           scala-version: "2.13.0-M5"

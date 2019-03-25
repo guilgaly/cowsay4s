@@ -2,10 +2,7 @@
 
 set -e
 
-scala_flavor="$1"
-echo "Scala flavor: $scala_flavor"
-
-scala_version="$2"
+scala_version="$1"
 echo "Scala version: $scala_version"
 
 if [[ "$CIRCLE_BRANCH" == "master" ]]; then
@@ -21,7 +18,7 @@ if [[ "$CIRCLE_BRANCH" == "master" ]]; then
   mill mill.scalalib.PublishModule/publishAll \
     --sonatypeCreds "guilgaly:$SONATYPE_PASSWORD" \
     --signed "true" \
-    --publishArtifacts "_.$scala_flavor[$scala_version].publishArtifacts"
+    --publishArtifacts "_._[$scala_version].publishArtifacts"
 
 else
 
