@@ -68,7 +68,8 @@ object AsciimojisTransformer extends CommandTransformer {
     Asciimoji.Simple(
       "clique",
       Seq("clique", "gang", "squad"),
-      "ヽ༼ ຈل͜ຈ༼ ▀̿̿Ĺ̯̿̿▀̿ ̿༽Ɵ͆ل͜Ɵ͆ ༽ﾉ"),
+      "ヽ༼ ຈل͜ຈ༼ ▀̿̿Ĺ̯̿̿▀̿ ̿༽Ɵ͆ل͜Ɵ͆ ༽ﾉ"
+    ),
     Asciimoji.Simple("cloud", Seq("cloud"), "☁"),
     Asciimoji.Simple("club", Seq("club"), "♣"),
     Asciimoji.Simple("coffee", Seq("coffee", "cuppa"), "c[_]"),

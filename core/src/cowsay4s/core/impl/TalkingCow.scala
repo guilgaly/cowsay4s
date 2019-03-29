@@ -15,7 +15,8 @@ private[core] object TalkingCow {
       cow: Cow,
       eyes: CowEyes,
       tongue: CowTongue,
-      action: CowAction): String = {
+      action: CowAction
+  ): String = {
 
     val thoughts = action match {
       case CowAction.CowSay   => """\"""

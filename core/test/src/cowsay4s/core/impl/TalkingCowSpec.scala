@@ -31,8 +31,10 @@ class TalkingCowSpec extends UnitSpec {
         TalkingCow.printToString(cowsayCommand) shouldBe expected
       }
       "construct a multiline cowsay output" in {
-        val cowsayCommand = command.copy(message =
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nec cursus sapien, quis sagittis quam. In ultrices fringilla mauris, eget euismod mi faucibus vel. Nulla vel vulputate neque, nec feugiat massa.")
+        val cowsayCommand = command.copy(
+          message =
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nec cursus sapien, quis sagittis quam. In ultrices fringilla mauris, eget euismod mi faucibus vel. Nulla vel vulputate neque, nec feugiat massa."
+        )
         val expected =
           """ __________________________________________ 
             |/ Lorem ipsum dolor sit amet, consectetur  \
@@ -67,8 +69,10 @@ class TalkingCowSpec extends UnitSpec {
       "construct a multiline cowthink output" in {
         val cowsayCommand = command
           .copy(action = CowAction.CowThink)
-          .copy(message =
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nec cursus sapien, quis sagittis quam. In ultrices fringilla mauris, eget euismod mi faucibus vel. Nulla vel vulputate neque, nec feugiat massa.")
+          .copy(
+            message =
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nec cursus sapien, quis sagittis quam. In ultrices fringilla mauris, eget euismod mi faucibus vel. Nulla vel vulputate neque, nec feugiat massa."
+          )
         val expected =
           """ __________________________________________ 
             |( Lorem ipsum dolor sit amet, consectetur  )

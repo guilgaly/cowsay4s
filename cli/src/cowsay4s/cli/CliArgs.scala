@@ -53,12 +53,14 @@ object CliArgs {
 
       opt[CowEyes]('e', "eyes")
         .text(
-          "appearance of the cow's eyes (only the first two characters are used)")
+          "appearance of the cow's eyes (only the first two characters are used)"
+        )
         .action((eyes, config) => config.copy(eyes = Some(eyes)))
 
       opt[CowTongue]('T', "tongue")
         .text(
-          "appearance of the cow's tongue (only the first two characters are used)")
+          "appearance of the cow's tongue (only the first two characters are used)"
+        )
         .action((tongue, config) => config.copy(tongue = Some(tongue)))
 
       opt[DefaultCow]('f', "cowfile")
@@ -80,7 +82,8 @@ object CliArgs {
             success
           else
             failure(
-              s"$w is not a valid argument for --wrapcolumn; should be strictly positive")
+              s"$w is not a valid argument for --wrapcolumn; should be strictly positive"
+            )
         }
         .action((wrapcolumn, config) => config.copy(wrapcolumn = wrapcolumn))
 
@@ -92,7 +95,8 @@ object CliArgs {
             success
           case invalid =>
             failure(
-              s"$invalid is not a valid action; should be 'say' or 'think'; ")
+              s"$invalid is not a valid action; should be 'say' or 'think'; "
+            )
         }
         .action {
           case ("say", config)   => config.copy(action = CowAction.CowSay)
@@ -114,8 +118,11 @@ object CliArgs {
   implicit val cowRead: Read[DefaultCow] = Read.reads { cowStr =>
     DefaultCow
       .withCowNameInsensitive(cowStr)
-      .getOrElse(throw new IllegalArgumentException(
-        s"'$cowStr' is not a valid cowfile name."))
+      .getOrElse(
+        throw new IllegalArgumentException(
+          s"'$cowStr' is not a valid cowfile name."
+        )
+      )
   }
 
   implicit val cowEyesRead: Read[CowEyes] = Read.reads(CowEyes(_))

@@ -6,7 +6,8 @@ object MessageWrapping {
   def apply(value: Int): MessageWrapping = {
     require(
       value > 0,
-      s"$value is not a valid MessageWrapping value; it should be strictly positive")
+      s"$value is not a valid MessageWrapping value; it should be strictly positive"
+    )
     new MessageWrapping(value)
   }
 
