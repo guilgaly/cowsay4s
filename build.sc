@@ -10,18 +10,7 @@ import mill.scalalib.scalafmt.ScalafmtModule
 
 // *************** Base traits ***************
 
-trait FormattedScalaModule extends ScalaModule with ScalafmtModule {
-  // We need to override this (not just 'scalafmtVersion') because the group ID has changed
-  override def scalafmtDeps: T[Agg[PathRef]] = T {
-    Lib.resolveDependencies(
-      zincWorker.repositories,
-      Lib.depToDependency(_, "2.12.8"),
-      Seq(ivy"org.scalameta::scalafmt-cli:2.0.0-RC5"),
-    )
-  }
-}
-
-trait BaseModule extends FormattedScalaModule {
+trait BaseModule extends ScalaModule with ScalafmtModule {
   def platformSegment: String
 
   override def sources = T.sources(
@@ -182,7 +171,7 @@ object asciimojis extends LibraryModule {
 
 // *************** CLI application module ***************
 
-object cli extends FormattedScalaModule {
+object cli extends ScalaModule with ScalafmtModule {
   private def scalaVers = settings.scalaVersion.default
 
   override def scalaVersion = scalaVers
@@ -195,7 +184,7 @@ object cli extends FormattedScalaModule {
     dependencies.scopt,
   )
 
-  object test extends Tests with FormattedScalaModule {
+  object test extends Tests with ScalafmtModule {
     override def testFrameworks = Seq("org.scalatest.tools.Framework")
     override def moduleDeps =
       super.moduleDeps :+ testutils.jvm(settings.scalaVersion.default)
