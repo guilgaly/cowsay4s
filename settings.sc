@@ -6,7 +6,7 @@ object scalaVersion {
   val v2_12 = "2.12.8"
   val v2_13 = "2.13.0"
 
-  val default = v2_12
+  val default = v2_13
   val cross = Seq(v2_11, v2_12, v2_13)
 }
 
