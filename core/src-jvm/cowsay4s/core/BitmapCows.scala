@@ -19,7 +19,7 @@ object BitmapCows {
         backgroundColor: Option[Color] = None
     ): BufferedImage = {
       val text = cowSay.talk(command)
-      val lines = text.lines.toList
+      val lines = text.linesIterator.toList
 
       renderImage(lines, font, fontColor, backgroundColor)
     }

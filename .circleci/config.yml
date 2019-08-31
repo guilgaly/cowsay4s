@@ -65,7 +65,7 @@ workflows:
           name: "2.12 (+ CLI)"
           requires:
             - "Scalafmt"
-          scala-version: "2.12.8"
+          scala-version: "2.12.9"
           add-build: "cli"
       - test-publish:
           name: "2.13"

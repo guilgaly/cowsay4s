@@ -6,7 +6,7 @@ private[core] object TextUtil {
 
   def softWrap(text: String, lineWidth: Int): List[String] =
     if (text.isEmpty) List(text)
-    else text.lines.flatMap(softWrapLine(_, lineWidth)).toList
+    else text.linesIterator.flatMap(softWrapLine(_, lineWidth)).toList
 
   private def softWrapLine(text: String, lineWidth: Int): List[String] = {
     var lines = List.empty[String]
