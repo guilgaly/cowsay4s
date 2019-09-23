@@ -3,7 +3,7 @@ version: 2.1
 executors:
   openjdk-8-node:
     docker:
-      - image: guilgaly/openjdk-mill-node-heroku:8u212-0.5.0-stretch
+      - image: guilgaly/openjdk-mill-node-heroku:8u222-0.5.1
     working_directory: /tmp/cowsay4s
     environment:
       JVM_OPTS: -Xmx2g
@@ -62,13 +62,13 @@ workflows:
             - "Scalafmt"
           scala-version: "2.11.12"
       - test-publish:
-          name: "2.12 (+ CLI)"
+          name: "2.12"
           requires:
             - "Scalafmt"
-          scala-version: "2.12.9"
-          add-build: "cli"
+          scala-version: "2.12.10"
       - test-publish:
-          name: "2.13"
+          name: "2.13 (+ CLI)"
           requires:
             - "Scalafmt"
-          scala-version: "2.13.0"
+          scala-version: "2.13.1"
+          add-build: "cli"
