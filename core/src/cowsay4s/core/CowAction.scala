@@ -7,7 +7,6 @@ import enumeratum.EnumEntry
 sealed abstract class CowAction(val verb: String) extends EnumEntry
 
 object CowAction extends EnumWithDefault[CowAction] {
-
   case object CowSay extends CowAction("say")
   case object CowThink extends CowAction("think")
 

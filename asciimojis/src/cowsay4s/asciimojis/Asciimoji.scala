@@ -6,7 +6,6 @@ sealed trait Asciimoji {
 }
 
 object Asciimoji {
-
   class Simple(
       override val name: String,
       override val words: Seq[String],

@@ -1,7 +1,6 @@
 package cowsay4s.core
 
 object Toto {
-
   val muteTransformer: CowSay.CommandTransformer =
     (command: CowCommand) => command.copy(message = "")
   val thinkingTransformer: CowSay.CommandTransformer =

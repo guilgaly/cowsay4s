@@ -3,7 +3,6 @@ package cowsay4s.core.impl
 import cowsay4s.testutils.UnitSpec
 
 class TextUtilSpec extends UnitSpec {
-
   "wrap" when {
     "given an empty string" should {
       "return a single empty string" in {

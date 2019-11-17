@@ -1,7 +1,6 @@
 package cowsay4s.core.impl
 
 private[core] object TextUtil {
-
   // java.text.BreakIterator isn't supported on Scala.js
 
   def softWrap(text: String, lineWidth: Int): List[String] =

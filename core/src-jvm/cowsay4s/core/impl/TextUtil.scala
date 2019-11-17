@@ -3,7 +3,6 @@ package cowsay4s.core.impl
 import java.text.BreakIterator
 
 private[core] object TextUtil {
-
   // http://tutorials.jenkov.com/java-internationalization/breakiterator.html
 
   def softWrap(text: String, lineWidth: Int): List[String] =

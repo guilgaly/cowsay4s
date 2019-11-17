@@ -5,7 +5,6 @@ import cowsay4s.core.impl.Baloon.{DelimiterCouple, Delimiters}
 import cowsay4s.testutils.UnitSpec
 
 class BaloonSpec extends UnitSpec {
-
   private val delimiters = new Delimiters {
     override def first: DelimiterCouple = DelimiterCouple('1', '2')
     override def middle: DelimiterCouple = DelimiterCouple('3', '4')

@@ -9,9 +9,7 @@ import java.nio.file.Path
 import javax.imageio.ImageIO
 
 object BitmapCows {
-
   implicit final class CowSayToPng(cowSay: CowSay) {
-
     def talkToBufferedImage(
         command: CowCommand,
         font: Font,

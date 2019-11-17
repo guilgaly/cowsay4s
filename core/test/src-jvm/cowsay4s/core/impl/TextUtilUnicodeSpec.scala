@@ -9,7 +9,6 @@ import cowsay4s.testutils.UnitSpec
  * Currently only works on the JVM.
  */
 class TextUtilUnicodeSpec extends UnitSpec {
-
   "wrap" when {
     "given a string with multipoint unicode characters" should {
       "wrap it properly" in {

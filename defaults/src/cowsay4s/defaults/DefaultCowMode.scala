@@ -16,7 +16,6 @@ sealed abstract class DefaultCowMode(
 }
 
 object DefaultCowMode extends EnumWithDefault[DefaultCowMode] {
-
   case object Default
       extends DefaultCowMode(
         "default",

@@ -3,7 +3,6 @@ package cowsay4s.core.impl
 import cowsay4s.core._
 
 private[core] object TalkingCow {
-
   def printToString(command: CowCommand): String = {
     val pimpedCow =
       pimpCow(command.cow, command.eyes, command.tongue, command.action)
@@ -17,7 +16,6 @@ private[core] object TalkingCow {
       tongue: CowTongue,
       action: CowAction
   ): String = {
-
     val thoughts = action match {
       case CowAction.CowSay   => """\"""
       case CowAction.CowThink => "o"

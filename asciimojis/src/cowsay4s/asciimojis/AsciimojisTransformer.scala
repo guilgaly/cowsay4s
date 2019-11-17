@@ -7,7 +7,6 @@ import scala.util.matching.Regex
 import scala.util.{Random, Try}
 
 object AsciimojisTransformer extends CommandTransformer {
-
   override def apply(command: CowCommand): CowCommand =
     command.copy(message = replace(command.message))
 

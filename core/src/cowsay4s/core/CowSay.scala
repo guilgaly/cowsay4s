@@ -7,7 +7,6 @@ trait CowSay {
 }
 
 object CowSay {
-
   val default: CowSay = new CowSay {
     override def talk(command: CowCommand): String =
       TalkingCow.printToString(command)

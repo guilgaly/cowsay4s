@@ -3,7 +3,6 @@ package cowsay4s.core.impl
 import cowsay4s.core.{CowAction, MessageWrapping}
 
 private[core] object Baloon {
-
   final case class DelimiterCouple(start: Char, end: Char)
 
   trait Delimiters {

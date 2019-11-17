@@ -5,7 +5,6 @@ import cowsay4s.core._
 import cowsay4s.defaults.DefaultCow
 
 object Main {
-
   def main(args: Array[String]): Unit =
     CliArgs.parse(args.toSeq) match {
       case Some(config) if config.list => executeList()

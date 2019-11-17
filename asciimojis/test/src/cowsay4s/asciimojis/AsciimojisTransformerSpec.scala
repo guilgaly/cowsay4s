@@ -6,7 +6,6 @@ import org.scalatest.prop.TableDrivenPropertyChecks
 class AsciimojisTransformerSpec
     extends UnitSpec
     with TableDrivenPropertyChecks {
-
   "AsciimojisTransformer" when {
     "given a string with no asciimojis" should {
       "return it as-is" in {

@@ -7,7 +7,6 @@ sealed trait CowError {
 }
 
 object CowError {
-
   final case class CowNotFound(cowName: String) extends CowError {
     override def printError: String = s"Cow named '$cowName' was not found"
   }

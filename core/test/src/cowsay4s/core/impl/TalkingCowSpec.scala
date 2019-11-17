@@ -5,7 +5,6 @@ import cowsay4s.core.TestCow
 import cowsay4s.testutils.UnitSpec
 
 class TalkingCowSpec extends UnitSpec {
-
   "TalkingCow" when {
     "given a simple custom command" should {
       val command = CowCommand(

@@ -10,7 +10,6 @@ case class CowCommand(
 )
 
 object CowCommand {
-
   def apply(cow: Cow, message: String, mode: CowMode): CowCommand =
     CowCommand(cow, message, mode.eyes, mode.tongue)
 
