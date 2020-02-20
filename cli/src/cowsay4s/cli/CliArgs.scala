@@ -15,6 +15,7 @@ case class CliArgs(
     action: CowAction,
     message: Option[String]
 ) {
+
   /** No-args constructor used only for the scopt parser. */
   private def this() = this(
     mode = DefaultCowMode.Default,
@@ -30,6 +31,7 @@ case class CliArgs(
 }
 
 object CliArgs {
+
   /**
    * Parses the command line arguments.
    *

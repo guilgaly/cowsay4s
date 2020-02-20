@@ -14,9 +14,8 @@ object CowSay {
 
   def withTransformers(transformers: CommandTransformer*): CowSay = new CowSay {
     override def talk(command: CowCommand): String = {
-      val transformedCmd = transformers.foldLeft(command)(
-        (acc, transformer) => transformer(acc)
-      )
+      val transformedCmd =
+        transformers.foldLeft(command)((acc, transformer) => transformer(acc))
       default.talk(transformedCmd)
     }
   }
