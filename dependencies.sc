@@ -4,7 +4,7 @@ import mill.scalalib._
 val scopt = ivy"com.github.scopt::scopt:3.7.1"
 
 /** Enumerations. */
-val enumeratum = ivy"com.beachape::enumeratum::1.5.13"
+val enumeratum = ivy"com.beachape::enumeratum::1.5.15"
 
 /** Tests. */
-val scalatest = ivy"org.scalatest::scalatest::3.0.8"
+val scalatest = ivy"org.scalatest::scalatest::3.1.0"
