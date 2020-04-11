@@ -1,0 +1,174 @@
+/*
+   CSS reset taken from:
+     http://meyerweb.com/eric/tools/css/reset/
+     v2.0 | 20110126
+     (was licensed as "public domain")
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+
+/* Actual stylesheet here. */
+
+body {
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    height: 100%;
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    display:flex;
+    flex-direction: column;
+}
+
+header {
+    /*background-color: red;*/
+    padding: 10px 15px 5px 15px;
+    border-bottom: 2px solid #000000;
+    display: flex;
+    flex-direction: row;
+}
+header h1 a {
+    font-size: 28px;
+    font-weight: bold;
+    color: #000000;
+    text-decoration: none;
+}
+header nav {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row-reverse;
+}
+header nav ul {
+    display: flex;
+    flex-direction: row;
+}
+header nav li {
+    display: flex;
+    flex-direction: column-reverse;
+}
+header nav li~li a {
+    border-left: 2px solid #000000
+}
+header nav li a {
+    padding: 0 10px 0 10px;
+    font-size: 22px;
+    color: #000000;
+    width: 100%;
+}
+
+footer {
+    /*background-color: green;*/
+    padding: 5px 15px 10px 15px;
+    border-top: 2px solid #000000;
+    text-align: center;
+}
+
+.main-body {
+    /*background-color: blue;*/
+    flex-grow: 1;
+    padding: 20px 15px 10px 15px;
+    display:flex;
+    flex-direction: column;
+}
+.main-body section {
+    padding: 10px 0 10px 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+.main-body h2 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+.main-body h3 {
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+.main-body p {
+    margin-bottom: 0.5em;
+}
+.main-body li {
+    list-style-type: disc;
+    list-style-position: inside;
+}
+
+.multiline-display {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cow-display {
+    padding: 5px;
+    border: 2px solid #cccccc;
+}
+
+form {
+    display:flex;
+    flex-direction: column;
+}
+
+.form-field {
+    padding: 5px 0 5px 0;
+    display: flex;
+    flex-direction: column;
+}
+.form-field label {
+    padding-bottom: 5px;
+}
+.form-field select {
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+}
+
+.form-submit-field {
+    padding: 10px 0 5px 0;
+    display: flex;
+    flex-direction: row-reverse;
+}
+.form-submit-field input {
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+}

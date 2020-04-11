@@ -1,4 +1,8 @@
-val customRepositories = Seq()
+import coursier.maven.MavenRepository
+
+val customRepositories = Seq(
+  MavenRepository("https://oss.sonatype.org/content/repositories/snapshots"),
+)
 
 object scalaVersion {
 

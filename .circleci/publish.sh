@@ -4,6 +4,8 @@ set -e
 
 scala_version="$1"
 echo "Scala version: $scala_version"
+publish_web="$2"
+echo "Publish web app: $publish_web"
 
 if [[ "$CIRCLE_BRANCH" == "master" ]]; then
 
@@ -19,6 +21,12 @@ if [[ "$CIRCLE_BRANCH" == "master" ]]; then
     --sonatypeCreds "guilgaly:$SONATYPE_PASSWORD" \
     --signed "true" \
     --publishArtifacts "_._[$scala_version].publishArtifacts"
+
+  if [[ "$publish_web" == "true" ]]; then
+    echo "[INFO] Deploying JAR to Heroku"
+    mill "web.assembly"
+    heroku deploy:jar "out/web/assembly/dest/out.jar" --app "cowsay-online" --jdk "11"
+  fi
 
 else
 

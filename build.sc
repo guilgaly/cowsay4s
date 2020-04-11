@@ -1,8 +1,10 @@
+import $ivy.`com.lihaoyi::mill-contrib-buildinfo:0.6.1`
 import $file.cowgen
 import $file.dependencies
 import $file.projectVersion
 import $file.settings
 import mill._
+import mill.contrib.buildinfo.BuildInfo
 import mill.scalajslib._
 import mill.scalalib._
 import mill.scalalib.publish.{Developer, License, PomSettings, VersionControl}
@@ -74,7 +76,7 @@ object core extends Module {
     def moduleDescription = "Cowsay implemented as a Scala library"
 
     override def millSourcePath: os.Path = build.millSourcePath / moduleName
-    override def ivyDeps = Agg(dependencies.enumeratum)
+    override def ivyDeps = Agg(dependencies.enumeratum.core)
     override def repositories =
       super.repositories ++ settings.customRepositories
     override def scalacOptions = settings.scalacOptions(crossScalaVersion)
@@ -136,5 +138,56 @@ object cli extends ScalaModule with ScalafmtModule {
     override def moduleDeps =
       super.moduleDeps :+ testutils.jvm(settings.scalaVersion.default)
     override def ivyDeps = Agg(dependencies.scalatest)
+  }
+}
+
+// *************** Web application module ***************
+
+object web extends ScalaModule with ScalafmtModule with BuildInfo {
+  private def scalaVers = settings.scalaVersion.default
+
+  def scalaVersion = scalaVers
+  override def scalacOptions = settings.scalacOptions(scalaVers)
+  override def moduleDeps = Seq(core.jvm(scalaVers))
+  override def ivyDeps = Agg(
+    dependencies.akka.stream,
+    dependencies.akka.http,
+    dependencies.akka.httpPlayJson,
+    dependencies.akka.slf4j,
+    dependencies.scalatags,
+    dependencies.database.postgresql,
+    dependencies.database.hikaricp,
+    dependencies.logging.slf4jApi,
+    dependencies.logging.logback,
+    dependencies.logging.log4s,
+    dependencies.enumeratum.playJson,
+    dependencies.apacheCommons.text,
+    dependencies.apacheCommons.codec,
+    dependencies.fastparse,
+    dependencies.macWire
+  )
+
+  def publishVersion = "0.1.4-SNAPSHOT"
+
+  override def buildInfoMembers: T[Map[String, String]] = T {
+    Map(
+      "name" -> "cowsay-online",
+      "version" -> publishVersion,
+      "scalaVersion" -> scalaVersion()
+    )
+  }
+  override def buildInfoPackageName = Some("cowsay4s.web")
+  override def buildInfoObjectName = "BuildInfo"
+
+  object test extends Tests with ScalafmtModule {
+    override def testFrameworks = Seq("org.scalatest.tools.Framework")
+    override def moduleDeps =
+      super.moduleDeps :+ testutils.jvm(settings.scalaVersion.default)
+    override def ivyDeps = Agg(
+      dependencies.scalatest,
+      dependencies.akka.testkit.core,
+      dependencies.akka.testkit.stream,
+      dependencies.akka.testkit.http
+    )
   }
 }

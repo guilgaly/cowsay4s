@@ -23,9 +23,12 @@ jobs:
         type: string
       scala-version:
         type: string
-      add-build:
-        type: string
-        default: ""
+      include-cli:
+        type: boolean
+        default: false
+      include-web:
+        type: boolean
+        default: false
       publish:
         type: boolean
         default: false
@@ -38,11 +41,11 @@ jobs:
             - v2-coursier-<< parameters.scala-version >>-{{ checksum "dependencies.sc" }}-{{ checksum "build.sc" }}
             - v2-coursier-<< parameters.scala-version >>-{{ checksum "dependencies.sc" }}
             - v2-coursier-<< parameters.scala-version >>-
-      - run: ./.circleci/test.sh << parameters.scala-version >> << parameters.add-build >>
+      - run: ./.circleci/test.sh << parameters.scala-version >> << parameters.include-cli >> << parameters.include-web >>
       - when:
           condition: << parameters.publish >>
           steps:
-            - run: ./.circleci/publish.sh << parameters.scala-version >>
+            - run: ./.circleci/publish.sh << parameters.scala-version >> << parameters.include-web >>
       - save_cache:
           key: v2-coursier-<< parameters.scala-version >>-{{ checksum "dependencies.sc" }}-{{ checksum "build.sc" }}
           paths:
@@ -68,12 +71,14 @@ workflows:
           name: "2.13 (JDK 11)"
           executor: "openjdk-11-node"
           scala-version: "2.13.1"
-          add-build: "cli"
+          include-cli: true
+          include-web: true
       - build:
           name: "2.13 (JDK 8)"
           requires:
             - "2.13 (JDK 11)"
           executor: "openjdk-11-node"
           scala-version: "2.13.1"
-          add-build: "cli"
+          include-cli: true
+          include-web: true
           publish: true
