@@ -1,6 +1,5 @@
 package cowsay4s.cli
 
-import cowsay4s.asciimojis.AsciimojisTransformer
 import cowsay4s.core._
 import cowsay4s.core.defaults.DefaultCow
 
@@ -32,7 +31,7 @@ object Main {
       MessageWrapping(config.wrapcolumn)
     )
 
-    val cowsay = CowSay.withTransformers(AsciimojisTransformer)
+    val cowsay = CowSay.default
     val cowsayOutput = cowsay.talk(command)
 
     Console.out.println(cowsayOutput)

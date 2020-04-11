@@ -15,77 +15,8 @@ trait BaseModule extends ScalaModule with ScalafmtModule {
 
   override def sources = T.sources(
     millSourcePath / "src",
-    millSourcePath / s"src-$platformSegment",
+    millSourcePath / s"src-$platformSegment"
   )
-}
-
-trait BasePublishCrossModule
-    extends BaseModule
-    with CrossScalaModule
-    with PublishModule {
-  def moduleName: String
-  def moduleDescription: String
-
-  override def millSourcePath: os.Path = build.millSourcePath / moduleName
-
-  override def ivyDeps = Agg(dependencies.enumeratum)
-  override def repositories = super.repositories ++ settings.customRepositories
-  override def scalacOptions = settings.scalacOptions(crossScalaVersion)
-
-  override def publishVersion = projectVersion.projectVersion
-  override def artifactName = s"cowsay4s-$moduleName"
-  override def pomSettings = PomSettings(
-    description = moduleDescription,
-    organization = "fr.ggaly",
-    url = "https://github.com/guilgaly/cowsay4s",
-    licenses = Seq(License.MIT),
-    versionControl = VersionControl.github("guilgaly", "cowsay4s"),
-    developers = Seq(
-      Developer("guilgaly", "Guillaume Galy", "https://github.com/guilgaly"),
-    ),
-  )
-
-  trait Tests extends super.Tests with BaseModule {
-    override def platformSegment = BasePublishCrossModule.this.platformSegment
-    override def testFrameworks = Seq("org.scalatest.tools.Framework")
-    override def ivyDeps = Agg(dependencies.scalatest)
-  }
-}
-
-trait LibraryModule extends Module {
-  def moduleName: String
-  def moduleDescription: String
-  def moduleDeps: Seq[LibraryModule] = Seq.empty
-
-  def jvm: Cross[_ <: JvmModule]
-  def js: Cross[_ <: JsModule]
-
-  class JvmModule(val crossScalaVersion: String) extends CommonModule {
-    override def platformSegment = "jvm"
-    override def moduleDeps = LibraryModule.this.moduleDeps.map(_.jvm())
-
-    object test extends super.Tests {
-      override def moduleDeps = super.moduleDeps :+ testutils.jvm()
-    }
-  }
-
-  class JsModule(val crossScalaVersion: String)
-      extends ScalaJSModule
-      with CommonModule {
-    override def platformSegment = "js"
-    override def moduleDeps = LibraryModule.this.moduleDeps.map(_.js())
-    override def scalaJSVersion = settings.scalaJsVersion.default
-
-    object test extends super.Tests with TestScalaJSModule {
-      override def scalaJSVersion = settings.scalaJsVersion.default
-      override def moduleDeps = super.moduleDeps :+ testutils.js()
-    }
-  }
-
-  trait CommonModule extends BasePublishCrossModule {
-    override def moduleName = LibraryModule.this.moduleName
-    override def moduleDescription = LibraryModule.this.moduleDescription
-  }
 }
 
 // *************** Common utilities modules ***************
@@ -95,15 +26,15 @@ object testutils extends Module {
   object jvm extends Cross[JvmTestutilsModule](settings.scalaVersion.cross: _*)
   class JvmTestutilsModule(val crossScalaVersion: String)
       extends TestutilsModule {
-    override def platformSegment = "jvm"
+    def platformSegment = "jvm"
   }
 
   object js extends Cross[JsTestutilsModule](settings.scalaVersion.cross: _*)
   class JsTestutilsModule(val crossScalaVersion: String)
       extends TestutilsModule
       with ScalaJSModule {
-    override def platformSegment = "js"
-    override def scalaJSVersion = settings.scalaJsVersion.default
+    def platformSegment = "js"
+    def scalaJSVersion = settings.scalaJsVersion.default
   }
 
   trait TestutilsModule extends BaseModule with CrossScalaModule {
@@ -112,25 +43,58 @@ object testutils extends Module {
   }
 }
 
-// *************** Libraries modules ***************
+// *************** Library modules ***************
 
-object core extends LibraryModule {
-  override def moduleName = "core"
-  override def moduleDescription = "Cowsay implemented as a Scala library"
+object core extends Module {
+  object jvm extends Cross[JvmCoreModule](settings.scalaVersion.cross: _*)
+  class JvmCoreModule(val crossScalaVersion: String) extends CoreModule {
+    def platformSegment = "jvm"
 
-  override object jvm extends Cross[JvmCoreModule](settings.scalaVersion.cross: _*)
-  class JvmCoreModule(crossScalaVersion: String)
-    extends JvmModule(crossScalaVersion)
-      with CoreModule
+    object test extends super.Tests {
+      override def moduleDeps = super.moduleDeps :+ testutils.jvm()
+    }
+  }
 
-  override object js extends Cross[JsModule](settings.scalaVersion.cross: _*)
-  class JsCoreModule(crossScalaVersion: String)
-    extends JsModule(crossScalaVersion)
-      with CoreModule
+  object js extends Cross[JsCoreModule](settings.scalaVersion.cross: _*)
+  class JsCoreModule(val crossScalaVersion: String)
+      extends ScalaJSModule
+      with CoreModule {
+    def platformSegment = "js"
+    def scalaJSVersion = settings.scalaJsVersion.default
 
-  trait CoreModule extends CommonModule {
+    object test extends super.Tests with TestScalaJSModule {
+      def scalaJSVersion = settings.scalaJsVersion.default
+      override def moduleDeps = super.moduleDeps :+ testutils.js()
+    }
+  }
+
+  trait CoreModule extends BaseModule with CrossScalaModule with PublishModule {
+    outer =>
+    def moduleName = "core"
+    def moduleDescription = "Cowsay implemented as a Scala library"
+
+    override def millSourcePath: os.Path = build.millSourcePath / moduleName
+    override def ivyDeps = Agg(dependencies.enumeratum)
+    override def repositories =
+      super.repositories ++ settings.customRepositories
+    override def scalacOptions = settings.scalacOptions(crossScalaVersion)
+
+    // Publish settings
+    def publishVersion = projectVersion.projectVersion
+    def artifactName = s"cowsay4s-$moduleName"
+    def pomSettings = PomSettings(
+      description = moduleDescription,
+      organization = "fr.ggaly",
+      url = "https://github.com/guilgaly/cowsay4s",
+      licenses = Seq(License.MIT),
+      versionControl = VersionControl.github("guilgaly", "cowsay4s"),
+      developers = Seq(
+        Developer("guilgaly", "Guillaume Galy", "https://github.com/guilgaly")
+      )
+    )
+
+    // Cowfiles code generation
     def cowfiles = T.sources { millSourcePath / 'cowfiles }
-
     def allCowfiles = T {
       def isHiddenFile(path: os.Path) = path.last.startsWith(".")
       for {
@@ -140,23 +104,19 @@ object core extends LibraryModule {
         if os.isFile(path) && path.ext == "cow" && !isHiddenFile(path)
       } yield PathRef(path)
     }
-
-    override def generatedSources = T {
+    def generatedSources = T {
       val cowfiles = allCowfiles().map(_.path)
       val dir = T.ctx().dest
       cowgen.generateDefaultCows(dir, cowfiles)
       Seq(PathRef(dir))
     }
+
+    trait Tests extends super.Tests with BaseModule {
+      def platformSegment = outer.platformSegment
+      def testFrameworks = Seq("org.scalatest.tools.Framework")
+      override def ivyDeps = Agg(dependencies.scalatest)
+    }
   }
-}
-
-object asciimojis extends LibraryModule {
-  override def moduleName = "asciimojis"
-  override def moduleDescription = "Asciimojis support for cowsay4s-core"
-  override def moduleDeps = Seq(core)
-
-  override object jvm extends Cross[JvmModule](settings.scalaVersion.cross: _*)
-  override object js extends Cross[JsModule](settings.scalaVersion.cross: _*)
 }
 
 // *************** CLI application module ***************
@@ -164,15 +124,15 @@ object asciimojis extends LibraryModule {
 object cli extends ScalaModule with ScalafmtModule {
   private def scalaVers = settings.scalaVersion.default
 
-  override def scalaVersion = scalaVers
+  def scalaVersion = scalaVers
   override def scalacOptions = settings.scalacOptions(scalaVers)
-  override def moduleDeps = Seq(asciimojis.jvm(scalaVers))
+  override def moduleDeps = Seq(core.jvm(scalaVers))
   override def ivyDeps = Agg(
-    dependencies.scopt,
+    dependencies.scopt
   )
 
   object test extends Tests with ScalafmtModule {
-    override def testFrameworks = Seq("org.scalatest.tools.Framework")
+    def testFrameworks = Seq("org.scalatest.tools.Framework")
     override def moduleDeps =
       super.moduleDeps :+ testutils.jvm(settings.scalaVersion.default)
     override def ivyDeps = Agg(dependencies.scalatest)
