@@ -3,7 +3,7 @@ val customRepositories = Seq()
 object scalaVersion {
 
   val v2_11 = "2.11.12"
-  val v2_12 = "2.12.10"
+  val v2_12 = "2.12.11"
   val v2_13 = "2.13.1"
 
   val default = v2_13
@@ -11,7 +11,7 @@ object scalaVersion {
 }
 
 object scalaJsVersion {
-  val default = "0.6.29"
+  val default = "0.6.32"
 }
 
 /**

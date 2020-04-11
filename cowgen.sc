@@ -1,6 +1,6 @@
 import java.nio.charset.StandardCharsets
 
-import $ivy.`org.apache.commons:commons-text:1.6`
+import $ivy.`org.apache.commons:commons-text:1.8`
 import org.apache.commons.text.{CaseUtils, StringEscapeUtils}
 
 def generateDefaultCows(dir: os.Path, cowfiles: Seq[os.Path]): Unit = {
