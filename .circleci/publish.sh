@@ -17,10 +17,12 @@ if [[ "$CIRCLE_BRANCH" == "master" ]]; then
 
   echo "[INFO] Publish artifacts"
 
-  mill mill.scalalib.PublishModule/publishAll \
+  mill --version
+
+  mill "mill.scalalib.PublishModule/publishAll" \
     --sonatypeCreds "guilgaly:$SONATYPE_PASSWORD" \
     --signed "true" \
-    --publishArtifacts "_._[$scala_version].publishArtifacts"
+    --publishArtifacts "core._[$scala_version].publishArtifacts"
 
   if [[ "$publish_web" == "true" ]]; then
     echo "[INFO] Deploying JAR to Heroku"
