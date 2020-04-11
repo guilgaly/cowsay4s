@@ -13,7 +13,7 @@ case class CliArgs(
     nowrap: Boolean,
     wrapcolumn: Int,
     action: CowAction,
-    message: Option[String]
+    message: Option[String],
 ) {
 
   /** No-args constructor used only for the scopt parser. */
@@ -26,7 +26,7 @@ case class CliArgs(
     nowrap = false,
     wrapcolumn = 40,
     action = CowAction.CowSay,
-    message = None
+    message = None,
   )
 }
 
@@ -53,13 +53,13 @@ object CliArgs {
 
       opt[CowEyes]('e', "eyes")
         .text(
-          "appearance of the cow's eyes (only the first two characters are used)"
+          "appearance of the cow's eyes (only the first two characters are used)",
         )
         .action((eyes, config) => config.copy(eyes = Some(eyes)))
 
       opt[CowTongue]('T', "tongue")
         .text(
-          "appearance of the cow's tongue (only the first two characters are used)"
+          "appearance of the cow's tongue (only the first two characters are used)",
         )
         .action((tongue, config) => config.copy(tongue = Some(tongue)))
 
@@ -82,7 +82,7 @@ object CliArgs {
             success
           else
             failure(
-              s"$w is not a valid argument for --wrapcolumn; should be strictly positive"
+              s"$w is not a valid argument for --wrapcolumn; should be strictly positive",
             )
         }
         .action((wrapcolumn, config) => config.copy(wrapcolumn = wrapcolumn))
@@ -95,7 +95,7 @@ object CliArgs {
             success
           case invalid =>
             failure(
-              s"$invalid is not a valid action; should be 'say' or 'think'; "
+              s"$invalid is not a valid action; should be 'say' or 'think'; ",
             )
         }
         .action {
@@ -120,8 +120,8 @@ object CliArgs {
       .withCowNameInsensitive(cowStr)
       .getOrElse(
         throw new IllegalArgumentException(
-          s"'$cowStr' is not a valid cowfile name."
-        )
+          s"'$cowStr' is not a valid cowfile name.",
+        ),
       )
   }
 

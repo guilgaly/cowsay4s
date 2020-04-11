@@ -11,7 +11,7 @@ case class TalkCommand(message: String) {
     message,
     DefaultCowMode.Default,
     CowAction.CowSay,
-    MessageWrapping(40)
+    MessageWrapping(40),
   )
 }
 

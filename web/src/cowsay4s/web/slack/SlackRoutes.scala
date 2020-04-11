@@ -6,14 +6,14 @@ import cowsay4s.web.RouteProvider
 
 final class SlackRoutes(
     cowsayRoutes: SlackCowsayRoutes,
-    oauthRoutes: SlackOauthRoutes
+    oauthRoutes: SlackOauthRoutes,
 ) extends RouteProvider {
 
   def apply(): Route =
     pathPrefix("slack") {
       concat(
         cowsayRoutes(),
-        oauthRoutes()
+        oauthRoutes(),
       )
     }
 }

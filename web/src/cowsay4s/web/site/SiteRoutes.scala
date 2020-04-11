@@ -24,7 +24,7 @@ final class SiteRoutes(settings: ServerSettings, siteCowsay: SiteCowsay)
       },
       getAbout,
       getCowsay4slack,
-      getListCows
+      getListCows,
     )
 
   private def getStaticAssets = pathPrefix("static") {
@@ -42,8 +42,8 @@ final class SiteRoutes(settings: ServerSettings, siteCowsay: SiteCowsay)
         "action".as[CowAction].?,
         "default-cow".as[DefaultCow].?,
         "mode".as[DefaultCowMode].?,
-        "outputType".as[OutputType].?
-      )
+        "outputType".as[OutputType].?,
+      ),
     ) { (message, cowAction, defaultCow, cowMode, outputType) =>
       val talkCommand =
         TalkCommand.withDefaults(message, cowAction, defaultCow, cowMode)

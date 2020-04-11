@@ -37,7 +37,7 @@ private[core] object Baloon {
   def format(
       text: String,
       lineWidth: MessageWrapping,
-      delimiters: Delimiters
+      delimiters: Delimiters,
   ): String = {
     val lines = TextUtil.softWrap(text, lineWidth.value)
     val maxLength = lines.map(TextUtil.displayLength).max

@@ -13,7 +13,7 @@ final case class NewTeamRegistration(
     teamId: String,
     teamName: String,
     accessToken: String,
-    scope: String
+    scope: String,
 ) extends TeamRegistrationLike
 
 final case class TeamRegistration(
@@ -22,5 +22,5 @@ final case class TeamRegistration(
     createdOn: Instant,
     updatedOn: Instant,
     accessToken: String,
-    scope: String
+    scope: String,
 ) extends TeamRegistrationLike

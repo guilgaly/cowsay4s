@@ -16,7 +16,7 @@ class TextUtilUnicodeSpec extends UnitSpec {
         val expected = Seq(
           "😀😀😀😀 🐮🐮🐮🐮",
           "🤘🤘🤘🤘 👽👽👽👽👽",
-          "🦄🦄🦄"
+          "🦄🦄🦄",
         )
         TextUtil.softWrap(str, 10) shouldBe expected
       }

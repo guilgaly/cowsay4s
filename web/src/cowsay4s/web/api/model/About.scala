@@ -7,7 +7,7 @@ case class About(
     name: String,
     version: String,
     scalaVersion: String,
-    apiVersion: String
+    apiVersion: String,
 )
 
 object About {

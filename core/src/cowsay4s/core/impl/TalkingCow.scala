@@ -14,7 +14,7 @@ private[core] object TalkingCow {
       cow: Cow,
       eyes: CowEyes,
       tongue: CowTongue,
-      action: CowAction
+      action: CowAction,
   ): String = {
     val thoughts = action match {
       case CowAction.CowSay   => """\"""
@@ -28,7 +28,7 @@ private[core] object TalkingCow {
       cow: Cow,
       eyes: String,
       tongue: String,
-      thoughts: String
+      thoughts: String,
   ): String =
     cow.cowValue
       .replace("$eyes", eyes)

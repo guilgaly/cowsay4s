@@ -36,7 +36,7 @@ trait RootModule extends ApiModule with SiteModule with SlackModule {
       concat(
         siteRoutes(),
         apiRoutes(),
-        slackRoutes()
+        slackRoutes(),
       )
     }
 }

@@ -6,7 +6,7 @@ case class CowCommand(
     eyes: CowEyes = CowEyes.default,
     tongue: CowTongue = CowTongue.default,
     action: CowAction = CowAction.defaultValue,
-    wrap: MessageWrapping = MessageWrapping.default
+    wrap: MessageWrapping = MessageWrapping.default,
 )
 
 object CowCommand {
@@ -17,7 +17,7 @@ object CowCommand {
       cow: Cow,
       message: String,
       mode: CowMode,
-      action: CowAction
+      action: CowAction,
   ): CowCommand =
     CowCommand(cow, message, mode.eyes, mode.tongue, action)
 
@@ -25,7 +25,7 @@ object CowCommand {
       cow: Cow,
       message: String,
       mode: CowMode,
-      wrap: MessageWrapping
+      wrap: MessageWrapping,
   ): CowCommand =
     CowCommand(cow, message, mode.eyes, mode.tongue, wrap = wrap)
 
@@ -34,7 +34,7 @@ object CowCommand {
       message: String,
       mode: CowMode,
       action: CowAction,
-      wrap: MessageWrapping
+      wrap: MessageWrapping,
   ): CowCommand =
     CowCommand(cow, message, mode.eyes, mode.tongue, action, wrap)
 }

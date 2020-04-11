@@ -8,7 +8,7 @@ case class AccessToken(
     accessToken: String,
     scope: String,
     teamName: String,
-    teamId: String
+    teamId: String,
 )
 
 object AccessToken {

@@ -8,7 +8,7 @@ import scala.collection.immutable
 case class TalkCommandText(
     cow: DefaultCow,
     mode: DefaultCowMode,
-    message: String
+    message: String,
 )
 
 object TalkCommandText {
@@ -16,12 +16,12 @@ object TalkCommandText {
   def withDefaults(
       cow: Option[DefaultCow],
       mode: Option[DefaultCowMode],
-      message: String
+      message: String,
   ): TalkCommandText =
     new TalkCommandText(
       cow.getOrElse(DefaultCow.defaultValue),
       mode.getOrElse(DefaultCowMode.defaultValue),
-      message
+      message,
     )
 
   object Parser {
@@ -30,7 +30,7 @@ object TalkCommandText {
     import ParsingError._
 
     def apply(
-        text: String
+        text: String,
     ): Either[List[TalkCommandText.ParsingError], TalkCommandText] =
       parse(text.trim, parser(_)) match {
         case Parsed.Success((options, message), _) =>
@@ -73,7 +73,7 @@ object TalkCommandText {
 
     private def cmdOptions[_: P] = P(
       (cmdOptionType ~ "=" ~ notWhitespace ~ whitespace.rep(1)).rep
-        .map(_.toMap)
+        .map(_.toMap),
     )
 
     private def cmdOptionType[_: P]: P[CmdOption] = {

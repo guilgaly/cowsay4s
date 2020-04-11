@@ -13,7 +13,7 @@ class TalkingCowSpec extends UnitSpec {
         CowEyes("**"),
         CowTongue("U "),
         CowAction.CowSay,
-        MessageWrapping(40)
+        MessageWrapping(40),
       )
       "construct a single line cowsay output" in {
         val cowsayCommand = command
@@ -32,7 +32,7 @@ class TalkingCowSpec extends UnitSpec {
       "construct a multiline cowsay output" in {
         val cowsayCommand = command.copy(
           message =
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nec cursus sapien, quis sagittis quam. In ultrices fringilla mauris, eget euismod mi faucibus vel. Nulla vel vulputate neque, nec feugiat massa."
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nec cursus sapien, quis sagittis quam. In ultrices fringilla mauris, eget euismod mi faucibus vel. Nulla vel vulputate neque, nec feugiat massa.",
         )
         val expected =
           """ __________________________________________ 
@@ -70,7 +70,7 @@ class TalkingCowSpec extends UnitSpec {
           .copy(action = CowAction.CowThink)
           .copy(
             message =
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nec cursus sapien, quis sagittis quam. In ultrices fringilla mauris, eget euismod mi faucibus vel. Nulla vel vulputate neque, nec feugiat massa."
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nec cursus sapien, quis sagittis quam. In ultrices fringilla mauris, eget euismod mi faucibus vel. Nulla vel vulputate neque, nec feugiat massa.",
           )
         val expected =
           """ __________________________________________ 

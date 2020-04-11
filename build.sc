@@ -17,7 +17,7 @@ trait BaseModule extends ScalaModule with ScalafmtModule {
 
   override def sources = T.sources(
     millSourcePath / "src",
-    millSourcePath / s"src-$platformSegment"
+    millSourcePath / s"src-$platformSegment",
   )
 }
 
@@ -91,8 +91,8 @@ object core extends Module {
       licenses = Seq(License.MIT),
       versionControl = VersionControl.github("guilgaly", "cowsay4s"),
       developers = Seq(
-        Developer("guilgaly", "Guillaume Galy", "https://github.com/guilgaly")
-      )
+        Developer("guilgaly", "Guillaume Galy", "https://github.com/guilgaly"),
+      ),
     )
 
     // Cowfiles code generation
@@ -130,7 +130,7 @@ object cli extends ScalaModule with ScalafmtModule {
   override def scalacOptions = settings.scalacOptions(scalaVers)
   override def moduleDeps = Seq(core.jvm(scalaVers))
   override def ivyDeps = Agg(
-    dependencies.scopt
+    dependencies.scopt,
   )
 
   object test extends Tests with ScalafmtModule {
@@ -164,7 +164,7 @@ object web extends ScalaModule with ScalafmtModule with BuildInfo {
     dependencies.apacheCommons.text,
     dependencies.apacheCommons.codec,
     dependencies.fastparse,
-    dependencies.macWire
+    dependencies.macWire,
   )
 
   def publishVersion = "0.1.4-SNAPSHOT"
@@ -173,7 +173,7 @@ object web extends ScalaModule with ScalafmtModule with BuildInfo {
     Map(
       "name" -> "cowsay-online",
       "version" -> publishVersion,
-      "scalaVersion" -> scalaVersion()
+      "scalaVersion" -> scalaVersion(),
     )
   }
   override def buildInfoPackageName = Some("cowsay4s.web")
@@ -187,7 +187,7 @@ object web extends ScalaModule with ScalafmtModule with BuildInfo {
       dependencies.scalatest,
       dependencies.akka.testkit.core,
       dependencies.akka.testkit.stream,
-      dependencies.akka.testkit.http
+      dependencies.akka.testkit.http,
     )
   }
 }

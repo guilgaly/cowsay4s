@@ -12,8 +12,8 @@ object ListCows extends Page {
     renderPage(Some("All supported cows"))(
       div(cls := "multiline-display")(
         showcaseCow(DefaultCow.defaultValue),
-        DefaultCow.nonDefaultValues.map(showcaseCow)
-      )
+        DefaultCow.nonDefaultValues.map(showcaseCow),
+      ),
     )
 
   private def showcaseCow(cow: DefaultCow) = {
@@ -22,7 +22,7 @@ object ListCows extends Page {
 
     tags2.section(
       h3(cow.cowName),
-      p(pre(cls := "cow-display")(cowPic))
+      p(pre(cls := "cow-display")(cowPic)),
     )
   }
 }

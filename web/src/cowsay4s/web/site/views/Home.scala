@@ -15,15 +15,15 @@ object Home extends Page {
 
   val renderWithoutCow: Frag =
     renderPage(None)(
-      cowFormSection(TalkCommand.default)
+      cowFormSection(TalkCommand.default),
     )
 
   def renderWithTextCow(cow: String, talkCommand: TalkCommand): Frag =
     renderPage(None)(
       tags2.section(
-        pre(cls := "cow-display")(cow)
+        pre(cls := "cow-display")(cow),
       ),
-      cowFormSection(talkCommand, OutputType.Text)
+      cowFormSection(talkCommand, OutputType.Text),
     )
 
   def renderWithPngCow(cow: Array[Byte], talkCommand: TalkCommand): Frag = {
@@ -32,15 +32,15 @@ object Home extends Page {
     val imgSrc = s"data:image/png;base64, $base64Data"
     renderPage(None)(
       tags2.section(
-        img(src := imgSrc, cls := "cow-display")
+        img(src := imgSrc, cls := "cow-display"),
       ),
-      cowFormSection(talkCommand, OutputType.Png)
+      cowFormSection(talkCommand, OutputType.Png),
     )
   }
 
   private def cowFormSection(
       talkCommand: TalkCommand,
-      outputType: OutputType = OutputType.defaultValue
+      outputType: OutputType = OutputType.defaultValue,
   ) = {
     tags2.section(
       form(id := "cowform", action := "", method := "post")(
@@ -53,10 +53,10 @@ object Home extends Page {
           input(
             tpe := "submit",
             value := "Make the cow talk",
-            cls := "form-button"
-          )
-        )
-      )
+            cls := "form-button",
+          ),
+        ),
+      ),
     )
   }
 
@@ -67,15 +67,15 @@ object Home extends Page {
           tpe := "radio",
           name := "action",
           value := "CowSay",
-          if (selected == CowAction.CowSay) checked := "true" else ()
+          if (selected == CowAction.CowSay) checked := "true" else (),
         )("Say"),
         input(
           tpe := "radio",
           name := "action",
           value := "CowThink",
-          if (selected == CowAction.CowThink) checked := "true" else ()
-        )("Think")
-      )
+          if (selected == CowAction.CowThink) checked := "true" else (),
+        )("Think"),
+      ),
     )
 
   private def cowFormMessageField(message: String) =
@@ -86,29 +86,29 @@ object Home extends Page {
         autofocus := "autofocus",
         cols := "40",
         rows := "5",
-        maxlength := "2000"
-      )(message)
+        maxlength := "2000",
+      )(message),
     )
 
   private def cowFormCowField(selected: DefaultCow) =
     cowFormField("cowform-select-default-cow", "Cow:")(
       select(id := "cowform-select-default-cow", name := "default-cow")(
-        enumOptions(DefaultCow, selected)
-      )
+        enumOptions(DefaultCow, selected),
+      ),
     )
 
   private def cowFormModeField(selected: DefaultCowMode) =
     cowFormField("cowform-select-mode", "Mode:")(
       select(id := "cowform-select-mode", name := "mode")(
-        enumOptions(DefaultCowMode, selected)
-      )
+        enumOptions(DefaultCowMode, selected),
+      ),
     )
 
   private def cowFormOutputTypeField(selected: OutputType) =
     cowFormField("cowform-select-outputType", "Output type:")(
       select(id := "cowform-select-outputType", name := "outputType")(
-        enumOptions(OutputType, selected)
-      )
+        enumOptions(OutputType, selected),
+      ),
     )
 
   private def cowFormField(id: String, labelText: String)(content: Frag) =
@@ -116,14 +116,14 @@ object Home extends Page {
 
   private def enumOptions[A <: EnumEntry, E <: EnumWithDefault[A]](
       enum: E,
-      selectedValue: A
+      selectedValue: A,
   ): Frag = {
     val orderedNonDefaults = enum.nonDefaultValues.sortBy(_.entryName)
     val orderedValues = enum.defaultValue +: orderedNonDefaults
     orderedValues.map { entry =>
       option(
         value := entry.entryName,
-        if (entry == selectedValue) selected := "true" else ""
+        if (entry == selectedValue) selected := "true" else "",
       )(entry.entryName)
     }
   }

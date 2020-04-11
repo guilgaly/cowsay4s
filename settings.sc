@@ -1,8 +1,8 @@
 import coursier.maven.MavenRepository
 
 val customRepositories = Seq(
-  MavenRepository("https://oss.sonatype.org/content/repositories/snapshots"),
-)
+    MavenRepository("https://oss.sonatype.org/content/repositories/snapshots"),
+  )
 
 object scalaVersion {
 
@@ -18,8 +18,8 @@ object scalaJsVersion {
 }
 
 /**
- * See https://tpolecat.github.io/2017/04/25/scalac-flags.html
- */
+   * See https://tpolecat.github.io/2017/04/25/scalac-flags.html
+   */
 def scalacOptions(scalaVersion: String) = {
 
   def v2_12 = Seq(
@@ -118,7 +118,7 @@ def scalacOptions(scalaVersion: String) = {
     "-Wunused:locals", // Warn if a local definition is unused.
     "-Wunused:explicits", // Warn if an explicit parameter is unused.
     "-Wunused:implicits", // Warn if an implicit parameter is unused.
-    "-Wunused:params",  // Enable -Wunused:explicits,implicits.
+    "-Wunused:params", // Enable -Wunused:explicits,implicits.
     "-Wvalue-discard", // Warn when non-Unit expression results are unused.
 
     // ********** -Xlint: Enable recommended warnings ****************************

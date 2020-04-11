@@ -28,7 +28,7 @@ object Main {
       eyes,
       tongue,
       config.action,
-      MessageWrapping(config.wrapcolumn)
+      MessageWrapping(config.wrapcolumn),
     )
 
     val cowsay = CowSay.default

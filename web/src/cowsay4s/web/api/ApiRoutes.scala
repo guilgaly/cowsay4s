@@ -27,7 +27,7 @@ final class ApiRoutes(apiCowsay: ApiCowsay)
               complete((StatusCodes.OK, talkResponse))
             }
           }
-        }
+        },
       )
     }
 }

@@ -14,7 +14,7 @@ object BitmapCows {
         command: CowCommand,
         font: Font,
         fontColor: Color,
-        backgroundColor: Option[Color] = None
+        backgroundColor: Option[Color] = None,
     ): BufferedImage = {
       val text = cowSay.talk(command)
       val lines = text.linesIterator.toList
@@ -26,7 +26,7 @@ object BitmapCows {
         command: CowCommand,
         font: Font,
         fontColor: Color,
-        backgroundColor: Option[Color] = None
+        backgroundColor: Option[Color] = None,
     ): Array[Byte] = {
       val img = talkToBufferedImage(command, font, fontColor, backgroundColor)
       writeToByteArray(img, "png")
@@ -37,7 +37,7 @@ object BitmapCows {
         command: CowCommand,
         font: Font,
         fontColor: Color,
-        backgroundColor: Option[Color] = None
+        backgroundColor: Option[Color] = None,
     ): Unit = {
       val img = talkToBufferedImage(command, font, fontColor, backgroundColor)
       ImageIO.write(img, "png", path.toFile)
@@ -48,7 +48,7 @@ object BitmapCows {
         lines: List[String],
         font: Font,
         fontColor: Color,
-        backgroundColor: Option[Color]
+        backgroundColor: Option[Color],
     ) = {
       val (width, height) = textSize(lines, font)
 
@@ -68,7 +68,7 @@ object BitmapCows {
         img: BufferedImage,
         font: Font,
         fontColor: Color,
-        backgroundColor: Option[Color]
+        backgroundColor: Option[Color],
     ) = {
       val g2d = img.createGraphics()
 
@@ -81,7 +81,7 @@ object BitmapCows {
       g2d.setFont(font)
       g2d.setRenderingHint(
         KEY_ALPHA_INTERPOLATION,
-        VALUE_ALPHA_INTERPOLATION_QUALITY
+        VALUE_ALPHA_INTERPOLATION_QUALITY,
       )
       g2d.setRenderingHint(KEY_ANTIALIASING, VALUE_ANTIALIAS_ON)
       g2d.setRenderingHint(KEY_COLOR_RENDERING, VALUE_COLOR_RENDER_QUALITY)

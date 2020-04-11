@@ -14,7 +14,7 @@ class TalkCommandTextParserSpec extends UnitSpec {
         val expected = TalkCommandText.withDefaults(
           None,
           None,
-          "Hello World!\n\tWhat a lovely test. ♥︎"
+          "Hello World!\n\tWhat a lovely test. ♥︎",
         )
         TalkCommandText.Parser(text) shouldBe Right(expected)
       }
@@ -24,7 +24,7 @@ class TalkCommandTextParserSpec extends UnitSpec {
         val expected = TalkCommandText(
           DefaultCow.ElephantInSnake,
           DefaultCowMode.Borg,
-          "Hello World!\n\tWhat a lovely test. ♥︎"
+          "Hello World!\n\tWhat a lovely test. ♥︎",
         )
         TalkCommandText.Parser(text) shouldBe Right(expected)
       }
@@ -34,7 +34,7 @@ class TalkCommandTextParserSpec extends UnitSpec {
         val expected = TalkCommandText(
           DefaultCow.Pterodactyl,
           DefaultCowMode.Stoned,
-          "Hello World!"
+          "Hello World!",
         )
         TalkCommandText.Parser(text) shouldBe Right(expected)
       }

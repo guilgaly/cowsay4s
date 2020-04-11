@@ -13,8 +13,8 @@ object Header {
           li(a(href := "/")("Home")),
           li(a(href := "/about")("About")),
           li(a(href := "/cowsay4slack")("Slack integration")),
-          li(a(href := "/listCows")("List cows"))
-        )
-      )
+          li(a(href := "/listCows")("List cows")),
+        ),
+      ),
     )
 }

@@ -8,7 +8,7 @@ import scala.collection.immutable
 sealed abstract class DefaultCowMode(
     val modeName: String,
     _eyes: String,
-    _tongue: String
+    _tongue: String,
 ) extends EnumEntry
     with CowMode {
   override val eyes: CowEyes = CowEyes(_eyes)
@@ -20,7 +20,7 @@ object DefaultCowMode extends EnumWithDefault[DefaultCowMode] {
       extends DefaultCowMode(
         "default",
         CowEyes.default.value,
-        CowTongue.default.value
+        CowTongue.default.value,
       )
 
   case object Borg extends DefaultCowMode("borg", "==", "  ") // b

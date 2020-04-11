@@ -17,7 +17,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class SlackOauthRoutes(
     settings: ServerSettings,
     teamRegistrationDao: TeamRegistrationDao,
-    slackpiClient: SlackApiClient
+    slackpiClient: SlackApiClient,
 )(implicit system: ActorSystem)
     extends RouteProvider {
   implicit private val ec: ExecutionContext = system.dispatcher
@@ -48,14 +48,14 @@ class SlackOauthRoutes(
           token.teamId,
           token.teamName,
           token.accessToken,
-          token.scope
+          token.scope,
         )
         _ <- teamRegistrationDao.insertOrUpdate(newRegistration)
 
       } yield HttpResponse(
         status = StatusCodes.SeeOther,
         headers = headers.Location("/") :: Nil,
-        entity = HttpEntity.Empty
+        entity = HttpEntity.Empty,
       )
     }
   }

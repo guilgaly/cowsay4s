@@ -9,7 +9,7 @@ import scala.collection.immutable
 
 sealed abstract class SlashCommand(
     val command: String,
-    val cowAction: CowAction
+    val cowAction: CowAction,
 ) extends EnumEntry {
   override def entryName: String = command
 }

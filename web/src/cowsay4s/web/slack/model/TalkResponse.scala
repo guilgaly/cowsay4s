@@ -8,7 +8,7 @@ import scala.collection.immutable
 
 case class TalkResponse(
     response_type: ResponseType,
-    text: String
+    text: String,
 )
 
 object TalkResponse {

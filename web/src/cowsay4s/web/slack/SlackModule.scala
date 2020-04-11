@@ -21,7 +21,7 @@ trait SlackModule {
 
   lazy val slackRoutes: RouteProvider = new SlackRoutes(
     new SlackCowsayRoutes(settings, slackpiClient, slackCowsay),
-    new SlackOauthRoutes(settings, teamRegistrationDao, slackpiClient)
+    new SlackOauthRoutes(settings, teamRegistrationDao, slackpiClient),
   )
 
   lazy val teamRegistrationDao: TeamRegistrationDao = wire[TeamRegistrationDao]

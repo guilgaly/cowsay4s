@@ -26,6 +26,6 @@ final class SiteCowsay(cowSay: CowSay) {
       talkCommand.message,
       talkCommand.mode,
       talkCommand.action,
-      MessageWrapping(40)
+      MessageWrapping(40),
     )
 }

@@ -5,19 +5,19 @@ import cowsay4s.core.defaults.{DefaultCow, DefaultCowMode}
 import cowsay4s.web.ServerSettings
 import cowsay4s.web.slack.model.TalkResponse.ResponseType.{
   ephemeral,
-  in_channel
+  in_channel,
 }
 import cowsay4s.web.slack.model.{
   SlashCommand,
   TalkCommand,
   TalkCommandText,
-  TalkResponse
+  TalkResponse,
 }
 
 import scala.concurrent.{ExecutionContext, Future}
 
 final class SlackCowsay(settings: ServerSettings, cowSay: CowSay)(
-    implicit ec: ExecutionContext
+    implicit ec: ExecutionContext,
 ) {
 
   def talk(command: TalkCommand): Future[TalkResponse] = Future {
@@ -64,7 +64,7 @@ final class SlackCowsay(settings: ServerSettings, cowSay: CowSay)(
   private def doTalk(
       slashCommand: SlashCommand,
       userId: String,
-      text: String
+      text: String,
   ) = {
     import cowsay4s.web.slack.model.TalkCommandText.ParsingError._
 
@@ -94,7 +94,7 @@ final class SlackCowsay(settings: ServerSettings, cowSay: CowSay)(
       userId: String,
       cow: DefaultCow,
       mode: DefaultCowMode,
-      message: String
+      message: String,
   ) = {
     val action = slashCommand.cowAction
     val wrap = MessageWrapping(40)
