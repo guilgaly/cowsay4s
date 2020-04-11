@@ -22,7 +22,7 @@ object About extends Page {
       p(pre(cowsayIllustration)),
       p(
         "Source code available ",
-        a(href := "https://github.com/guilgaly/cowsay-online")("on GitHub"),
+        a(href := "https://github.com/guilgaly/cowsay4s")("on GitHub"),
         "."
       ),
       p(
@@ -38,12 +38,6 @@ object About extends Page {
             ),
             " for the original program"
           ),
-          li(
-            a(href := "https://github.com/guilgaly/cowsay4s")(
-              "guilgaly/cowsay4s"
-            ),
-            " for the re-implementation of cowsay as a Scala library, used in this project"
-          )
         )
       )
     )

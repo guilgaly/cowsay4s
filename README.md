@@ -24,6 +24,25 @@ See also:
 - [tnalpgge/rank-amateur-cowsay](https://github.com/tnalpgge/rank-amateur-cowsay)
 for the original program
 
+## Web app (cowsay-online)
+
+A web app is included in the module `web`, because we all know that of course
+everything is better in the Cloud :cloud:. Written with Akka HTTP.
+
+It aims to provide, in a single app:
+
+- a webpage to manually generate cowsay outputs
+- a RESTful API providing the same service
+- Slack integration
+
+Cowsay-online is accessible at
+[cowsay-online.herokuapp.com](https://cowsay-online.herokuapp.com).
+
+## Command line app
+
+A command line app is included in the module `cli`. Run it with `--help` for
+usage information.
+
 ## Getting started with the library
 
 Cowsay4s is made up of three libraries:
@@ -53,7 +72,7 @@ Dependencies when building with SBT:
 ### Example with only the `core` module
 
 Here is the example at the beginning of this README file, implemented
-using only `cowsay4s-core`:
+using only `cowsay4s-core` and providing a custom "cow" (ascii art):
 
 ```scala
 import cowsay4s.core._
@@ -82,10 +101,7 @@ val result: String = CowSay.default.talk(myCommand)
 println(result)
 ```
 
-### Example with the `defaults` module
-
-And here is the same example, implemented using `cowsay4s-core` and
-`cowsay4s-defaults`:
+And here is the same example, using some of the included defaults:
 
 ```scala
 import cowsay4s.core._
@@ -184,20 +200,4 @@ val thinkingTransformer: CowSay.CommandTransformer =
 // command you feed it.
 val thinkingAndMuteCowSay =
   CowSay.withTransformers(thinkingTransformer, muteTransformer)
-```
-
-### Asciimojis support
-
-Asciimojis are supported by way of a transformer, available with the
-`cowsay4s-asciimojis` module. Here's how to setup your `CowSay` to use
-it:
-
-```scala
-import cowsay4s.core.CowSay
-import cowsay4s.asciimojis.AsciimojisTransformer
-
-// This CowSay will allways be thinking and mute, not matter what
-// command you feed it.
-val cowSayWithAsciimojisSupport =
-  CowSay.withTransformers(AsciimojisTransformer)
 ```
