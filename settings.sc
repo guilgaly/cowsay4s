@@ -2,12 +2,11 @@ val customRepositories = Seq()
 
 object scalaVersion {
 
-  val v2_11 = "2.11.12"
   val v2_12 = "2.12.11"
   val v2_13 = "2.13.1"
 
   val default = v2_13
-  val cross = Seq(v2_11, v2_12, v2_13)
+  val cross = Seq(v2_12, v2_13)
 }
 
 object scalaJsVersion {
@@ -18,28 +17,6 @@ object scalaJsVersion {
  * See https://tpolecat.github.io/2017/04/25/scalac-flags.html
  */
 def scalacOptions(scalaVersion: String) = {
-
-  def v2_11 = Seq(
-    "-encoding",
-    "utf-8", // Specify character encoding used by source files.
-    "-Xsource:2.12",
-    "-explaintypes", // Explain type errors in more detail.
-    "-feature", // Emit warning and location for usages of features that should be imported explicitly.
-    "-unchecked", // Enable additional warnings where generated code depends on assumptions.
-    "-Xcheckinit", // Wrap field accessors to throw an exception on uninitialized access.
-    "-Ypartial-unification", // Enable partial unification in type constructor inference
-    "-Yno-adapted-args", // Do not adapt an argument list (either by inserting () or creating a tuple) to match the receiver.
-    "-deprecation",
-
-    "-Ywarn-dead-code", // Warn when dead code is identified.
-    "-Ywarn-numeric-widen", // Warn when numerics are widened.
-    "-Ywarn-value-discard", // Warn when non-Unit expression results are unused.
-
-    "-Xlint:inaccessible", // Warn about inaccessible types in method signatures.
-    "-Xlint:infer-any", // Warn when a type argument is inferred to be `Any`.
-    "-Xlint:nullary-override", // Warn when non-nullary `def f()' overrides nullary `def f'.
-    "-Xlint:nullary-unit", // Warn when nullary methods return Unit.
-  )
 
   def v2_12 = Seq(
     "-encoding",
@@ -165,9 +142,7 @@ def scalacOptions(scalaVersion: String) = {
     "-Xlint:deprecation", // Enable linted deprecations.
   )
 
-
-  if (scalaVersion.startsWith("2.11")) v2_11
-  else if (scalaVersion.startsWith("2.12")) v2_12
+  if (scalaVersion.startsWith("2.12")) v2_12
   else if (scalaVersion.startsWith("2.13")) v2_13
   else sys.error(s"No Scala compiler options defined for version $scalaVersion")
 }

@@ -57,11 +57,6 @@ workflows:
           name: "Scalafmt"
 
       - test-publish:
-          name: "2.11"
-          requires:
-            - "Scalafmt"
-          scala-version: "2.11.12"
-      - test-publish:
           name: "2.12"
           requires:
             - "Scalafmt"
