@@ -2,7 +2,7 @@ package cowsay4s.cli
 
 import cowsay4s.asciimojis.AsciimojisTransformer
 import cowsay4s.core._
-import cowsay4s.defaults.DefaultCow
+import cowsay4s.core.defaults.DefaultCow
 
 object Main {
   def main(args: Array[String]): Unit =

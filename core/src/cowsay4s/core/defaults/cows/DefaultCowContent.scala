@@ -1,4 +1,4 @@
-package cowsay4s.defaults.cows
+package cowsay4s.core.defaults.cows
 
 private[defaults] trait DefaultCowContent {
   def cowName: String

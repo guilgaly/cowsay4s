@@ -1,4 +1,4 @@
-package cowsay4s.defaults
+package cowsay4s.core.defaults
 
 import cowsay4s.core._
 import enumeratum.EnumEntry

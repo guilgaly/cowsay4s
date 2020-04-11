@@ -118,27 +118,17 @@ object core extends LibraryModule {
   override def moduleName = "core"
   override def moduleDescription = "Cowsay implemented as a Scala library"
 
-  override object jvm extends Cross[JvmModule](settings.scalaVersion.cross: _*)
+  override object jvm extends Cross[JvmCoreModule](settings.scalaVersion.cross: _*)
+  class JvmCoreModule(crossScalaVersion: String)
+    extends JvmModule(crossScalaVersion)
+      with CoreModule
+
   override object js extends Cross[JsModule](settings.scalaVersion.cross: _*)
-}
+  class JsCoreModule(crossScalaVersion: String)
+    extends JsModule(crossScalaVersion)
+      with CoreModule
 
-object defaults extends LibraryModule {
-  override def moduleName = "defaults"
-  override def moduleDescription =
-    "Default cows and modes for use with cowsay4s-core"
-  override def moduleDeps = Seq(core)
-
-  object jvm extends Cross[JvmDefaultsModule](settings.scalaVersion.cross: _*)
-  class JvmDefaultsModule(crossScalaVersion: String)
-      extends JvmModule(crossScalaVersion)
-      with DefaultsModule
-
-  object js extends Cross[JsDefaultsModule](settings.scalaVersion.cross: _*)
-  class JsDefaultsModule(crossScalaVersion: String)
-      extends JsModule(crossScalaVersion)
-      with DefaultsModule
-
-  trait DefaultsModule extends CommonModule {
+  trait CoreModule extends CommonModule {
     def cowfiles = T.sources { millSourcePath / 'cowfiles }
 
     def allCowfiles = T {
@@ -176,10 +166,7 @@ object cli extends ScalaModule with ScalafmtModule {
 
   override def scalaVersion = scalaVers
   override def scalacOptions = settings.scalacOptions(scalaVers)
-  override def moduleDeps = Seq(
-    defaults.jvm(scalaVers),
-    asciimojis.jvm(scalaVers),
-  )
+  override def moduleDeps = Seq(asciimojis.jvm(scalaVers))
   override def ivyDeps = Agg(
     dependencies.scopt,
   )

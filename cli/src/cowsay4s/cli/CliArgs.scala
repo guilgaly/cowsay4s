@@ -1,7 +1,7 @@
 package cowsay4s.cli
 
 import cowsay4s.core.{CowAction, CowEyes, CowMode, CowTongue}
-import cowsay4s.defaults.{DefaultCow, DefaultCowMode}
+import cowsay4s.core.defaults.{DefaultCow, DefaultCowMode}
 import scopt.{OptionParser, Read}
 
 case class CliArgs(
