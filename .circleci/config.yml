@@ -8,44 +8,43 @@ executors:
     environment:
       JVM_OPTS: -Xmx2g
       TERM: dumb
+  openjdk-11-node:
+    docker:
+        - image: guilgaly/openjdk-mill-node-heroku:11.0.6-0.6.1
+    working_directory: /tmp/cowsay4s
+    environment:
+      JVM_OPTS: -Xmx2g
+      TERM: dumb
 
 jobs:
-  check-format:
-    executor: openjdk-8-node
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v2-coursier-scalafmt-{{ checksum "dependencies.sc" }}
-            - v2-coursier-scalafmt-
-      - run: ./.circleci/check_formatting.sh
-      - save_cache:
-          key: v2-coursier-scalafmt-{{ checksum "dependencies.sc" }}
-          paths:
-            - ~/.cache/coursier
-      - persist_to_workspace:
-          root: /tmp
-          paths:
-            - cowsay4s
-  test-publish:
+  build:
     parameters:
+      executor:
+        type: string
       scala-version:
         type: string
       add-build:
         type: string
         default: ""
-    executor: openjdk-8-node
+      publish:
+        type: boolean
+        default: false
+    executor:
+      name: << parameters.executor >>
     steps:
-      - attach_workspace:
-          at: /tmp
+      - checkout
       - restore_cache:
           keys:
+            - v2-coursier-<< parameters.scala-version >>-{{ checksum "dependencies.sc" }}-{{ checksum "build.sc" }}
             - v2-coursier-<< parameters.scala-version >>-{{ checksum "dependencies.sc" }}
             - v2-coursier-<< parameters.scala-version >>-
-      - run: ./.circleci/execute_tests.sh << parameters.scala-version >> << parameters.add-build >>
-      - run: ./.circleci/publish.sh << parameters.scala-version >>
+      - run: ./.circleci/test.sh << parameters.scala-version >> << parameters.add-build >>
+      - when:
+          condition: << parameters.publish >>
+          steps:
+            - run: ./.circleci/publish.sh << parameters.scala-version >>
       - save_cache:
-          key: v2-coursier-<< parameters.scala-version >>-{{ checksum "dependencies.sc" }}
+          key: v2-coursier-<< parameters.scala-version >>-{{ checksum "dependencies.sc" }}-{{ checksum "build.sc" }}
           paths:
             - ~/.cache/coursier
 
@@ -53,17 +52,28 @@ workflows:
   version: 2
   build:
     jobs:
-      - check-format:
-          name: "Scalafmt"
-
-      - test-publish:
-          name: "2.12"
-          requires:
-            - "Scalafmt"
+      - build:
+          name: "2.12 (JDK 11)"
+          executor: "openjdk-11-node"
           scala-version: "2.12.11"
-      - test-publish:
-          name: "2.13 (+ CLI)"
+      - build:
+          name: "2.12 (JDK 8)"
           requires:
-            - "Scalafmt"
+            - "2.12 (JDK 11)"
+          executor: "openjdk-11-node"
+          scala-version: "2.12.11"
+          publish: true
+
+      - build:
+          name: "2.13 (JDK 11)"
+          executor: "openjdk-11-node"
           scala-version: "2.13.1"
           add-build: "cli"
+      - build:
+          name: "2.13 (JDK 8)"
+          requires:
+            - "2.13 (JDK 11)"
+          executor: "openjdk-11-node"
+          scala-version: "2.13.1"
+          add-build: "cli"
+          publish: true
