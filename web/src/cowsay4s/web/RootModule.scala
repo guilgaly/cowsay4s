@@ -5,7 +5,6 @@ import akka.dispatch.MessageDispatcher
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import akka.stream.ActorMaterializer
 import com.typesafe.config.{Config, ConfigFactory}
 import cowsay4s.core.CowSay
 import cowsay4s.web.api.ApiModule
@@ -22,7 +21,6 @@ trait RootModule extends ApiModule with SiteModule with SlackModule {
 
   implicit lazy val system: ActorSystem =
     ActorSystem("cowsay-online-system", config)
-  implicit lazy val materializer: ActorMaterializer = ActorMaterializer()
   implicit lazy val ec: ExecutionContext = system.dispatcher
 
   lazy val databaseEc: MessageDispatcher =

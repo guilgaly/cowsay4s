@@ -1,7 +1,6 @@
 package cowsay4s.web.slack
 
 import akka.actor.ActorSystem
-import akka.stream.ActorMaterializer
 import com.softwaremill.macwire._
 import cowsay4s.core.CowSay
 import cowsay4s.web.common.db.Database
@@ -16,7 +15,6 @@ trait SlackModule {
   def cowSay: CowSay
 
   implicit def system: ActorSystem
-  implicit def materializer: ActorMaterializer
   implicit def ec: ExecutionContext
 
   lazy val slackRoutes: RouteProvider = new SlackRoutes(

@@ -4,7 +4,6 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.unmarshalling.Unmarshal
-import akka.stream.ActorMaterializer
 import cowsay4s.web.slack.model.AccessToken
 import cowsay4s.web.{JsonSupport, ServerSettings}
 import org.log4s._
@@ -16,7 +15,6 @@ import scala.util.{Failure, Success}
 final class SlackApiClient(settings: ServerSettings)(
     implicit
     system: ActorSystem,
-    materializer: ActorMaterializer,
     ec: ExecutionContext,
 ) extends JsonSupport {
   private[this] val log = getLogger
