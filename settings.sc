@@ -6,8 +6,8 @@ val customRepositories = Seq(
 
 object scalaVersion {
 
-  val v2_12 = "2.12.11"
-  val v2_13 = "2.13.1"
+  val v2_12 = "2.12.12"
+  val v2_13 = "2.13.3"
 
   val default = v2_13
   val cross = Seq(v2_12, v2_13)
@@ -125,7 +125,6 @@ def scalacOptions(scalaVersion: String) = {
     "-Xlint:adapted-args", // Warn if an argument list is modified to match the receiver.
     "-Xlint:nullary-unit", // Warn when nullary methods return Unit.
     "-Xlint:inaccessible", // Warn about inaccessible types in method signatures.
-    "-Xlint:nullary-override", // Warn when non-nullary def f() overrides nullary def f.
     "-Xlint:infer-any", // Warn when a type argument is inferred to be Any.
     // "-Xlint:missing-interpolator", // A string literal appears to be missing an interpolator id.
     "-Xlint:doc-detached", // A Scaladoc comment appears to be detached from its element.

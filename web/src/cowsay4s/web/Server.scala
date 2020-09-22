@@ -15,7 +15,10 @@ object Server extends RootModule {
     val port = settings.http.port
 
     val binding: ServerBinding =
-      Await.result(Http().newServerAt(interface, port).bind(allRoutes), 30.seconds)
+      Await.result(
+        Http().newServerAt(interface, port).bind(allRoutes),
+        30.seconds,
+      )
     log.info(s"HTTP server bound to ${binding.localAddress}")
 
     Await.result(system.whenTerminated, Duration.Inf)

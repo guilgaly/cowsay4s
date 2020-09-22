@@ -37,11 +37,11 @@ final class SiteRoutes(settings: ServerSettings, siteCowsay: SiteCowsay)
 
   private def postHome = post {
     formFields(
-        "message",
-        "action".as[CowAction].?,
-        "default-cow".as[DefaultCow].?,
-        "mode".as[DefaultCowMode].?,
-        "outputType".as[OutputType].?,
+      "message",
+      "action".as[CowAction].?,
+      "default-cow".as[DefaultCow].?,
+      "mode".as[DefaultCowMode].?,
+      "outputType".as[OutputType].?,
     ) { (message, cowAction, defaultCow, cowMode, outputType) =>
       val talkCommand =
         TalkCommand.withDefaults(message, cowAction, defaultCow, cowMode)
