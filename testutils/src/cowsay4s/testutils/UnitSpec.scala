@@ -1,5 +1,6 @@
 package cowsay4s.testutils
 
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should.Matchers
 
-trait UnitSpec extends WordSpec with Matchers
+trait UnitSpec extends AnyWordSpec with Matchers

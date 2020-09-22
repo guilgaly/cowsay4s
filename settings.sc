@@ -14,7 +14,7 @@ object scalaVersion {
 }
 
 object scalaJsVersion {
-  val default = "0.6.32"
+  val default = "1.2.0"
 }
 
 /**

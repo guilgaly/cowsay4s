@@ -4,7 +4,7 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.unmarshalling.{FromEntityUnmarshaller, Unmarshaller}
-import cowsay4s.web.slack.model.TalkCommand
+import cowsay4s.web.slack.model.{SlashCommand, TalkCommand}
 import cowsay4s.web.util.SignatureUtils
 import cowsay4s.web.{JsonSupport, RouteProvider, ServerSettings}
 import org.apache.commons.codec.binary.Hex
@@ -21,7 +21,13 @@ class SlackCowsayRoutes(
 
   def apply(): Route = (path("talk") & post) {
     (validateSignature & ignoreSslChecks) {
-      formFields(TalkCommand.fields).as(TalkCommand.apply _) { command =>
+      formFields(
+        "command".as[SlashCommand],
+        "text",
+        "user_id",
+        "team_id",
+        "response_url",
+      ).as(TalkCommand.apply _) { command =>
         slackCowsay.talk(command).flatMap { response =>
           slackApiClient.respondToSlashCommand(command.responseUrl, response)
         }

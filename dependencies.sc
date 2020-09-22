@@ -2,24 +2,24 @@ import mill.scalalib._
 
 /** Enumerations. */
 object enumeratum {
-  val core = ivy"com.beachape::enumeratum::1.5.15"
-  val playJson = ivy"com.beachape::enumeratum-play-json:1.5.17"
+  val core = ivy"com.beachape::enumeratum::1.6.1"
+  val playJson = ivy"com.beachape::enumeratum-play-json:1.6.1"
 }
 
 /** Tests. */
-val scalatest = ivy"org.scalatest::scalatest::3.1.1"
+val scalatest = ivy"org.scalatest::scalatest::3.2.2"
 
 /** Command-line args parsing. */
 val scopt = ivy"com.github.scopt::scopt:3.7.1"
 
 /** Web server (akka-http). */
 object akka {
-  private val akkaHttpVersion = "10.1.11"
-  private val akkaVersion = "2.6.4"
+  private val akkaHttpVersion = "10.2.0"
+  private val akkaVersion = "2.6.9"
 
   val stream = ivy"com.typesafe.akka::akka-stream:${akkaVersion}"
   val http = ivy"com.typesafe.akka::akka-http:${akkaHttpVersion}"
-  val httpPlayJson = ivy"de.heikoseeberger::akka-http-play-json:1.31.0"
+  val httpPlayJson = ivy"de.heikoseeberger::akka-http-play-json:1.34.0"
   val slf4j = ivy"com.typesafe.akka::akka-slf4j:${akkaVersion}"
 
   object testkit {
@@ -30,11 +30,11 @@ object akka {
 }
 
 /** HTML templating. */
-val scalatags = ivy"com.lihaoyi::scalatags:0.8.6"
+val scalatags = ivy"com.lihaoyi::scalatags:0.9.1"
 
 object database {
-  val postgresql = ivy"org.postgresql:postgresql:42.2.12"
-  val hikaricp = ivy"com.zaxxer:HikariCP:3.4.2"
+  val postgresql = ivy"org.postgresql:postgresql:42.2.16"
+  val hikaricp = ivy"com.zaxxer:HikariCP:3.4.5"
 }
 
 /** Logging. */
@@ -45,12 +45,12 @@ object logging {
 }
 
 object apacheCommons {
-  val text = ivy"org.apache.commons:commons-text:1.8"
-  val codec = ivy"commons-codec:commons-codec:1.14"
+  val text = ivy"org.apache.commons:commons-text:1.9"
+  val codec = ivy"commons-codec:commons-codec:1.15"
 }
 
 /** Parser combinators. */
-val fastparse = ivy"com.lihaoyi::fastparse:2.2.4"
+val fastparse = ivy"com.lihaoyi::fastparse:2.3.0"
 
 /** Dependency injection. */
-val macWire = ivy"com.softwaremill.macwire::macros:2.3.3"
+val macWire = ivy"com.softwaremill.macwire::macros:2.3.7"
