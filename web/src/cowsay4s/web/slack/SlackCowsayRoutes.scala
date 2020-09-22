@@ -41,15 +41,14 @@ class SlackCowsayRoutes(
         entity(as[String])
     }
 
-    extractValues.trequire {
-      case (timestamp, expectedSignature, body) =>
-        val stringToSign = s"v0:$timestamp:$body"
-        SignatureUtils
-          .signHmacSHA256(stringToSign, settings.slack.signingSecret)
-          .map { signature =>
-            s"v0=${Hex.encodeHexString(signature)}" == expectedSignature
-          }
-          .getOrElse(false)
+    extractValues.trequire { case (timestamp, expectedSignature, body) =>
+      val stringToSign = s"v0:$timestamp:$body"
+      SignatureUtils
+        .signHmacSHA256(stringToSign, settings.slack.signingSecret)
+        .map { signature =>
+          s"v0=${Hex.encodeHexString(signature)}" == expectedSignature
+        }
+        .getOrElse(false)
     }
   }
 

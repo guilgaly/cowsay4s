@@ -16,8 +16,8 @@ import cowsay4s.web.slack.model.{
 
 import scala.concurrent.{ExecutionContext, Future}
 
-final class SlackCowsay(settings: ServerSettings, cowSay: CowSay)(
-    implicit ec: ExecutionContext,
+final class SlackCowsay(settings: ServerSettings, cowSay: CowSay)(implicit
+    ec: ExecutionContext,
 ) {
 
   def talk(command: TalkCommand): Future[TalkResponse] = Future {

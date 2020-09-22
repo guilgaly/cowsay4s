@@ -86,13 +86,19 @@ class TextUtilSpec extends UnitSpec {
     }
     "given a too long string" should {
       "cut it to length" in {
-        TextUtil.normalizeToDisplayLength("This string is way too long!", 10) shouldBe
+        TextUtil.normalizeToDisplayLength(
+          "This string is way too long!",
+          10,
+        ) shouldBe
           "This strin"
       }
     }
     "given an exact string" should {
       "return it as-is" in {
-        TextUtil.normalizeToDisplayLength("0123456789", 10) shouldBe "0123456789"
+        TextUtil.normalizeToDisplayLength(
+          "0123456789",
+          10,
+        ) shouldBe "0123456789"
       }
     }
     "given a short string" should {

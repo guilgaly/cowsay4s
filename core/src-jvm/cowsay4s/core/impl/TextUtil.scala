@@ -22,7 +22,9 @@ private[core] object TextUtil {
     while (end != BreakIterator.DONE) {
       val word = text.substring(start, end)
       val wordLength = displayLength(word)
-      if (currentLineLength == 0 || (currentLineLength + wordLength) <= lineWidth) {
+      if (
+        currentLineLength == 0 || (currentLineLength + wordLength) <= lineWidth
+      ) {
         currentLine.append(word)
         currentLineLength += wordLength
       } else {

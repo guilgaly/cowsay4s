@@ -12,8 +12,7 @@ import play.api.libs.json.{Json, Writes}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
-final class SlackApiClient(settings: ServerSettings)(
-    implicit
+final class SlackApiClient(settings: ServerSettings)(implicit
     system: ActorSystem,
     ec: ExecutionContext,
 ) extends JsonSupport {

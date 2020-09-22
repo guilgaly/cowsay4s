@@ -55,10 +55,9 @@ object BitmapCows {
       val img = createImage(width, height)
       val g2d = setupGraphics2D(img, font, fontColor, backgroundColor)
       val fontMetrics = g2d.getFontMetrics()
-      lines.zipWithIndex.foreach {
-        case (line, idx) =>
-          val y = fontMetrics.getAscent + fontMetrics.getHeight * idx
-          g2d.drawString(line, 0, y)
+      lines.zipWithIndex.foreach { case (line, idx) =>
+        val y = fontMetrics.getAscent + fontMetrics.getHeight * idx
+        g2d.drawString(line, 0, y)
       }
       g2d.dispose()
       img

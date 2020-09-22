@@ -49,7 +49,10 @@ class TextUtilUnicodeSpec extends UnitSpec {
   "normalizeToDisplayLength" when {
     "given a too long string with multipoint unicode characters" should {
       "cut it to length" in {
-        TextUtil.normalizeToDisplayLength("This 🗨 is way too long! 😱", 10) shouldBe
+        TextUtil.normalizeToDisplayLength(
+          "This 🗨 is way too long! 😱",
+          10,
+        ) shouldBe
           "This 🗨 is "
       }
     }
