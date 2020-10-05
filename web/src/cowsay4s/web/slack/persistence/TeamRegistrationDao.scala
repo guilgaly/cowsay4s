@@ -4,9 +4,9 @@ import java.sql.{ResultSet, Timestamp}
 import java.time.Instant
 import java.util.{Calendar, TimeZone}
 
-import cowsay4s.web.common.db.Database
-
 import scala.concurrent.Future
+
+import cowsay4s.web.common.db.Database
 
 final class TeamRegistrationDao(database: Database) {
 

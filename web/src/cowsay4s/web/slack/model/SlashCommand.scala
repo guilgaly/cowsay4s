@@ -1,11 +1,12 @@
 package cowsay4s.web.slack.model
 
+import scala.collection.immutable
+
 import akka.http.scaladsl.unmarshalling.{FromStringUnmarshaller, Unmarshaller}
-import cowsay4s.core.CowAction
-import cowsay4s.web.util.MarshallingUtils
 import enumeratum.{Enum, EnumEntry}
 
-import scala.collection.immutable
+import cowsay4s.core.CowAction
+import cowsay4s.web.util.MarshallingUtils
 
 sealed abstract class SlashCommand(
     val command: String,

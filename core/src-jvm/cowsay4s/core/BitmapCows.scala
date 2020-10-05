@@ -1,11 +1,10 @@
 package cowsay4s.core
 
+import java.awt.{Color, Font}
 import java.awt.RenderingHints._
 import java.awt.image.BufferedImage
-import java.awt.{Color, Font}
 import java.io.ByteArrayOutputStream
 import java.nio.file.Path
-
 import javax.imageio.ImageIO
 
 object BitmapCows {

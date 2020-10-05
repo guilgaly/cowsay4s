@@ -1,8 +1,9 @@
 package cowsay4s.web.site.views
 
+import scalatags.Text.all._
+
 import cowsay4s.web.ServerSettings
 import cowsay4s.web.site.views.common.Page
-import scalatags.Text.all._
 
 object Cowsay4slack extends Page {
 

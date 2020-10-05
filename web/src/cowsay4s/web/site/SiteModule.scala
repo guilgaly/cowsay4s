@@ -1,6 +1,7 @@
 package cowsay4s.web.site
 
 import com.softwaremill.macwire._
+
 import cowsay4s.core.CowSay
 import cowsay4s.web.{RouteProvider, ServerSettings}
 

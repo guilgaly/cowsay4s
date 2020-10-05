@@ -1,18 +1,19 @@
 package cowsay4s.web
 
+import scala.concurrent.ExecutionContext
+
 import akka.actor.ActorSystem
 import akka.dispatch.MessageDispatcher
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import com.typesafe.config.{Config, ConfigFactory}
+
 import cowsay4s.core.CowSay
 import cowsay4s.web.api.ApiModule
 import cowsay4s.web.common.db.Database
 import cowsay4s.web.site.SiteModule
 import cowsay4s.web.slack.SlackModule
-
-import scala.concurrent.ExecutionContext
 
 trait RootModule extends ApiModule with SiteModule with SlackModule {
 

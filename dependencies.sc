@@ -1,5 +1,7 @@
 import mill.scalalib._
 
+val scalafix = ivy"com.github.liancheng::organize-imports:0.4.2"
+
 /** Enumerations. */
 object enumeratum {
   val core = ivy"com.beachape::enumeratum::1.6.1"

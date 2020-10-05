@@ -2,12 +2,13 @@ package cowsay4s.web.common.db
 
 import java.sql.Connection
 
-import com.zaxxer.hikari.{HikariConfig, HikariDataSource}
-import cowsay4s.web.ServerSettings
-import org.log4s._
-
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.{ControlThrowable, NonFatal}
+
+import com.zaxxer.hikari.{HikariConfig, HikariDataSource}
+import org.log4s._
+
+import cowsay4s.web.ServerSettings
 
 final class Database(settings: ServerSettings, ec: ExecutionContext) {
   private[this] val log = getLogger

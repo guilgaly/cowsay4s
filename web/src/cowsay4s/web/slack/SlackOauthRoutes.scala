@@ -3,16 +3,17 @@ package cowsay4s.web.slack
 import java.net.URLEncoder
 import java.util.UUID
 
+import scala.concurrent.{ExecutionContext, Future}
+
 import akka.actor.ActorSystem
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import cowsay4s.web.slack.persistence.{NewTeamRegistration, TeamRegistrationDao}
-import cowsay4s.web.util.SignatureUtils
-import cowsay4s.web.{RouteProvider, ServerSettings}
 import org.apache.commons.codec.binary.Base64
 
-import scala.concurrent.{ExecutionContext, Future}
+import cowsay4s.web.{RouteProvider, ServerSettings}
+import cowsay4s.web.slack.persistence.{NewTeamRegistration, TeamRegistrationDao}
+import cowsay4s.web.util.SignatureUtils
 
 class SlackOauthRoutes(
     settings: ServerSettings,

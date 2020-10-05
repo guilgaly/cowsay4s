@@ -1,10 +1,11 @@
 package cowsay4s.web.slack.model
 
-import cowsay4s.web.slack.model.TalkResponse.ResponseType
+import scala.collection.immutable
+
 import enumeratum.{Enum, EnumEntry, PlayJsonEnum}
 import play.api.libs.json.{Json, OFormat}
 
-import scala.collection.immutable
+import cowsay4s.web.slack.model.TalkResponse.ResponseType
 
 case class TalkResponse(
     response_type: ResponseType,

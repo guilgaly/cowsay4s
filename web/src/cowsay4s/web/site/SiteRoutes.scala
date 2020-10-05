@@ -5,13 +5,14 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.MethodDirectives.get
 import akka.http.scaladsl.server.directives.RouteDirectives.complete
+import scalatags.Text.all.Frag
+
 import cowsay4s.core._
 import cowsay4s.core.defaults.{DefaultCow, DefaultCowMode}
-import cowsay4s.web.site.model.TalkCommand.Unmarshallers._
-import cowsay4s.web.site.model.{OutputType, TalkCommand}
-import cowsay4s.web.site.views.{About, Cowsay4slack, Home, ListCows}
 import cowsay4s.web.{RouteProvider, ServerSettings}
-import scalatags.Text.all.Frag
+import cowsay4s.web.site.model.{OutputType, TalkCommand}
+import cowsay4s.web.site.model.TalkCommand.Unmarshallers._
+import cowsay4s.web.site.views.{About, Cowsay4slack, Home, ListCows}
 
 final class SiteRoutes(settings: ServerSettings, siteCowsay: SiteCowsay)
     extends RouteProvider {

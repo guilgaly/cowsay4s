@@ -1,13 +1,14 @@
 package cowsay4s.web.slack
 
+import scala.concurrent.ExecutionContext
+
 import akka.actor.ActorSystem
 import com.softwaremill.macwire._
+
 import cowsay4s.core.CowSay
+import cowsay4s.web.{RouteProvider, ServerSettings}
 import cowsay4s.web.common.db.Database
 import cowsay4s.web.slack.persistence.TeamRegistrationDao
-import cowsay4s.web.{RouteProvider, ServerSettings}
-
-import scala.concurrent.ExecutionContext
 
 trait SlackModule {
   def settings: ServerSettings

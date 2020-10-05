@@ -1,7 +1,6 @@
 package cowsay4s.web.util
 
 import java.nio.charset.StandardCharsets.UTF_8
-
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 

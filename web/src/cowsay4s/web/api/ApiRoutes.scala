@@ -5,8 +5,9 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.MethodDirectives.{get, post}
 import akka.http.scaladsl.server.directives.RouteDirectives.complete
-import cowsay4s.web.api.model.{About, TalkCommand}
+
 import cowsay4s.web.{JsonSupport, RouteProvider}
+import cowsay4s.web.api.model.{About, TalkCommand}
 
 final class ApiRoutes(apiCowsay: ApiCowsay)
     extends RouteProvider

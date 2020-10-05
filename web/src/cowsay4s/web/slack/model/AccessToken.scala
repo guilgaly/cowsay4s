@@ -1,8 +1,8 @@
 package cowsay4s.web.slack.model
 
+import play.api.libs.json._
 import play.api.libs.json.JsonConfiguration.Aux
 import play.api.libs.json.JsonNaming.SnakeCase
-import play.api.libs.json._
 
 case class AccessToken(
     accessToken: String,

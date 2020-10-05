@@ -3,13 +3,14 @@ package cowsay4s.web.site.views
 import java.nio.charset.StandardCharsets
 import java.util.Base64
 
-import cowsay4s.core.defaults.{DefaultCow, DefaultCowMode}
-import cowsay4s.core.{CowAction, EnumWithDefault}
-import cowsay4s.web.site.model.{OutputType, TalkCommand}
-import cowsay4s.web.site.views.common._
 import enumeratum.EnumEntry
 import scalatags.Text.all._
 import scalatags.Text.tags2
+
+import cowsay4s.core.{CowAction, EnumWithDefault}
+import cowsay4s.core.defaults.{DefaultCow, DefaultCowMode}
+import cowsay4s.web.site.model.{OutputType, TalkCommand}
+import cowsay4s.web.site.views.common._
 
 object Home extends Page {
 

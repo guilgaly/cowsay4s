@@ -1,8 +1,9 @@
 package cowsay4s.web.api.model
 
-import cowsay4s.core.defaults.{DefaultCow, DefaultCowMode}
-import cowsay4s.core.{CowAction, CowCommand, MessageWrapping}
 import play.api.libs.json.{Json, OFormat}
+
+import cowsay4s.core.{CowAction, CowCommand, MessageWrapping}
+import cowsay4s.core.defaults.{DefaultCow, DefaultCowMode}
 
 case class TalkCommand(message: String) {
 

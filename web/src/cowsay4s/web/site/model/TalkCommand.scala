@@ -1,6 +1,7 @@
 package cowsay4s.web.site.model
 
 import akka.http.scaladsl.unmarshalling.FromStringUnmarshaller
+
 import cowsay4s.core.CowAction
 import cowsay4s.core.defaults.{DefaultCow, DefaultCowMode}
 import cowsay4s.web.util.MarshallingUtils

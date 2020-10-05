@@ -1,7 +1,6 @@
 package cowsay4s.core.impl
 
 import cowsay4s.core._
-import cowsay4s.core.TestCow
 import cowsay4s.testutils.UnitSpec
 
 class TalkingCowSpec extends UnitSpec {
