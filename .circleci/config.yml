@@ -3,14 +3,14 @@ version: 2.1
 executors:
   openjdk-8-node:
     docker:
-      - image: guilgaly/openjdk-mill-node-heroku:8.0.265-0.8.0
+      - image: guilgaly/openjdk-mill-node-heroku:8.0.275-0.9.3
     working_directory: /tmp/cowsay4s
     environment:
       JVM_OPTS: -Xmx2g
       TERM: dumb
   openjdk-11-node:
     docker:
-        - image: guilgaly/openjdk-mill-node-heroku:11.0.8-0.8.0
+        - image: guilgaly/openjdk-mill-node-heroku:11.0.9-0.9.3
     working_directory: /tmp/cowsay4s
     environment:
       JVM_OPTS: -Xmx2g

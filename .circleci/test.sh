@@ -10,10 +10,10 @@ build_web="$3"
 echo "Build web app: $build_web"
 
 echo "[INFO] Check the source format"
-mill "__.reformat"
+mill format
 git diff --exit-code || (cat >> /dev/stderr <<EOF
-[ERROR] Scalafmt check failed, see differences above.
-To fix, format your sources using 'mill __.reformat'.
+[ERROR] Scalafmt & Organize Imports check failed, see differences above.
+To fix, format your sources using 'mill format'.
 EOF
 false
 )

@@ -1,19 +1,60 @@
+import $ivy.`com.goyeau::mill-scalafix:0.2.1`
 import $ivy.`com.lihaoyi::mill-contrib-buildinfo:0.9.3`
+
 import $file.cowgen
 import $file.dependencies
 import $file.projectVersion
 import $file.settings
+
 import mill._
+import mill.api.Strict
 import mill.contrib.buildinfo.BuildInfo
+import mill.eval.Evaluator
+import mill.define.Task
 import mill.scalajslib._
 import mill.scalalib._
 import mill.scalalib.publish.{Developer, License, PomSettings, VersionControl}
 import mill.scalalib.scalafmt.ScalafmtModule
 
+import com.goyeau.mill.scalafix.ScalafixModule
+
+def format(ev: Evaluator) = T.command {
+  def findAllChildren(module: Module): Seq[Module] = {
+    val children = module.millModuleDirectChildren
+    if (children.isEmpty) Seq(module)
+    else module +: children.flatMap(findAllChildren)
+  }
+
+  def eval[T](e: Task[T]): T =
+    ev.evaluate(Strict.Agg(e)).values match {
+      case Seq()     => throw new NoSuchElementException
+      case Seq(e: T) => e
+    }
+
+  findAllChildren(ev.rootModule)
+    .collect { case mod: ScalafmtModule with ScalafixModule => mod }
+    .foreach { mod =>
+      // We don't currently have different sources for specific Scala versions
+      if (eval(mod.scalaVersion) == settings.scalaVersion.default) {
+        println(s"Formatting module $mod...")
+        eval(mod.fix()) // Organize imports
+        eval(mod.reformat()) // Scalafmt
+      }
+    }
+}
+
 // *************** Base traits ***************
 
-trait BaseModule extends ScalaModule with ScalafmtModule {
+trait BaseModule extends ScalaModule with ScalafmtModule with ScalafixModule {
   def platformSegment: String
+
+  override def repositoriesTask = T.task {
+    super.repositoriesTask() ++ settings.customRepositories
+  }
+
+  override def scalacOptions = T { settings.scalacOptions(scalaVersion()) }
+
+  override def scalafixIvyDeps = Agg(dependencies.scalafix)
 
   override def sources = T.sources(
     millSourcePath / "src",
@@ -77,9 +118,6 @@ object core extends Module {
 
     override def millSourcePath: os.Path = build.millSourcePath / moduleName
     override def ivyDeps = Agg(dependencies.enumeratum.core)
-    override def repositories =
-      super.repositories ++ settings.customRepositories
-    override def scalacOptions = settings.scalacOptions(crossScalaVersion)
 
     // Publish settings
     def publishVersion = projectVersion.projectVersion
@@ -127,7 +165,6 @@ object cli extends ScalaModule with ScalafmtModule {
   private def scalaVers = settings.scalaVersion.default
 
   def scalaVersion = scalaVers
-  override def scalacOptions = settings.scalacOptions(scalaVers)
   override def moduleDeps = Seq(core.jvm(scalaVers))
   override def ivyDeps = Agg(
     dependencies.scopt,
@@ -143,7 +180,11 @@ object cli extends ScalaModule with ScalafmtModule {
 
 // *************** Web application module ***************
 
-object web extends ScalaModule with ScalafmtModule with BuildInfo {
+object web
+  extends ScalaModule
+    with ScalafmtModule
+    with ScalafixModule
+    with BuildInfo {
   private def scalaVers = settings.scalaVersion.default
 
   def scalaVersion = scalaVers
@@ -166,6 +207,8 @@ object web extends ScalaModule with ScalafmtModule with BuildInfo {
     dependencies.fastparse,
     dependencies.macWire,
   )
+
+  override def scalafixIvyDeps = Agg(dependencies.scalafix)
 
   def publishVersion = "0.1.4-SNAPSHOT"
 
