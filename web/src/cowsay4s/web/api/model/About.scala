@@ -1,7 +1,8 @@
 package cowsay4s.web.api.model
 
-import cowsay4s.web.BuildInfo
 import play.api.libs.json.{Json, OFormat}
+
+import cowsay4s.web.BuildInfo
 
 case class About(
     name: String,

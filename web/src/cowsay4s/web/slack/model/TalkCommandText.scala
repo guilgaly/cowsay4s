@@ -1,9 +1,10 @@
 package cowsay4s.web.slack.model
 
-import cowsay4s.core.defaults.{DefaultCow, DefaultCowMode}
+import scala.collection.immutable
+
 import enumeratum.{Enum, EnumEntry}
 
-import scala.collection.immutable
+import cowsay4s.core.defaults.{DefaultCow, DefaultCowMode}
 
 case class TalkCommandText(
     cow: DefaultCow,

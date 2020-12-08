@@ -2,8 +2,8 @@ package cowsay4s.web.site
 
 import java.awt.Color
 
-import cowsay4s.core.BitmapCows._
 import cowsay4s.core.{CowCommand, CowSay, MessageWrapping}
+import cowsay4s.core.BitmapCows._
 import cowsay4s.web.Fonts
 import cowsay4s.web.site.model.TalkCommand
 

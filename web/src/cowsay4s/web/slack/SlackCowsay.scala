@@ -1,20 +1,20 @@
 package cowsay4s.web.slack
 
+import scala.concurrent.{ExecutionContext, Future}
+
 import cowsay4s.core._
 import cowsay4s.core.defaults.{DefaultCow, DefaultCowMode}
 import cowsay4s.web.ServerSettings
-import cowsay4s.web.slack.model.TalkResponse.ResponseType.{
-  ephemeral,
-  in_channel,
-}
 import cowsay4s.web.slack.model.{
   SlashCommand,
   TalkCommand,
   TalkCommandText,
   TalkResponse,
 }
-
-import scala.concurrent.{ExecutionContext, Future}
+import cowsay4s.web.slack.model.TalkResponse.ResponseType.{
+  ephemeral,
+  in_channel,
+}
 
 final class SlackCowsay(settings: ServerSettings, cowSay: CowSay)(implicit
     ec: ExecutionContext,

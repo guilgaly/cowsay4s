@@ -1,10 +1,11 @@
 package cowsay4s.web.site.views
 
-import cowsay4s.core.defaults.DefaultCow
-import cowsay4s.core.{CowCommand, CowSay}
-import cowsay4s.web.site.views.common.Page
 import scalatags.Text.all._
 import scalatags.Text.tags2
+
+import cowsay4s.core.{CowCommand, CowSay}
+import cowsay4s.core.defaults.DefaultCow
+import cowsay4s.web.site.views.common.Page
 
 object ListCows extends Page {
 

@@ -1,15 +1,16 @@
 package cowsay4s.web.slack
 
+import scala.concurrent.ExecutionContext
+
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.unmarshalling.{FromEntityUnmarshaller, Unmarshaller}
-import cowsay4s.web.slack.model.{SlashCommand, TalkCommand}
-import cowsay4s.web.util.SignatureUtils
-import cowsay4s.web.{JsonSupport, RouteProvider, ServerSettings}
 import org.apache.commons.codec.binary.Hex
 
-import scala.concurrent.ExecutionContext
+import cowsay4s.web.{JsonSupport, RouteProvider, ServerSettings}
+import cowsay4s.web.slack.model.{SlashCommand, TalkCommand}
+import cowsay4s.web.util.SignatureUtils
 
 class SlackCowsayRoutes(
     settings: ServerSettings,

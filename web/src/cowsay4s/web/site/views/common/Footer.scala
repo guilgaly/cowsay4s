@@ -1,7 +1,8 @@
 package cowsay4s.web.site.views.common
 
-import cowsay4s.web.BuildInfo
 import scalatags.Text.all._
+
+import cowsay4s.web.BuildInfo
 
 object Footer {
 

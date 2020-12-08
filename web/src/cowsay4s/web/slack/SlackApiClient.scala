@@ -1,16 +1,17 @@
 package cowsay4s.web.slack
 
+import scala.concurrent.{ExecutionContext, Future}
+import scala.util.{Failure, Success}
+
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.unmarshalling.Unmarshal
-import cowsay4s.web.slack.model.AccessToken
-import cowsay4s.web.{JsonSupport, ServerSettings}
 import org.log4s._
 import play.api.libs.json.{Json, Writes}
 
-import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{Failure, Success}
+import cowsay4s.web.{JsonSupport, ServerSettings}
+import cowsay4s.web.slack.model.AccessToken
 
 final class SlackApiClient(settings: ServerSettings)(implicit
     system: ActorSystem,

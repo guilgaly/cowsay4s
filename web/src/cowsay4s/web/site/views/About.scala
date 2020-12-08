@@ -1,7 +1,8 @@
 package cowsay4s.web.site.views
 
-import cowsay4s.web.site.views.common.Page
 import scalatags.Text.all._
+
+import cowsay4s.web.site.views.common.Page
 
 object About extends Page {
 

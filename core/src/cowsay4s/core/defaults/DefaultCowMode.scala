@@ -1,9 +1,10 @@
 package cowsay4s.core.defaults
 
-import cowsay4s.core._
+import scala.collection.immutable
+
 import enumeratum.EnumEntry
 
-import scala.collection.immutable
+import cowsay4s.core._
 
 sealed abstract class DefaultCowMode(
     val modeName: String,

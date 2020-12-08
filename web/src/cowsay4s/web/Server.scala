@@ -1,11 +1,11 @@
 package cowsay4s.web
 
+import scala.concurrent.Await
+import scala.concurrent.duration._
+
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
 import org.log4s._
-
-import scala.concurrent.Await
-import scala.concurrent.duration._
 
 object Server extends RootModule {
   private[this] val log = getLogger

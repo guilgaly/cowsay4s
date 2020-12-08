@@ -1,11 +1,12 @@
 package cowsay4s.web.site.model
 
+import scala.collection.immutable
+
 import akka.http.scaladsl.unmarshalling.FromStringUnmarshaller
-import cowsay4s.core.EnumWithDefault
-import cowsay4s.web.util.MarshallingUtils
 import enumeratum.EnumEntry
 
-import scala.collection.immutable
+import cowsay4s.core.EnumWithDefault
+import cowsay4s.web.util.MarshallingUtils
 
 sealed trait OutputType extends EnumEntry
 
