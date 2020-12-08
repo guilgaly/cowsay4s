@@ -44,14 +44,19 @@ private[core] object Baloon {
 
     val top = topLine(maxLength)
     val middle = lines match {
-      case Nil =>
+      case Vector() =>
         Nil
-      case one +: Nil =>
+      case Vector(one) =>
         List(line(one, maxLength, delimiters.only))
-      case head +: mid :+ last =>
-        line(head, maxLength, delimiters.first) +:
-          mid.map(s => line(s, maxLength, delimiters.middle)) :+
-          line(last, maxLength, delimiters.last)
+      case longer =>
+        val lastIdx = longer.size - 1
+        longer.view.zipWithIndex.map { case (txt, idx) =>
+          val delim =
+            if (idx == 0) delimiters.first
+            else if (idx == lastIdx) delimiters.last
+            else delimiters.middle
+          line(txt, maxLength, delim)
+        }.toList
     }
     val bottom = bottomLine(maxLength)
 

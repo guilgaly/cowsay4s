@@ -70,7 +70,7 @@ workflows:
       - build:
           name: "2.13 (JDK 11)"
           executor: "openjdk-11-node"
-          scala-version: "2.13.3"
+          scala-version: "2.13.4"
           include-cli: true
           include-web: true
       - build:
@@ -78,7 +78,7 @@ workflows:
           requires:
             - "2.13 (JDK 11)"
           executor: "openjdk-11-node"
-          scala-version: "2.13.3"
+          scala-version: "2.13.4"
           include-cli: true
           include-web: true
           publish: true

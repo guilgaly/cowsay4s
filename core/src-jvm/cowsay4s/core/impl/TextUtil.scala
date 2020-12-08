@@ -5,9 +5,9 @@ import java.text.BreakIterator
 private[core] object TextUtil {
   // http://tutorials.jenkov.com/java-internationalization/breakiterator.html
 
-  def softWrap(text: String, lineWidth: Int): List[String] =
-    if (text.isEmpty) List(text)
-    else text.linesIterator.flatMap(softWrapLine(_, lineWidth)).toList
+  def softWrap(text: String, lineWidth: Int): Vector[String] =
+    if (text.isEmpty) Vector(text)
+    else text.linesIterator.flatMap(softWrapLine(_, lineWidth)).toVector
 
   private def softWrapLine(text: String, lineWidth: Int): List[String] = {
     val breakIterator = BreakIterator.getLineInstance

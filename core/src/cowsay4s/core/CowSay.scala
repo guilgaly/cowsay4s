@@ -7,18 +7,15 @@ trait CowSay {
 }
 
 object CowSay {
-  val default: CowSay = new CowSay {
-    override def talk(command: CowCommand): String =
-      TalkingCow.printToString(command)
-  }
+  val default: CowSay = (command: CowCommand) =>
+    TalkingCow.printToString(command)
 
-  def withTransformers(transformers: CommandTransformer*): CowSay = new CowSay {
-    override def talk(command: CowCommand): String = {
+  def withTransformers(transformers: CommandTransformer*): CowSay =
+    (command: CowCommand) => {
       val transformedCmd =
         transformers.foldLeft(command)((acc, transformer) => transformer(acc))
       default.talk(transformedCmd)
     }
-  }
 
   type CommandTransformer = CowCommand => CowCommand
 }

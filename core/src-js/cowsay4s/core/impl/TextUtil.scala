@@ -3,9 +3,9 @@ package cowsay4s.core.impl
 private[core] object TextUtil {
   // java.text.BreakIterator isn't supported on Scala.js
 
-  def softWrap(text: String, lineWidth: Int): List[String] =
-    if (text.isEmpty) List(text)
-    else text.linesIterator.flatMap(softWrapLine(_, lineWidth)).toList
+  def softWrap(text: String, lineWidth: Int): Vector[String] =
+    if (text.isEmpty) Vector(text)
+    else text.linesIterator.flatMap(softWrapLine(_, lineWidth)).toVector
 
   private def softWrapLine(text: String, lineWidth: Int): List[String] = {
     var lines = List.empty[String]
