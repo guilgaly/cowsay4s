@@ -8,7 +8,7 @@ val customRepositories: Seq[Repository] = Seq(
 object scalaVersion {
 
   val v2_12 = "2.12.12"
-  val v2_13 = "2.13.3"
+  val v2_13 = "2.13.4"
 
   val default = v2_13
   val cross = Seq(v2_12, v2_13)
@@ -22,6 +22,9 @@ object scalaJsVersion {
    * See https://tpolecat.github.io/2017/04/25/scalac-flags.html
    */
 def scalacOptions(scalaVersion: String) = {
+
+  def isCiBuild: Boolean =
+    sys.env.get("CI_BUILD").exists(_.toLowerCase == "true")
 
   def v2_12 = Seq(
     "-encoding",
@@ -46,7 +49,7 @@ def scalacOptions(scalaVersion: String) = {
     // "-language:experimental.macros", // Allow macro definition (besides implementation and application)
 
     // ********** Warning Settings ***********************************************
-    "-Xfatal-warnings", // Fail the compilation if there are any warnings.
+    // "-Xfatal-warnings", // Fail the compilation if there are any warnings.
     "-Ywarn-dead-code", // Warn when dead code is identified.
     "-Ywarn-extra-implicit", // Warn when more than one implicit parameter section is defined.
     // "-Ywarn-macros:none", // Do not inspect expansions or their original trees when generating unused symbol warnings.
@@ -80,7 +83,9 @@ def scalacOptions(scalaVersion: String) = {
     "-Xlint:constant", // Evaluation of a constant arithmetic expression results in an error.
     "-Xlint:by-name-right-associative", // By-name parameter of right associative operator.
     "-Xlint:unsound-match", // Pattern match may not be typesafe.
-  )
+  ) ++ {
+    if (isCiBuild) Seq("-Xfatal-warnings") else Seq.empty
+  }
 
   def v2_13 = Seq(
     "-encoding",
@@ -103,7 +108,7 @@ def scalacOptions(scalaVersion: String) = {
     // "-language:experimental.macros", // Allow macro definition (besides implementation and application)
 
     // ********** Warning Settings ***********************************************
-    "-Werror", // Fail the compilation if there are any warnings.
+    // "-Werror", // Fail the compilation if there are any warnings.
     "-Wdead-code", //  Warn when dead code is identified.
     "-Wextra-implicit", // Warn when more than one implicit parameter section is defined.
     // "-Wmacros:none", // Do not inspect expansions or their original trees when generating unused symbol warnings.
@@ -144,7 +149,9 @@ def scalacOptions(scalaVersion: String) = {
     "-Xlint:eta-zero", // Warn on eta-expansion (rather than auto-application) of zero-ary method.
     "-Xlint:eta-sam", // Warn on eta-expansion to meet a Java-defined functional interface that is not explicitly annotated with @FunctionalInterface.
     "-Xlint:deprecation", // Enable linted deprecations.
-  )
+  ) ++ {
+    if (isCiBuild) Seq("-Werror") else Seq.empty
+  }
 
   if (scalaVersion.startsWith("2.12")) v2_12
   else if (scalaVersion.startsWith("2.13")) v2_13

@@ -2,6 +2,8 @@
 
 set -e
 
+export CI_BUILD='true'
+
 scala_version="$1"
 echo "Scala version: $scala_version"
 build_cli="$2"
