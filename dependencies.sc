@@ -7,19 +7,19 @@ object enumeratum {
 }
 
 /** Tests. */
-val scalatest = ivy"org.scalatest::scalatest::3.2.2"
+val scalatest = ivy"org.scalatest::scalatest::3.2.3"
 
 /** Command-line args parsing. */
-val scopt = ivy"com.github.scopt::scopt:3.7.1"
+val scopt = ivy"com.github.scopt::scopt:4.0.0"
 
 /** Web server (akka-http). */
 object akka {
-  private val akkaHttpVersion = "10.2.0"
-  private val akkaVersion = "2.6.9"
+  private val akkaHttpVersion = "10.2.1"
+  private val akkaVersion = "2.6.10"
 
   val stream = ivy"com.typesafe.akka::akka-stream:${akkaVersion}"
   val http = ivy"com.typesafe.akka::akka-http:${akkaHttpVersion}"
-  val httpPlayJson = ivy"de.heikoseeberger::akka-http-play-json:1.34.0"
+  val httpPlayJson = ivy"de.heikoseeberger::akka-http-play-json:1.35.2"
   val slf4j = ivy"com.typesafe.akka::akka-slf4j:${akkaVersion}"
 
   object testkit {
@@ -30,10 +30,10 @@ object akka {
 }
 
 /** HTML templating. */
-val scalatags = ivy"com.lihaoyi::scalatags:0.9.1"
+val scalatags = ivy"com.lihaoyi::scalatags:0.9.2"
 
 object database {
-  val postgresql = ivy"org.postgresql:postgresql:42.2.16"
+  val postgresql = ivy"org.postgresql:postgresql:42.2.18"
   val hikaricp = ivy"com.zaxxer:HikariCP:3.4.5"
 }
 
@@ -41,7 +41,7 @@ object database {
 object logging {
   val slf4jApi = ivy"org.slf4j:slf4j-api:1.7.30"
   val logback = ivy"ch.qos.logback:logback-classic:1.2.3"
-  val log4s = ivy"org.log4s::log4s:1.8.2"
+  val log4s = ivy"org.log4s::log4s:1.9.0"
 }
 
 object apacheCommons {

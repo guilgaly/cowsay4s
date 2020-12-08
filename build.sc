@@ -1,4 +1,4 @@
-import $ivy.`com.lihaoyi::mill-contrib-buildinfo:0.8.0`
+import $ivy.`com.lihaoyi::mill-contrib-buildinfo:0.9.3`
 import $file.cowgen
 import $file.dependencies
 import $file.projectVersion

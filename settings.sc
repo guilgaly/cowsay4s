@@ -1,8 +1,8 @@
 import coursier.maven.MavenRepository
 
 val customRepositories = Seq(
-    MavenRepository("https://oss.sonatype.org/content/repositories/snapshots"),
-  )
+  MavenRepository("https://oss.sonatype.org/content/repositories/snapshots"),
+)
 
 object scalaVersion {
 
@@ -14,7 +14,7 @@ object scalaVersion {
 }
 
 object scalaJsVersion {
-  val default = "1.2.0"
+  val default = "1.3.1"
 }
 
 /**
