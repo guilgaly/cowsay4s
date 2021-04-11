@@ -5,23 +5,23 @@ val scalafix = ivy"com.github.liancheng::organize-imports:0.4.4"
 /** Enumerations. */
 object enumeratum {
   val core = ivy"com.beachape::enumeratum::1.6.1"
-  val playJson = ivy"com.beachape::enumeratum-play-json:1.6.1"
+  val playJson = ivy"com.beachape::enumeratum-play-json:1.6.3"
 }
 
 /** Tests. */
-val scalatest = ivy"org.scalatest::scalatest::3.2.3"
+val scalatest = ivy"org.scalatest::scalatest::3.2.7"
 
 /** Command-line args parsing. */
-val scopt = ivy"com.github.scopt::scopt:4.0.0"
+val scopt = ivy"com.github.scopt::scopt:4.0.1"
 
 /** Web server (akka-http). */
 object akka {
-  private val akkaHttpVersion = "10.2.1"
-  private val akkaVersion = "2.6.10"
+  private val akkaHttpVersion = "10.2.4"
+  private val akkaVersion = "2.6.14"
 
   val stream = ivy"com.typesafe.akka::akka-stream:${akkaVersion}"
   val http = ivy"com.typesafe.akka::akka-http:${akkaHttpVersion}"
-  val httpPlayJson = ivy"de.heikoseeberger::akka-http-play-json:1.35.2"
+  val httpPlayJson = ivy"de.heikoseeberger::akka-http-play-json:1.36.0"
   val slf4j = ivy"com.typesafe.akka::akka-slf4j:${akkaVersion}"
 
   object testkit {
@@ -32,11 +32,11 @@ object akka {
 }
 
 /** HTML templating. */
-val scalatags = ivy"com.lihaoyi::scalatags:0.9.2"
+val scalatags = ivy"com.lihaoyi::scalatags:0.9.4"
 
 object database {
-  val postgresql = ivy"org.postgresql:postgresql:42.2.18"
-  val hikaricp = ivy"com.zaxxer:HikariCP:3.4.5"
+  val postgresql = ivy"org.postgresql:postgresql:42.2.19"
+  val hikaricp = ivy"com.zaxxer:HikariCP:4.0.3"
 }
 
 /** Logging. */
@@ -52,7 +52,7 @@ object apacheCommons {
 }
 
 /** Parser combinators. */
-val fastparse = ivy"com.lihaoyi::fastparse:2.3.0"
+val fastparse = ivy"com.lihaoyi::fastparse:2.3.2"
 
 /** Dependency injection. */
 val macWire = ivy"com.softwaremill.macwire::macros:2.3.7"

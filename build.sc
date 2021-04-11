@@ -1,5 +1,5 @@
 import $ivy.`com.goyeau::mill-scalafix:0.2.1`
-import $ivy.`com.lihaoyi::mill-contrib-buildinfo:0.9.3`
+import $ivy.`com.lihaoyi::mill-contrib-buildinfo:0.9.6`
 
 import $file.cowgen
 import $file.dependencies

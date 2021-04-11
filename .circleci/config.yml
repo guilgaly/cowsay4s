@@ -3,14 +3,14 @@ version: 2.1
 executors:
   openjdk-8-node:
     docker:
-      - image: guilgaly/openjdk-mill-node-heroku:8.0.275-0.9.3
+      - image: guilgaly/openjdk-mill-node-heroku:8.0.282-0.9.6
     working_directory: /tmp/cowsay4s
     environment:
       JVM_OPTS: -Xmx2g
       TERM: dumb
   openjdk-11-node:
     docker:
-        - image: guilgaly/openjdk-mill-node-heroku:11.0.9-0.9.3
+        - image: guilgaly/openjdk-mill-node-heroku:11.0.10-0.9.6
     working_directory: /tmp/cowsay4s
     environment:
       JVM_OPTS: -Xmx2g
@@ -63,7 +63,7 @@ workflows:
           name: "2.12 (JDK 8)"
           requires:
             - "2.12 (JDK 11)"
-          executor: "openjdk-11-node"
+          executor: "openjdk-8-node"
           scala-version: "2.12.12"
           publish: true
 
@@ -77,7 +77,7 @@ workflows:
           name: "2.13 (JDK 8)"
           requires:
             - "2.13 (JDK 11)"
-          executor: "openjdk-11-node"
+          executor: "openjdk-8-node"
           scala-version: "2.13.4"
           include-cli: true
           include-web: true

@@ -2,7 +2,7 @@
     https://app.circleci.com/pipelines/github/guilgaly/cowsay4s)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/61283f92a63444738407f767d6bf86f7)](
     https://www.codacy.com/app/guilgaly/cowsay4s?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=guilgaly/cowsay4s&amp;utm_campaign=Badge_Grade)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/fr.ggaly/cowsay4s-core_2.12/badge.svg)](
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/fr.ggaly/cowsay4s-core_2.13/badge.svg)](
     https://search.maven.org/search?q=g:fr.ggaly%20AND%20a:cowsay4s*)
 
 # cowsay4s

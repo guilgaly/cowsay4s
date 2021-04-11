@@ -10,7 +10,7 @@ object Footer {
     footer(
       p(
         s"Cowsay Online v${BuildInfo.version} created by Guillaume Galy - ",
-        a(href := "https://github.com/guilgaly/cowsay-online")(
+        a(href := "https://github.com/guilgaly/cowsay4s")(
           "find out more on Github",
         ),
       ),
